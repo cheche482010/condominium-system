@@ -16,10 +16,10 @@ class Connection
         $this->credentials = [
             'Servidor'   => 'mysql',
             'Host'       => 'localhost',
-            'Base_Datos' => 'condominium-system',
+            'Base_Datos' => 'billing-system',
             'Puerto'     => '3306',
             'Usuario'    => 'root',
-            'Contraseña' => 'root',
+            'Contraseña' => '',
         ];
 
         $this->connect();

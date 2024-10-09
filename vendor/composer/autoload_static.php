@@ -6,7 +6,32 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitdf0e3945719bcfcc57666cc0e0fb8729
 {
+    public static $files = array (
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '0ccdf99b8f62f02c52cba55802e0c2e7' => __DIR__ . '/..' . '/zircote/swagger-php/src/functions.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Symfony\\Component\\Yaml\\' => 23,
+            'Symfony\\Component\\Finder\\' => 25,
+        ),
+        'P' => 
+        array (
+            'Psr\\Cache\\' => 10,
+        ),
+        'O' => 
+        array (
+            'OpenApi\\' => 8,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Deprecations\\' => 22,
+            'Doctrine\\Common\\Lexer\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
+        ),
         'C' => 
         array (
             'Core\\' => 5,
@@ -18,6 +43,38 @@ class ComposerStaticInitdf0e3945719bcfcc57666cc0e0fb8729
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Ctype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+        'Symfony\\Component\\Yaml\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Symfony\\Component\\Finder\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/finder',
+        ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'OpenApi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zircote/swagger-php/src',
+        ),
+        'Doctrine\\Deprecations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/deprecations/lib/Doctrine/Deprecations',
+        ),
+        'Doctrine\\Common\\Lexer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/lexer/src',
+        ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
+        ),
         'Core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core',
@@ -29,29 +86,7 @@ class ComposerStaticInitdf0e3945719bcfcc57666cc0e0fb8729
     );
 
     public static $classMap = array (
-        'App\\Components\\ButtonComponent' => __DIR__ . '/../..' . '/app/Components/ButtonComponent.php',
-        'App\\Components\\CardComponent' => __DIR__ . '/../..' . '/app/Components/CardComponent.php',
-        'App\\Components\\Component' => __DIR__ . '/../..' . '/app/Components/Component.php',
-        'App\\Components\\ContentHeaderComponent' => __DIR__ . '/../..' . '/app/Components/ContentHeaderComponent.php',
-        'App\\Components\\FooterComponent' => __DIR__ . '/../..' . '/app/Components/FooterComponent.php',
-        'App\\Components\\ImageComponent' => __DIR__ . '/../..' . '/app/Components/ImageComponent.php',
-        'App\\Components\\LinkComponent' => __DIR__ . '/../..' . '/app/Components/LinkComponent.php',
-        'App\\Components\\MetaComponent' => __DIR__ . '/../..' . '/app/Components/MetaComponent.php',
-        'App\\Components\\NavbarNavComponent' => __DIR__ . '/../..' . '/app/Components/NavbarNavComponent.php',
-        'App\\Components\\NotificationsComponent' => __DIR__ . '/../..' . '/app/Components/NotificationsComponent.php',
-        'App\\Components\\PageHeaderComponent' => __DIR__ . '/../..' . '/app/Components/PageHeaderComponent.php',
-        'App\\Components\\ScriptComponent' => __DIR__ . '/../..' . '/app/Components/ScriptComponent.php',
-        'App\\Components\\SidebarMenuComponent' => __DIR__ . '/../..' . '/app/Components/SidebarMenuComponent.php',
-        'App\\Components\\SmallBoxComponent' => __DIR__ . '/../..' . '/app/Components/SmallBoxComponent.php',
-        'App\\Controllers\\BaseController' => __DIR__ . '/../..' . '/app/Controllers/BaseController.php',
-        'App\\Controllers\\ErrorController' => __DIR__ . '/../..' . '/app/Controllers/ErrorController.php',
-        'App\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Controllers/HomeController.php',
-        'App\\Models\\BaseModel' => __DIR__ . '/../..' . '/app/Models/BaseModel.php',
-        'App\\Models\\HomeModel' => __DIR__ . '/../..' . '/app/Models/HomeModel.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Core\\Database\\Connection' => __DIR__ . '/../..' . '/core/Database/Connection.php',
-        'Core\\FrontController' => __DIR__ . '/../..' . '/core/FrontController.php',
-        'Core\\Router' => __DIR__ . '/../..' . '/core/Router.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
