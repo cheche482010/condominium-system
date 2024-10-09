@@ -18,6 +18,7 @@ class Router
             'login'          => 'UserController@renderView|login',
             'users/create'   => 'UserController@create',
             'users/login'    => 'UserController@login',
+            'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
         ];
     }
@@ -26,7 +27,7 @@ class Router
     {
         $url = $this->removeQueryString($url);
         $url = empty($url) ? 'home' : $url;
-
+        
         foreach ($this->routes as $route => $action) {
 
             $pattern = preg_replace('/(:\w+)/', '(\w+)', $route);

@@ -5,5 +5,8 @@
             "App\\": "app/",
             "Core\\": "core/"
         }
+    },
+    "require": {
+        "zircote/swagger-php": "3.2.0"
     }
 }

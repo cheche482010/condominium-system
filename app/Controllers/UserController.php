@@ -2,6 +2,11 @@
 
 namespace App\Controllers;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Info(title="Condominium System", version="0.1")
+ */
 class UserController extends BaseController
 {
     private $datos;
@@ -37,6 +42,17 @@ class UserController extends BaseController
         ];
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/user/getAll",
+     *     summary="Obtener todos los usuarios",
+     *     description="Devuelve una lista completa de todos los usuarios registrados.",
+     *     tags={"User"},
+     *     @OA\Response(response=200, description="Éxito"),
+     *     @OA\Response(response=404, description="No hay usuarios encontrados"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function getAll()
     {
         $this->isGetRequest();
