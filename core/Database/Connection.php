@@ -7,19 +7,21 @@ use PDOException;
 
 class Connection
 {
+    use \Core\Traits\EnvironmentLoader;
     private static $instance;
     private $pdo;
     private $credentials;
 
     private function __construct()
     {
+        $this->loadEnvironmentVariables();
         $this->credentials = [
-            'Servidor'   => 'mysql',
-            'Host'       => 'localhost',
-            'Base_Datos' => 'billing-system',
-            'Puerto'     => '3306',
-            'Usuario'    => 'root',
-            'Contraseña' => '',
+            'Servidor'   => $_ENV['DB_SERVER'],
+            'Host'       => $_ENV['DB_HOST'],
+            'Base_Datos' => $_ENV['DB_NAME'],
+            'Puerto'     => $_ENV['DB_PORT'],
+            'Usuario'    => $_ENV['DB_USER'],
+            'Contraseña' => $_ENV['DB_PASS'],
         ];
 
         $this->connect();
@@ -90,5 +92,4 @@ class Connection
     {
         $this->pdo->rollBack();
     }
-
 }

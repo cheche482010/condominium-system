@@ -1,52 +1,104 @@
+CREATE DATABASE IF NOT EXISTS `condominium-system`;
+USE `condominium-system`;
+
 CREATE TABLE usuarios (
-    id bigint primary key generated always as identity,
-    nombre text not null,
-    apellido text not null,
-    cedula bigint not null unique,
-    telefono text not null,
-    email text not null unique,
-    password text not null,
-    rol text not null,
-    token text
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+    apellido VARCHAR(255) NOT NULL,
+    cedula BIGINT NOT NULL UNIQUE,
+    telefono VARCHAR(20) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    user_password VARCHAR(255) NOT NULL,
+    rol VARCHAR(50) NOT NULL,
+    token VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE condominios (
-    id bigint primary key generated always as identity,
-    nombre text not null,
-    deuda numeric(10, 2) default 0,
-    alicuota numeric(10, 2)
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+    deuda DECIMAL(10, 2) DEFAULT 0,
+    alicuota DECIMAL(10, 2),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE cobranza (
-    id bigint primary key generated always as identity,
-    usuario_id bigint references usuarios(id),
-    condominio_id bigint references condominios(id),
-    monto numeric(10, 2) not null,
-    fecha date not null,
-    estado text not null
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id BIGINT REFERENCES usuarios(id),
+    condominio_id BIGINT REFERENCES condominios(id),
+    monto DECIMAL(10, 2) NOT NULL,
+    fecha DATE NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE reportes (
-    id bigint primary key generated always as identity,
-    usuario_id bigint references usuarios(id),
-    condominio_id bigint references condominios(id),
-    tipo text not null,
-    contenido text not null,
-    fecha date not null
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id BIGINT REFERENCES usuarios(id),
+    condominio_id BIGINT REFERENCES condominios(id),
+    tipo VARCHAR(50) NOT NULL,
+    contenido TEXT NOT NULL,
+    fecha DATE NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE pagos (
-    id bigint primary key generated always as identity,
-    condominio_id bigint references condominios(id),
-    cobranza_id bigint references cobranza(id),
-    monto numeric(10, 2) not null,
-    fecha date not null
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    condominio_id BIGINT REFERENCES condominios(id),
+    cobranza_id BIGINT REFERENCES cobranza(id),
+    monto DECIMAL(10, 2) NOT NULL,
+    fecha DATE NOT NULL,
+    banco_id BIGINT REFERENCES bancos(id),
+    tipo_pago_id BIGINT REFERENCES tipos_de_pago(id),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE gastos (
-    id bigint primary key generated always as identity,
-    cobranza_id bigint references cobranza(id),
-    concepto text not null,
-    monto numeric(10, 2) not null,
-    tipo text not null
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    cobranza_id BIGINT REFERENCES cobranza(id),
+    concepto VARCHAR(255) NOT NULL,
+    monto DECIMAL(10, 2) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE bitacora (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id BIGINT REFERENCES usuarios(id),
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    accion VARCHAR(255) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE bancos (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    codigo VARCHAR(20) NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tipos_de_pago (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    codigo VARCHAR(20) NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
