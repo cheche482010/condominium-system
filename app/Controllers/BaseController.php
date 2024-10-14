@@ -9,7 +9,9 @@ class BaseController
     protected $model;
     protected $validator;
     protected $assets;
+    protected $assetsView;
     protected $components = [];
+    public $config;
 
     public function __construct()
     {
@@ -19,6 +21,8 @@ class BaseController
         $this->model = new $modelName();
         $this->validator = new $validator();
         $this->assets = $this->Assets();
+        $this->assetsView = $this->assetsView();
+        $this->config = new \Core\Config();
     }
 
     protected function createComponent($className, $data = [])
@@ -44,13 +48,24 @@ class BaseController
         throw new \Exception("Method $method not found.");
     }
 
-    public function Assets()
+    public function getFullUrl()
     {
         $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
-        $domain   = $_SERVER['HTTP_HOST'];
-        $root     = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']) . "/";
-        return $protocol . $domain . $root . "assets/";
-        unset($protocol, $domain, $root);
+        $domain = $_SERVER['HTTP_HOST'];
+        $root = str_replace('/public/index.php', '', $_SERVER['SCRIPT_NAME']) . '/';
+        return $protocol . $domain . $root;
+    }
+
+    public function Assets()
+    {
+        $url = $this->getFullUrl();
+        return $url . "public/assets/";
+    }
+
+    public function assetsView()
+    {
+        $url = $this->getFullUrl();
+        return $url . 'app/Views/';
     }
 
     public function isGetRequest()

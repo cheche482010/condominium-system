@@ -1,0 +1,10 @@
+[EXCEPTION] Failed to parse dotenv file. Encountered unexpected whitespace at [Billing System]. in C:\xampp\htdocs\www\proyectos\condominium-system\vendor\vlucas\phpdotenv\src\Parser\Parser.php on line 30
+[EXCEPTION] Failed to parse dotenv file. Encountered unexpected whitespace at [Billing System]. in C:\xampp\htdocs\www\proyectos\condominium-system\vendor\vlucas\phpdotenv\src\Parser\Parser.php on line 30
+[ERROR] Undefined array key "PATH_INFO" in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\BaseController.php on line 56
+[ERROR] substr(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\BaseController.php on line 56
+[ERROR] Undefined array key "PATH_INFO" in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\BaseController.php on line 56
+[ERROR] substr(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\BaseController.php on line 56
+[ERROR] Undefined array key "PATH_INFO" in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\BaseController.php on line 56
+[ERROR] substr(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\BaseController.php on line 56
+[ERROR] Undefined array key "PATH_INFO" in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\BaseController.php on line 56
+[ERROR] substr(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\BaseController.php on line 56
