@@ -13,10 +13,6 @@ class BaseController
 
     public function __construct()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $controllerName = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
         $modelName = "App\Models\\" . str_replace("Controller", "Model", $controllerName);
         $validator = "App\Controllers\Validation\\Validator";

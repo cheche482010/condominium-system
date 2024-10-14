@@ -193,7 +193,7 @@ class UserController extends BaseController
     public function renderView($viewName)
     {
         try {
-            $this->Vista("user/{$viewName}/{$viewName}");
+            require __DIR__ . "/../Views/user/{$viewName}/{$viewName}.php";
         } catch (\Exception $e) {
             throw new \Exception('Error al cargar la vista: ' . $e->getMessage());
         }

@@ -9,7 +9,7 @@ class UserModel extends BaseModel
     public int    $cedula;
     public string $telefono;
     public string $email;
-    public string $password;
+    public string $user_password;
     public string $rol;
     public ?string $token;
 
@@ -20,13 +20,13 @@ class UserModel extends BaseModel
         parent::__construct();
 
         $this->sql = [
-            'getAll'  => "SELECT * FROM usuarios",
+            'getAll' => "SELECT * FROM usuarios",
             'getById' => "SELECT * FROM usuarios WHERE id = :id",
             'getByEmail' => "SELECT * FROM usuarios WHERE email = :email",
-            'create'  => "INSERT INTO usuarios (nombre, apellido, cedula, telefono, email, password, rol, token) VALUES (:nombre, :apellido, :cedula, :telefono, :email, :password, :rol, :token)",
-            'update'  => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, telefono = :telefono, email = :email, password = :password, rol = :rol WHERE id = :id",
-            'delete'  => "DELETE FROM usuarios WHERE id = :id",
-        ];
+            'create' => "INSERT INTO usuarios (nombre, apellido, cedula, telefono, email, user_password, rol, token) VALUES (:nombre, :apellido, :cedula, :telefono, :email, :user_password, :rol, :token)",
+            'update' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, telefono = :telefono, email = :email, user_password = :user_password, rol = :rol, token = :token WHERE id = :id",
+            'delete' => "DELETE FROM usuarios WHERE id = :id",
+        ];               
     }
 
     public function execute($sqlKey, $params = [], $fetchOption = "all")
