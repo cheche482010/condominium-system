@@ -4,12 +4,13 @@ namespace App\Models;
 
 class UserModel extends BaseModel
 {
+    public int    $id;
     public string $nombre;
     public string $apellido;
     public int    $cedula;
     public string $telefono;
     public string $email;
-    public string $password;
+    public string $user_password;
     public string $rol;
     public ?string $token;
 
@@ -23,7 +24,7 @@ class UserModel extends BaseModel
             'getAll'  => "SELECT * FROM usuarios",
             'getById' => "SELECT * FROM usuarios WHERE id = :id",
             'getByEmail' => "SELECT * FROM usuarios WHERE email = :email",
-            'create'  => "INSERT INTO usuarios (nombre, apellido, cedula, telefono, email, password, rol, token) VALUES (:nombre, :apellido, :cedula, :telefono, :email, :password, :rol, :token)",
+            'create'  => "INSERT INTO usuarios (nombre, apellido, cedula, telefono, email, user_password, rol, token) VALUES (:nombre, :apellido, :cedula, :telefono, :email, :user_password, :rol, :token)",
             'update'  => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, telefono = :telefono, email = :email, password = :password, rol = :rol WHERE id = :id",
             'delete'  => "DELETE FROM usuarios WHERE id = :id",
         ];
