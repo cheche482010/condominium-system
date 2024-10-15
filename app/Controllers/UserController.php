@@ -152,7 +152,7 @@ class UserController extends BaseController
             }
 
             $errors = $this->validateUserData($data);
-
+            
             if ($errors) {
                 return $this->response(400, false, 'error', 'Errores de validación', $errors);
             }
@@ -163,7 +163,7 @@ class UserController extends BaseController
                 return $this->response(409, false, 'error', 'Email ya registrado. ', $data["email"]);
             }
 
-            $passwordHash = $this->securePassword($key, $data['user_password'], 'codificar');
+            $passwordHash = $this->securePassword($_ENV["SECURE_KEY"], $data['user_password'], 'codificar');
 
             if (!$passwordHash['success']) {
                 return $this->response(500, false, 'error',  ($passwordHashResult['error'] ?? 'No especificado'));
@@ -270,7 +270,7 @@ class UserController extends BaseController
 
         $errors = $this->validator->validate($data, $rules);
 
-        return $this->validator->hasErrors() ? $errors : null;
+        return  $errors ?? null;
     }
 
     private function sanitizar(array $data): array

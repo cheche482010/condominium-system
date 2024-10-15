@@ -21,6 +21,7 @@ class Router
         $this->routes = [
             'home'           => 'HomeController@index',
             'login'          => 'UserController@renderView|login',
+            'register'       => 'UserController@renderView|register',
             'users/create'   => 'UserController@create',
             'users/login'    => 'UserController@login',
             'user/getAll'    => 'UserController@getAll',
@@ -33,6 +34,7 @@ class Router
     public function route($url)
     {
         $url = $this->removeQueryString($url);
+        $url = strtolower($url);
         $url = $this->isAuthenticated($url);
         
         foreach ($this->routes as $route => $action) {
