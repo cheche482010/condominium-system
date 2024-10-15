@@ -32,6 +32,38 @@ class UserController extends BaseController
         return $token;
     }
 
+    public static function securePassword($key, $string, $accion = null)
+    {   
+        if (!$key) {
+            throw new \Exception('La clave secreta no está configurada en el entorno.');
+        }
+    
+        $metodo = "AES-256-CBC"; 
+        $llave  = openssl_digest($key, 'whirlpool', true); 
+        $iv     = substr(hash("whirlpool", $llave), 0, 16); 
+
+        if ($accion == 'codificar') {
+            try {
+                $encryptedData = openssl_encrypt($string, $metodo, $llave, 0, $iv);
+                $encodedOutput = base64_encode($encryptedData);
+                return ['success' => true, 'data' => $encodedOutput];
+            } catch (\Exception $e) {
+                return ['success' => false, 'error' => 'Error al codificar: ' . $e->getMessage()];
+            }
+        } else if ($accion == 'decodificar') {
+            try {
+                $decodedString = base64_decode($string);
+                $decryptedData = openssl_decrypt($decodedString, $metodo, $llave, 0, $iv);
+                return ['success' => true, 'data' => $decryptedData];
+            } catch (\Exception $e) {
+                return ['success' => false, 'error' => 'Error al decodificar: ' . $e->getMessage()];
+            }
+        }
+
+        return ['success' => false, 'error' => 'Acción inválida'];
+    }
+
+
     private function initializeSession($user)
     {
         $_SESSION['user'] = [
@@ -79,24 +111,71 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/user/register",
+     *     summary="Register new user",
+     *     description="Creates a new user account.",
+     *     tags={"User"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="nombre", type="string", description="Nombre"),
+     *             @OA\Property(property="apellido", type="string", description="Apellido"),
+     *             @OA\Property(property="cedula", type="integer", description="Número de cédula"),
+     *             @OA\Property(property="telefono", type="string", description="Teléfono"),
+     *             @OA\Property(property="email", type="string", description="Correo electrónico"),
+     *             @OA\Property(property="user_password", type="string", description="Contraseña"),
+     *             @OA\Property(property="rol", type="string", description="Rol del usuario"),
+     *             @OA\Property(property="token", type="string", description="Indentificador de Usuario")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Usuario creado exitosamente"),
+     *     @OA\Response(response=400, description="Error de validación"),
+     *     @OA\Response(response=409, description="Email ya registrado"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function create()
     {
         $this->isPostRequest();
 
-        $data = $this->datos;
-
-        $errors = $this->validateUserData($data);
-
-        if ($errors) {
-            return $this->response(400, false, 'error', 'Errores de validación', $errors);
-        }
-
-        $data['token'] = $this->generateToken($data['nombre'], $data['apellido'], $data['cedula']);
-
+        $data = $this->datos["user_data"];
+        
         try {
+
+            $sanitizedData = $this->sanitizar($data);
+
+            if (!$sanitizedData) {
+                return $this->response(400, false, 'error', 'Error al sanitizar datos');
+            }
+
+            $errors = $this->validateUserData($data);
+
+            if ($errors) {
+                return $this->response(400, false, 'error', 'Errores de validación', $errors);
+            }
+
+            $existingUser = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
+
+            if ($existingUser) {
+                return $this->response(409, false, 'error', 'Email ya registrado. ', $data["email"]);
+            }
+
+            $passwordHash = $this->securePassword($key, $data['user_password'], 'codificar');
+
+            if (!$passwordHash['success']) {
+                return $this->response(500, false, 'error',  ($passwordHashResult['error'] ?? 'No especificado'));
+            }
+            
+            $data['user_password'] = $passwordHash;
+            $data['token'] = $this->generateToken($data['nombre'], $data['apellido'], $data['cedula']);
+
             $result = $this->model->execute('create', $data, 'create');
+
             if ($result) {
-                $this->respuesta = $this->response(201, true, 'success', 'usuario creado con éxito');
+                $this->respuesta = $this->response(200, true, 'success', 'usuario creado con éxito');
             } else {
                 $this->respuesta = $this->response(400, false, 'error', 'No se pudo crear el usuario');
             }
@@ -180,8 +259,13 @@ class UserController extends BaseController
     {
 
         $rules = [
-            'username' => 'required|regex:alphanumeric',
-            'password' => 'required|min:6|regex:alphanumeric',
+            'nombre' => 'required|string',
+            'apellido' => 'required|string',
+            'cedula' => 'required|cedula|min:6|max:10',
+            'telefono' => 'required|phone',
+            'email' => 'required|email',
+            'user_password' => 'required|password|min:8',
+            'rol' => 'required|string'
         ];
 
         $errors = $this->validator->validate($data, $rules);
@@ -189,6 +273,18 @@ class UserController extends BaseController
         return $this->validator->hasErrors() ? $errors : null;
     }
 
+    private function sanitizar(array $data): array
+    {
+        $sanitizedData = [];
+
+        foreach ($data as $key => $value) {
+            $sanitizedValue = trim(str_replace(['\'', '"', '[', ']'], '', (string)$value));
+            $sanitizedValue = preg_replace('/\s+/', ' ', $sanitizedValue);
+            $sanitizedData[$key] = !empty($sanitizedValue) ? $sanitizedValue : null;
+        }
+        
+        return $sanitizedData;
+    }
 
     public function renderView($viewName)
     {
