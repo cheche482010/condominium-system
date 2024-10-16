@@ -8,7 +8,7 @@ class UserModel extends BaseModel
     public string $nombre;
     public string $apellido;
     public int    $cedula;
-    public string $telefono;
+    public string $phone;
     public string $email;
     public string $user_password;
     public string $rol;
@@ -21,13 +21,13 @@ class UserModel extends BaseModel
         parent::__construct();
 
         $this->sql = [
-            'getAll'  => "SELECT * FROM usuarios",
-            'getById' => "SELECT * FROM usuarios WHERE id = :id",
-            'getByEmail' => "SELECT * FROM usuarios WHERE email = :email",
-            'create'  => "INSERT INTO usuarios (nombre, apellido, cedula, telefono, email, user_password, rol, token) VALUES (:nombre, :apellido, :cedula, :telefono, :email, :user_password, :rol, :token)",
-            'update'  => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, telefono = :telefono, email = :email, password = :password, rol = :rol WHERE id = :id",
-            'delete'  => "DELETE FROM usuarios WHERE id = :id",
-        ];
+            'getAll' => "SELECT * FROM usuarios",
+            'getById' => "SELECT (id, nombre, apellido, cedula, phone, email, user_password, rol, token, is_active) FROM usuarios WHERE id = :id",
+            'getByEmail' => "SELECT id, nombre, apellido, cedula, phone, email, user_password, rol, token, is_active FROM usuarios WHERE email = :email",
+            'createUser' => "INSERT INTO usuarios (nombre, apellido, cedula, phone, email, user_password, rol, token) VALUES (:nombre, :apellido, :cedula, :phone, :email, :user_password, :rol, :token)",
+            'update' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email, user_password = :user_password, rol = :rol, token = :token WHERE id = :id",
+            'delete' => "DELETE FROM usuarios WHERE id = :id",
+        ];               
     }
 
     public function execute($sqlKey, $params = [], $fetchOption = "all")
@@ -39,7 +39,7 @@ class UserModel extends BaseModel
         $sanitizedParams = array_map(function ($param) {
             return $this->sanitize($param);
         }, $params);
-
+        
         if ($fetchOption === "create" || $fetchOption === "update" || $fetchOption === "delete") {
             return $this->db->executeQuery($this->sql[$sqlKey], $sanitizedParams);
         } elseif ($fetchOption === "single" || $fetchOption === "all") {

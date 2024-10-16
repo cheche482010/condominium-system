@@ -22,13 +22,9 @@ class UserController extends BaseController
     private function generateToken($nombre, $apellido, $cedula)
     {
         $data = $nombre . '|' . $apellido . '|' . $cedula;
-        $key = 3;
-        $token = '';
-
-        $token = implode('', array_map(function ($char) use ($key) {
-            return chr(ord($char) + $key);
-        }, str_split($data)));
-
+        $hash = hash('sha256', $data);
+        $randomToken = bin2hex(random_bytes(16));
+        $token = hash('sha512', $hash . $randomToken);
         return $token;
     }
 
@@ -140,7 +136,7 @@ class UserController extends BaseController
     public function create()
     {
         $this->isPostRequest();
-
+        
         $data = $this->datos["user_data"];
         
         try {
@@ -148,39 +144,42 @@ class UserController extends BaseController
             $sanitizedData = $this->sanitizar($data);
 
             if (!$sanitizedData) {
-                return $this->response(400, false, 'error', 'Error al sanitizar datos');
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Error al sanitizar datos');
             }
 
-            $errors = $this->validateUserData($data);
-
-            if ($errors) {
-                return $this->response(400, false, 'error', 'Errores de validación', $errors);
+            $validateData = $this->validateUserData($data);
+            
+            if ($validateData) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
             }
 
             $existingUser = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
-
+            
             if ($existingUser) {
-                return $this->response(409, false, 'error', 'Email ya registrado. ', $data["email"]);
+                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'Email ya registrado. ', $data["email"]);
             }
 
-            $passwordHash = $this->securePassword($key, $data['user_password'], 'codificar');
+            $passwordHash = $this->securePassword($_ENV["SECURE_KEY"], $data['user_password'], 'codificar');
 
             if (!$passwordHash['success']) {
-                return $this->response(500, false, 'error',  ($passwordHashResult['error'] ?? 'No especificado'));
+                return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error',  ($passwordHashResult['error'] ?? 'No especificado'));
             }
             
-            $data['user_password'] = $passwordHash;
+            $data['rol'] = $this->datos["user_type"] ? "admin" : "user";
+            $data['user_password'] = $passwordHash['data'];
             $data['token'] = $this->generateToken($data['nombre'], $data['apellido'], $data['cedula']);
-
-            $result = $this->model->execute('create', $data, 'create');
+            
+            $result = $this->model->execute('createUser', $data, 'create');
+            $user = $this->model->lastInsertId();
+            $userId = is_numeric($user) ? ['id' => $user] : null;
 
             if ($result) {
-                $this->respuesta = $this->response(200, true, 'success', 'usuario creado con éxito');
+                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario creado con éxito', $userId);
             } else {
-                $this->respuesta = $this->response(400, false, 'error', 'No se pudo crear el usuario');
+                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el usuario');
             }
         } catch (\Exception $e) {
-            $this->respuesta = $this->response(500, false, 'error', 'Error al crear el usuario: ' . $e->getMessage());
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al crear el usuario.', $e->getTrace());
         }
 
         return $this->respuesta;
@@ -225,20 +224,32 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    public function login()
+    public function auth()
     {
         $this->isPostRequest();
 
-        $data = $this->datos;
+        $data = $this->datos["user_data"];
 
         try {
             $user = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
-            if ($user && password_verify($data['password'], $user['password'])) {
-                $this->initializeSession($user);
-                $this->respuesta = $this->response(200, true, 'success', 'Inicio de sesión exitoso', $user);
-            } else {
-                $this->respuesta = $this->response(401, false, 'error', 'Email o contraseña incorrectos');
+
+            if (!$user) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Email incorrecto. '. $data["email"]);
             }
+
+            $password = $this->securePassword($_ENV["SECURE_KEY"], $data['user_password'], 'codificar');
+
+            if (!$password['success']) {
+                return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error',  ($passwordResult['error'] ?? 'No especificado'));
+            }
+
+            if ($user['user_password'] !== $password['data']) {
+                return $this->response(self::HTTP_UNAUTHORIZED, false, 'error', 'Contraseña incorrecta.' , $data['user_password']);
+            }
+            
+            $this->initializeSession($user);
+            $this->respuesta = $this->response(200, true, 'success', 'Inicio de sesión exitoso', $user);
+
         } catch (\Exception $e) {
             $this->respuesta = $this->response(500, false, 'error', 'Error al iniciar sesión: ' . $e->getMessage());
         }
@@ -261,16 +272,15 @@ class UserController extends BaseController
         $rules = [
             'nombre' => 'required|string',
             'apellido' => 'required|string',
-            'cedula' => 'required|cedula|min:6|max:10',
-            'telefono' => 'required|phone',
+            'cedula' => 'required|regex:cedula|min:6|max:9',
+            'phone' => 'required|regex:phone',
             'email' => 'required|email',
             'user_password' => 'required|password|min:8',
-            'rol' => 'required|string'
         ];
 
         $errors = $this->validator->validate($data, $rules);
 
-        return $this->validator->hasErrors() ? $errors : null;
+        return  $errors ?? null;
     }
 
     private function sanitizar(array $data): array
@@ -289,7 +299,7 @@ class UserController extends BaseController
     public function renderView($viewName)
     {
         try {
-            $this->Vista("user/{$viewName}/{$viewName}");
+            require __DIR__ . "/../Views/user/{$viewName}/{$viewName}.php";
         } catch (\Exception $e) {
             throw new \Exception('Error al cargar la vista: ' . $e->getMessage());
         }

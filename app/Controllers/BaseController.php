@@ -9,7 +9,9 @@ class BaseController
     protected $model;
     protected $validator;
     protected $assets;
+    protected $assetsView;
     protected $components = [];
+    public $config;
 
     const HTTP_OK = 200;
     const HTTP_CREATED = 201;
@@ -17,6 +19,7 @@ class BaseController
     const HTTP_UNAUTHORIZED = 401;
     const HTTP_FORBIDDEN = 403;
     const HTTP_NOT_FOUND = 404;
+    const HTTP_CONFLICT_STATUS_CODE = 409;
     const HTTP_INTERNAL_SERVER_ERROR = 500;
 
     const MSG_SUCCESS = 'Operación realizada con éxito';
@@ -24,16 +27,14 @@ class BaseController
     
     public function __construct()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $controllerName = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
         $modelName = "App\Models\\" . str_replace("Controller", "Model", $controllerName);
         $validator = "App\Controllers\Validation\\Validator";
         $this->model = new $modelName();
         $this->validator = new $validator();
         $this->assets = $this->Assets();
+        $this->assetsView = $this->assetsView();
+        $this->config = new \Core\Config();
     }
 
     protected function createComponent($className, $data = [])
@@ -59,13 +60,24 @@ class BaseController
         throw new \Exception("Method $method not found.");
     }
 
-    public function Assets()
+    public function getFullUrl()
     {
         $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
-        $domain   = $_SERVER['HTTP_HOST'];
-        $root     = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']) . "/";
-        return $protocol . $domain . $root . "assets/";
-        unset($protocol, $domain, $root);
+        $domain = $_SERVER['HTTP_HOST'];
+        $root = str_replace('/public/index.php', '', $_SERVER['SCRIPT_NAME']) . '/';
+        return $protocol . $domain . $root;
+    }
+
+    public function Assets()
+    {
+        $url = $this->getFullUrl();
+        return $url . "public/assets/";
+    }
+
+    public function assetsView()
+    {
+        $url = $this->getFullUrl();
+        return $url . 'app/Views/';
     }
 
     public function isGetRequest()
@@ -108,7 +120,7 @@ class BaseController
         if ($data !== null) {
             $response['data'] = $data;
         }
-
-        return json_encode($response);
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
 }

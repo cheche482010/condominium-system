@@ -7,19 +7,21 @@ use PDOException;
 
 class Connection
 {
+    use \Core\Traits\EnvironmentLoader;
     private static $instance;
     private $pdo;
     private $credentials;
 
     private function __construct()
     {
+        $this->loadEnvironmentVariables();
         $this->credentials = [
-            'Servidor'   => 'mysql',
-            'Host'       => 'localhost',
-            'Base_Datos' => 'billing-system',
-            'Puerto'     => '3306',
-            'Usuario'    => 'root',
-            'Contraseña' => '',
+            'Servidor'   => $_ENV['DB_SERVER'],
+            'Host'       => $_ENV['DB_HOST'],
+            'Base_Datos' => $_ENV['DB_NAME'],
+            'Puerto'     => $_ENV['DB_PORT'],
+            'Usuario'    => $_ENV['DB_USER'],
+            'Contraseña' => $_ENV['DB_PASS'],
         ];
 
         $this->connect();
@@ -54,7 +56,7 @@ class Connection
             $stmt->execute($params);
             return $stmt;
         } catch (PDOException $e) {
-            die("Error en la consulta: " . $e->getMessage());
+            throw new \Exception("Error en la consulta: " . $e->getMessage(), 0, $e);
         }
     }
 
@@ -62,7 +64,8 @@ class Connection
     public function getResults($sql, $params = [], $fetchOption = "all")
     {
         $stmt = $this->executeQuery($sql, $params);
-       if ($fetchOption === "all") {
+        
+        if ($fetchOption === "all") {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } elseif ($fetchOption === "single") {
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -90,5 +93,4 @@ class Connection
     {
         $this->pdo->rollBack();
     }
-
 }

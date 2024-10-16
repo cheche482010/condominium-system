@@ -8,28 +8,38 @@ class Router
 {
     private $routes = [];
     private $error;
+    private $session;
 
     public function __construct()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $this->error = new ErrorController();
 
         $this->routes = [
             'home'           => 'HomeController@index',
             'login'          => 'UserController@renderView|login',
+            'register'       => 'UserController@renderView|register',
+            'list'           => 'UserController@renderView|list',
             'users/create'   => 'UserController@create',
-            'users/login'    => 'UserController@login',
+            'users/auth'     => 'UserController@auth',
             'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
         ];
+
+        $this->getSession();
     }
 
     public function route($url)
     {
         $url = $this->removeQueryString($url);
-        $url = empty($url) ? 'home' : $url;
+        $url = strtolower($url);
+        $url = $this->isAuthenticated($url);
         
         foreach ($this->routes as $route => $action) {
-
+            $route = strtolower($route);
             $pattern = preg_replace('/(:\w+)/', '(\w+)', $route);
             $pattern = '#^' . $pattern . '$#';
 
@@ -64,5 +74,15 @@ class Router
             $url = substr($url, 0, $pos);
         }
         return $url;
+    }
+
+    private function isAuthenticated($url)
+    {
+        return (empty($this->session) && empty($url)) ? 'login' : (!empty($this->session) && empty($url) ? 'home' : $url);
+    }
+
+    private function getSession()
+    {
+        $this->session = isset($_SESSION['user']) && isset($_SESSION['user']['sesion_token']) ? $_SESSION['user'] : null;
     }
 }
