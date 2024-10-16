@@ -4,53 +4,6 @@
 
 Este es un sistema de gestión de condominios desarrollado en PHP, utilizando una arquitectura MVC (Modelo-Vista-Controlador). El sistema permite gestionar información de propietarios, mantenimientos, pagos y otras actividades relacionadas con el administración de un condominio.
 
-## Estructura de Carpetas
-
-├── app/
-│   ├── Components/
-│   │   ├── ButtonComponent.php
-│   │   ├── CardComponent.php
-│   │   ├── ...
-│   │   └── VistaComponent.php
-│   ├── Controllers/
-│   │   ├── BaseController.php
-│   │   └── UserController.php
-│   ├── Documentation/
-│   │   ├── api.php
-│   │   └── index.php
-│   ├── Models/
-│   │   ├── BaseModel.php
-│   │   └── UserModel.php
-│   └── Views/
-│       ├── error/
-│       │   ├── 400.php
-│       │   ├── 403.php
-│       │   ├── 404.php
-│       │   └── 500.php
-│       ├── home/
-│       │   └── home.php
-│       └── user/
-│           └── login/
-│               └── login.php
-├── core/
-│   ├── Database/
-│   │   ├── Connection.php
-│   │   └── Sql/
-│   │       └── BD.sql
-│   ├── ErrorHandler.php
-│   ├── FrontController.php
-│   ├── Router.php
-│   └── logs/
-│       └── error.log
-├── public/
-│   ├── assets/
-│   └── index.php
-├── swagger-ui/
-└── vendor/
-├── .env
-├── .htaccess
-├── README.md
-
 ## Características Principales
 
 - Autenticación de usuarios
