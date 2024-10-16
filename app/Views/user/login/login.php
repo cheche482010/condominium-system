@@ -14,7 +14,8 @@
         ['rel' => 'stylesheet', 'href' => $this->assets . 'plugins/fontawesome-free/css/all.min.css'],
         ['rel' => 'stylesheet', 'href' => $this->assets . 'plugins/icheck-bootstrap/icheck-bootstrap.min.css'],
         ['rel' => 'stylesheet', 'href' => $this->assets . 'css/adminlte.min.css'],
-        ['rel' => 'stylesheet', 'href' => $this->assetsView . "user/login/login.scss"]
+        ['rel' => 'stylesheet', 'href' => $this->assetsView . "user/login/login.scss"],
+        ['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css'],
       ])->view();
     ?>
 </head>
@@ -32,7 +33,7 @@
 
                 <form action="" method="POST">
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input id="email" type="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -40,7 +41,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control password" id="password-field" placeholder="Password">
+                        <input type="password" class="form-control password" id="user_password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text toggle-password">
                                 <span class="fas fa-eye-slash"></span>
@@ -58,7 +59,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="button" class="btn btn-primary btn-block">Sign In</button>
+                            <button id="login" type="button" class="btn btn-primary btn-block">Ingresar</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -84,7 +85,12 @@
         $this->assets . 'plugins/jquery/jquery.min.js',
         $this->assets . 'plugins/bootstrap/js/bootstrap.bundle.min.js',
         $this->assets . 'js/adminlte.min.js',
+        $this->assets . 'js/constants.js',
+        $this->assets . 'js/function.js',
         $this->assetsView . 'user/login/login.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js',
+        'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js',
+        'https://cdn.jsdelivr.net/npm/sweetalert2@11',
       ])->view();
     ?>
 </body>

@@ -73,57 +73,43 @@ $(document).ready(function () {
         return isValid;
     }
 
-    function captureFormData() {
-        const formData = {};
-
-        $('.form-control').each(function (index) {
-            const $input = $(this);
-            const name = $input.attr('id');
-            const value = $input.val();
-            formData[name] = value;
-        });
-
-        return formData;
-    }
-    
     $('#register').click(function (e) {
         e.preventDefault();
         const formData = captureFormData();
         delete formData.retryPassword;
         
-        $.ajax({
-            url: PROJECT_URL + '/api/users/create',
-            method: 'POST',
-            data: {
-                user_data: formData,
-                user_type: false // usuario registrado sin rol
-            },
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-                if (!handleErrorValidate(data) || !handleErrorExisting(data)) {
-                    return; 
+        if (validateForm()) {
+            $.ajax({
+                url: PROJECT_URL + '/api/users/create',
+                method: 'POST',
+                data: {
+                    user_data: formData,
+                    user_type: 0 // usuario registrado sin rol
+                },
+                dataType: 'json',
+                success: function (data) {
+    
+                    if (!handleErrorValidate(data) || !handleErrorExisting(data)) {
+                        return; 
+                    }
+    
+                    Swal.fire({
+                        title: 'Registro Exitoso',
+                        text: 'Se ha registrado el usuario con éxito. Bienvenido a nuestro sistema!',
+                        icon: 'success',
+                        confirmButtonText: 'Continuar'
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error al registrar',
+                        text: 'Ha ocurrido un error al intentar registrarse. Por favor, inténtelo nuevamente.',
+                        icon: 'error'
+                    });
                 }
-
-                Swal.fire({
-                    title: 'Registro Exitoso',
-                    text: 'Se ha registrado el usuario con éxito. Bienvenido a nuestro sistema!',
-                    icon: 'success',
-                    confirmButtonText: 'Continuar'
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Error al registrar',
-                    text: 'Ha ocurrido un error al intentar registrarse. Por favor, inténtelo nuevamente.',
-                    icon: 'error'
-                });
-            }
-        });
-        // if (validateForm()) {
-
-        // }
+            });
+        }
     });
 
 

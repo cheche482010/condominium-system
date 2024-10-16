@@ -153,7 +153,7 @@ class UserController extends BaseController
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
             }
 
-            $existingUser = $this->model->execute('getByEmail', ['email' => $data['email']], 'all');
+            $existingUser = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
             
             if ($existingUser) {
                 return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'Email ya registrado. ', $data["email"]);
@@ -174,7 +174,7 @@ class UserController extends BaseController
             $userId = is_numeric($user) ? ['id' => $user] : null;
 
             if ($result) {
-                $this->respuesta = $this->response(200, true, 'success', 'usuario creado con éxito', $userId);
+                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario creado con éxito', $userId);
             } else {
                 $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el usuario');
             }
@@ -224,20 +224,32 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    public function login()
+    public function auth()
     {
         $this->isPostRequest();
 
-        $data = $this->datos;
+        $data = $this->datos["user_data"];
 
         try {
             $user = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
-            if ($user && password_verify($data['password'], $user['password'])) {
-                $this->initializeSession($user);
-                $this->respuesta = $this->response(200, true, 'success', 'Inicio de sesión exitoso', $user);
-            } else {
-                $this->respuesta = $this->response(401, false, 'error', 'Email o contraseña incorrectos');
+
+            if (!$user) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Email incorrecto. '. $data["email"]);
             }
+
+            $password = $this->securePassword($_ENV["SECURE_KEY"], $data['user_password'], 'codificar');
+
+            if (!$password['success']) {
+                return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error',  ($passwordResult['error'] ?? 'No especificado'));
+            }
+
+            if ($user['user_password'] !== $password['data']) {
+                return $this->response(self::HTTP_UNAUTHORIZED, false, 'error', 'Contraseña incorrecta.' , $data['user_password']);
+            }
+            
+            $this->initializeSession($user);
+            $this->respuesta = $this->response(200, true, 'success', 'Inicio de sesión exitoso', $user);
+
         } catch (\Exception $e) {
             $this->respuesta = $this->response(500, false, 'error', 'Error al iniciar sesión: ' . $e->getMessage());
         }
