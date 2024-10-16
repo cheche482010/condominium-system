@@ -170,9 +170,11 @@ class UserController extends BaseController
             $data['token'] = $this->generateToken($data['nombre'], $data['apellido'], $data['cedula']);
             
             $result = $this->model->execute('createUser', $data, 'create');
-            
+            $user = $this->model->lastInsertId();
+            $userId = is_numeric($user) ? ['id' => $user] : null;
+
             if ($result) {
-                $this->respuesta = $this->response(200, true, 'success', 'usuario creado con éxito');
+                $this->respuesta = $this->response(200, true, 'success', 'usuario creado con éxito', $userId);
             } else {
                 $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el usuario');
             }

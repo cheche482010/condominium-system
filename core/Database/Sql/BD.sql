@@ -6,7 +6,7 @@ CREATE TABLE usuarios (
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     cedula BIGINT NOT NULL UNIQUE,
-    telefono VARCHAR(20) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
     rol VARCHAR(50) NOT NULL,

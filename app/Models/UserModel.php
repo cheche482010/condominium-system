@@ -22,7 +22,7 @@ class UserModel extends BaseModel
 
         $this->sql = [
             'getAll' => "SELECT * FROM usuarios",
-            'getById' => "SELECT * FROM usuarios WHERE id = :id",
+            'getById' => "SELECT (id, nombre, apellido, cedula, phone, email, user_password, rol, token, is_active) FROM usuarios WHERE id = :id",
             'getByEmail' => "SELECT * FROM usuarios WHERE email = :email",
             'createUser' => "INSERT INTO usuarios (nombre, apellido, cedula, phone, email, user_password, rol, token) VALUES (:nombre, :apellido, :cedula, :phone, :email, :user_password, :rol, :token)",
             'update' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email, user_password = :user_password, rol = :rol, token = :token WHERE id = :id",

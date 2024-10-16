@@ -24,4 +24,8 @@ class BaseModel
         return $value;
     }
 
+    public function lastInsertId()
+    {
+        return $this->db->getPdo()->lastInsertId();
+    }
 }

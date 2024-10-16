@@ -1,0 +1,1 @@
+[EXCEPTION] Call to undefined method App\Models\UserModel::lastInsertId() in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\UserController.php on line 173
