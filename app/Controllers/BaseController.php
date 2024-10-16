@@ -19,6 +19,7 @@ class BaseController
     const HTTP_UNAUTHORIZED = 401;
     const HTTP_FORBIDDEN = 403;
     const HTTP_NOT_FOUND = 404;
+    const HTTP_CONFLICT_STATUS_CODE = 409;
     const HTTP_INTERNAL_SERVER_ERROR = 500;
 
     const MSG_SUCCESS = 'Operación realizada con éxito';
@@ -119,7 +120,7 @@ class BaseController
         if ($data !== null) {
             $response['data'] = $data;
         }
-
-        return json_encode($response);
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
 }

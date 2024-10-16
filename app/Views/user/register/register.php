@@ -158,6 +158,8 @@
         $this->assets . 'plugins/jquery/jquery.min.js',
         $this->assets . 'plugins/bootstrap/js/bootstrap.bundle.min.js',
         $this->assets . 'js/adminlte.min.js',
+        $this->assets . 'js/constants.js',
+        $this->assets . 'js/function.js',
         $this->assetsView . 'user/register/register.js',
         'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js',
         'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js',

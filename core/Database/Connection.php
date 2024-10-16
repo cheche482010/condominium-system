@@ -56,7 +56,7 @@ class Connection
             $stmt->execute($params);
             return $stmt;
         } catch (PDOException $e) {
-            die("Error en la consulta: " . $e->getMessage());
+            throw new \Exception("Error en la consulta: " . $e->getMessage(), 0, $e);
         }
     }
 
@@ -64,7 +64,8 @@ class Connection
     public function getResults($sql, $params = [], $fetchOption = "all")
     {
         $stmt = $this->executeQuery($sql, $params);
-       if ($fetchOption === "all") {
+        
+        if ($fetchOption === "all") {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } elseif ($fetchOption === "single") {
             return $stmt->fetch(PDO::FETCH_ASSOC);

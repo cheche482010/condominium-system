@@ -85,28 +85,40 @@ $(document).ready(function () {
 
         return formData;
     }
-
+    
     $('#register').click(function (e) {
         e.preventDefault();
         const formData = captureFormData();
         delete formData.retryPassword;
         
         $.ajax({
-            url: 'http://localhost/www/proyectos/condominium-system/api/users/create',
+            url: PROJECT_URL + '/api/users/create',
             method: 'POST',
             data: {
-                user_data: formData
+                user_data: formData,
+                user_type: false // usuario registrado sin rol
             },
-            success: function (response) {
-                console.log(response)
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                if (!handleErrorValidate(data) || !handleErrorExisting(data)) {
+                    return; 
+                }
+
+                Swal.fire({
+                    title: 'Registro Exitoso',
+                    text: 'Se ha registrado el usuario con éxito. Bienvenido a nuestro sistema!',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                });
             },
             error: function (xhr, status, error) {
+                console.error('Error:', error);
                 Swal.fire({
                     title: 'Error al registrar',
                     text: 'Ha ocurrido un error al intentar registrarse. Por favor, inténtelo nuevamente.',
                     icon: 'error'
                 });
-                console.log(error)
             }
         });
         // if (validateForm()) {

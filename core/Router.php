@@ -38,7 +38,7 @@ class Router
         $url = $this->isAuthenticated($url);
         
         foreach ($this->routes as $route => $action) {
-
+            $route = strtolower($route);
             $pattern = preg_replace('/(:\w+)/', '(\w+)', $route);
             $pattern = '#^' . $pattern . '$#';
 

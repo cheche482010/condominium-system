@@ -34,13 +34,11 @@ class Validator
                         $this->$methodName($field, $data[$field] ?? null);
                     }
                 }
-
-        
-                if (strpos($rule, 'regex:') === 0) {
-                    $patternKey = substr($rule, 6);
-                    $this->validateRegex($field, $data[$field] ?? null, $patternKey);
-                }
-
+            }
+            
+            if (strpos($rule, 'regex:') === 0) {
+                $patternKey = substr($rule, 6);
+                $this->validateRegex($field, $data[$field] ?? null, $patternKey);
             }
         }
         return $this->errors;
@@ -69,13 +67,14 @@ class Validator
 
     public function validateRegex($field, $value, $patternKey)
     {
-        if (array_key_exists($patternKey, $this->patterns)) {
-            $pattern = $this->patterns[$patternKey];
-            if (!preg_match($pattern, $value)) {
-                $this->errors[$field][] = "$field no tiene el formato correcto según el patrón '$patternKey'.";
-            }
-        } else {
+        if (!array_key_exists($patternKey, $this->patterns)) {
             $this->errors[$field][] = "Patrón '$patternKey' no definido.";
+            return; 
+        }
+        
+        $pattern = $this->patterns[$patternKey];
+        if (!preg_match($pattern, $value)) {
+            $this->errors[$field][] = "$field no tiene el formato correcto según el patrón '$patternKey'.";
         }
     }
 }
