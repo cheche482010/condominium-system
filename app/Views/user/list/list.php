@@ -87,7 +87,7 @@
         <!-- /.footer -->
     </div>
     <!-- ./wrapper -->
-    <?php include __DIR__ . "/..//../includes/script.php"; ?>
+    <?php include __DIR__ . "/../../includes/script.php"; ?>
 
     <script src="<?= $this->assetsView; ?>user/list/list.js"></script>
 </body>
