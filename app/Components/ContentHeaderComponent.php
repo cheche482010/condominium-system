@@ -16,7 +16,7 @@ class ContentHeaderComponent extends Component
 
     public function view()
     {
-        echo "<div class='ontent-header'>";
+        echo "<div class='content-header'>";
         echo "\n\t\t\t\t<div class=\"container-fluid\">";
         echo "\n\t\t\t\t\t<div class=\"row mb-2\">";
         echo "\n\t\t\t\t\t\t<div class=\"col-sm-6\">";

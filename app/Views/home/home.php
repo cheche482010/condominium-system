@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
+    
 <head>
     <?php include __DIR__ . "/../includes/meta.php"; ?>
     <title><?= $this->config->get('APP_NAME'); ?></title>
@@ -78,7 +78,7 @@
         </div>
         <!-- /.content-wrapper -->  
 
-         <!-- Footer -->
+        <!-- Footer -->
          <?php include __DIR__ . "/../includes/footer.php"; ?>
         <!-- /.footer -->
     </div>

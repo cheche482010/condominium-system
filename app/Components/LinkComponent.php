@@ -19,7 +19,7 @@ class LinkComponent extends Component
             foreach ($link as $attribute => $value) {
                 echo $attribute . '="' . $value . '" ';
             }
-            echo ">";
+            echo ">\n";
         }
     }
 }

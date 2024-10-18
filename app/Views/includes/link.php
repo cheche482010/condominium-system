@@ -9,3 +9,6 @@
         ['rel' => 'stylesheet', 'href' => 'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'],
     ])->view();
 ?>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    
