@@ -15,11 +15,11 @@ class LinkComponent extends Component
     public function view()
     {
         foreach ($this->links as $link) {
-            echo "\t<link ";
+            echo "\n\t<link ";
             foreach ($link as $attribute => $value) {
                 echo $attribute . '="' . $value . '" ';
             }
-            echo ">\n";
+            echo ">";
         }
     }
 }
