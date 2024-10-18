@@ -20,10 +20,42 @@
       ['rel' => 'stylesheet', 'href' => $this->assetsView . "user/list/list.scss"],
     ])->view();
   ?>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </link>
     <!-- DataTables CSS -->
-    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    </link>
+    <!-- DataTables Buttons CSS -->
+    <link href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    </link>
 
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js">
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+    </script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js">
+    </script>
+    <!-- DataTables Buttons JS -->
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js">
+    </script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js">
+    </script>
 </head>
 
 <body class="layout-navbar-fixed accent-primary layout-footer-fixed layout-fixed sidebar-mini sidebar-collapse">
@@ -171,7 +203,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <table id="userTable" class="table table-hover table-bordered" style="width:100%">
+                            <table class="table table-striped table-bordered" id="example" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -182,10 +214,82 @@
                                         <th>Email</th>
                                         <th>Rol</th>
                                         <th>Is Active</th>
-                                        <th>Created At</th>
-                                        <th>Updated At</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    <script>
+                                    $(document).ready(function() {
+
+                                        var table = createDataTable('#example', {
+                                                url: PROJECT_URL + '/api/user/getAll',
+                                            },
+                                            [{
+                                                    data: 'id'
+                                                },
+                                                {
+                                                    data: 'cedula'
+                                                },
+                                                {
+                                                    data: 'nombre'
+                                                },
+                                                {
+                                                    data: 'apellido'
+                                                },
+                                                {
+                                                    data: 'phone'
+                                                },
+                                                {
+                                                    data: 'email'
+                                                },
+                                                {
+                                                    data: 'rol'
+                                                },
+                                                {
+                                                    data: 'is_active'
+                                                }, {
+                                                    data: null,
+                                                    className: 'no-print',
+                                                    render: function(data, type, row) {
+                                                        return '<button class="btn btn-warning btn-edit">Edit</button>' +
+                                                            ' <button class="btn btn-danger btn-delete">Delete</button>';
+                                                    }
+                                                }
+                                         ]);
+
+                                        // Edit button click handler
+                                        $('#example tbody').on('click', '.btn-edit', function() {
+                                            var data = table.row($(this).parents('tr')).data();
+                                            alert('Edit User ID: ' + data.userId + ', ID: ' + data.id);
+                                            // Implement your edit logic here
+                                            table.ajax.reload(null, false);
+                                        });
+
+                                        // Delete button click handler
+                                        $('#example tbody').on('click', '.btn-delete', function() {
+                                            var row = table.row($(this).parents('tr'));
+                                            var data = row.data();
+                                            if (confirm('Are you sure you want to delete this row?')) {
+                                                // Implement your delete logic here (e.g., send an AJAX request to delete the record)
+                                                row.remove().draw(); // Remove row from the DataTable
+                                            }
+                                        });
+                                    });
+                                    </script>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Last Name</th>
+                                        <th>CI</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Rol</th>
+                                        <th>Is Active</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -216,7 +320,6 @@
 
     <?php 
         $this->Script([
-        $this->assets . 'plugins/jquery/jquery.min.js',
         $this->assets . 'plugins/jquery-ui/jquery-ui.min.js',
         $this->assets . 'plugins/bootstrap/js/bootstrap.bundle.min.js',
         $this->assets . 'plugins/chart.js/Chart.min.js',
@@ -231,90 +334,6 @@
         $this->assets . 'js/function.js',
         ])->view(); 
     ?>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-
 </body>
 
 </html>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- DataTables -->
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
-
-<script>
-$(document).ready(function() {
-
-    // Initialize DataTable with AJAX
-    $('#userTable').DataTable({
-        ajax: PROJECT_URL + '/api/user/getAll',
-        columns: [{
-                data: 'id'
-            },
-            {
-                data: 'nombre'
-            },
-            {
-                data: 'apellido'
-            },
-            {
-                data: 'cedula'
-            },
-            {
-                data: 'phone'
-            },
-            {
-                data: 'email'
-            },
-            {
-                data: 'rol'
-            },
-            {
-                data: 'is_active'
-            },
-            {
-                data: 'created_at'
-            },
-            {
-                data: 'updated_at'
-            }
-        ],
-        columnDefs: [{
-                targets: '_all',
-                orderable: true
-            },
-            {
-                className: 'text-center',
-                targets: '_all'
-            }
-        ],
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-        },
-        responsive: true,
-        scrollX: true,
-        scrollY: '400px',
-        scrollCollapse: true,
-        paging: true,
-        info: true,
-        autoWidth: false,
-        dom: 'Blfrtip',
-        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-        ordering: true,
-        processing: true,
-        pageLength: 10,
-        lengthMenu: [5, 10, 20, 30, 40, 50, 100]
-    });
-
-    // Handle server-side processing
-    $('#userTable').on('processing.dt', function(e, settings, processing) {
-        if (processing) {
-            $(this).find('.dataTables_processing').addClass(
-                'd-flex justify-content-center align-items-center');
-        } else {
-            $(this).find('.dataTables_processing').removeClass(
-                'd-flex justify-content-center align-items-center');
-        }
-    });
-});
-</script>
