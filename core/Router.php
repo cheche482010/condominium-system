@@ -19,7 +19,7 @@ class Router
         $this->error = new ErrorController();
 
         $this->routes = [
-            'home'           => 'HomeController@index',
+            'home'           => 'HomeController@renderView|home',
             'login'          => 'UserController@renderView|login',
             'register'       => 'UserController@renderView|register',
             'list'           => 'UserController@renderView|list',

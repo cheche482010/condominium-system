@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use Core\BaseModel;
+use Core\Config;
+use App\Controllers\ErrorController;
 
 class BaseController
 {
@@ -11,6 +13,9 @@ class BaseController
     protected $assets;
     protected $assetsView;
     protected $components = [];
+    protected $session;
+    protected $error;
+
     public $config;
 
     const HTTP_OK = 200;
@@ -34,7 +39,9 @@ class BaseController
         $this->validator = new $validator();
         $this->assets = $this->Assets();
         $this->assetsView = $this->assetsView();
-        $this->config = new \Core\Config();
+        $this->config = new Config();
+        $this->session = $_SESSION;
+        $this->error = new ErrorController();
     }
 
     protected function createComponent($className, $data = [])
@@ -123,4 +130,13 @@ class BaseController
         header('Content-Type: application/json');
         echo json_encode($response);
     }
+
+    public function handleIsUserLoggedIn(): void
+    {
+        if (!isset($this->session['user']) || empty($this->session['user'])) {
+            $this->error->_403_(); 
+            exit();
+        }
+    }
+
 }
