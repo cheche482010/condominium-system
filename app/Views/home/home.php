@@ -3,19 +3,8 @@
 
 <head>
     <?php include __DIR__ . "/../includes/meta.php"; ?>
-
     <title><?= $this->config->get('APP_NAME'); ?></title>
-    <?php 
-    $this->Link([
-        ['rel' => 'icon', 'href' => $this->assets . 'img/'. $this->config::LOGO, 'type' => 'image/x-icon'],
-        ['rel' => 'stylesheet', 'href' => $this->assets . 'plugins/fontawesome-free/css/all.min.css'],
-        ['rel' => 'stylesheet', 'href' => $this->assets . 'css/adminlte.min.css'],
-        ['rel' => 'stylesheet', 'href' => $this->assets . 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css'],
-        ['rel' => 'stylesheet', 'href' => $this->assets . "scss/style.scss"],
-        ['rel' => 'stylesheet', 'href' => 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'],
-        ['rel' => 'stylesheet', 'href' => 'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'],
-    ])->view();
-    ?>
+    <?php include __DIR__ . "/../includes/link.php"; ?>
 </head>
 
 <body class="layout-navbar-fixed accent-primary layout-footer-fixed layout-fixed sidebar-mini sidebar-collapse">
@@ -94,16 +83,7 @@
         <!-- /.footer -->
     </div>
     <!-- ./wrapper -->
-    <?php 
-        $this->Script([
-        $this->assets . 'plugins/jquery/jquery.min.js',
-        $this->assets . 'plugins/jquery-ui/jquery-ui.min.js',
-        $this->assets . 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
-        $this->assets . 'js/adminlte.js',
-        $this->assets . 'js/constants.js',
-        $this->assets . 'js/function.js',
-        ])->view(); 
-    ?> 
+    <?php include __DIR__ . "/../includes/script.php"; ?>
 </body>
 
 </html>
