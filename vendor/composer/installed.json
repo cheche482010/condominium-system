@@ -956,6 +956,6 @@
             "install-path": "../zircote/swagger-php"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }

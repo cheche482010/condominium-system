@@ -27,6 +27,8 @@ class Router
             'users/auth'     => 'UserController@auth',
             'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
+            'condominio/list' => 'CondominiumController@renderView|list',
+            'condominio/register' => 'CondominiumController@renderView|register',
         ];
 
         $this->getSession();

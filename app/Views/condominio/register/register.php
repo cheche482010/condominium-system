@@ -23,7 +23,7 @@
 
 <body class="hold-transition register-page">
 
-
+<h1>Registro de Condominio</h1>
     <?php
       $this->Script([
         $this->assets . 'plugins/jquery/jquery.min.js',
