@@ -94,6 +94,124 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/user/getAllPaginated",
+     *     summary="Obtener usuarios paginados",
+     *     description="Retorna una lista paginada de usuarios con información de paginación",
+     *     tags={"User"},
+     *     @OA\Parameter(
+     *         name="perPage",
+     *         in="query",
+     *         required=false,
+     *         description="Número de items por página",
+     *         @OA\Schema(
+     *             type="integer",
+     *             default=10
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         required=false,
+     *         description="Número de la página actual",
+     *         @OA\Schema(
+     *             type="integer",
+     *             default=1
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="details",
+     *         in="query",
+     *         required=false,
+     *         description="Indica si se desea mostrar detalles de paginación",
+     *         @OA\Schema(
+     *             type="boolean",
+     *             default=false
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Éxito",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 schema=@OA\Schema(
+     *                     type="object",
+     *                     properties={
+     *                         @OA\Property(property="items", type="array", items=@OA\Items(ref="#/components/schemas/User")),
+     *                         @OA\Property(property="pagination", type="object", properties={
+     *                             @OA\Property(property="currentPage", type="integer"),
+     *                             @OA\Property(property="totalPages", type="integer"),
+     *                             @OA\Property(property="itemsPerPage", type="integer"),
+     *                             @OA\Property(property="totalItems", type="integer")
+     *                         })
+     *                     }
+     *                 )
+     *             )
+     *         }
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Error de validación",
+     *         content={
+     *             @OA\MediaType(mediaType="application/json", schema=@OA\Schema(type="object"))
+     *         }
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error interno del servidor",
+     *         content={
+     *             @OA\MediaType(mediaType="application/json", schema=@OA\Schema(type="object"))
+     *         }
+     *     )
+     * )
+     */  
+    public function getAllPaginated()
+    {
+        $this->isGetRequest();
+
+        $perPage = isset($_GET['perPage']) ? (int)$_GET['perPage'] : 10; 
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $details = isset($_GET['details']) ? filter_var($_GET['details'], FILTER_VALIDATE_BOOLEAN) : false;
+
+        try {
+            if ($page < 1 || $perPage < 1) {
+                throw new \InvalidArgumentException("Invalid page or perPage value");
+            }
+            
+            $offset = ($page - 1) * $perPage;
+
+            $totalItems = $this->model->execute('getCount', 'single');
+            $totalPages = ceil($totalItems / $perPage);
+
+            $data = $this->model->execute('getAllPaginated', [
+                'limit' => $perPage,
+                'offset' => $offset
+            ]);
+
+            if ($details) {
+                $response = [
+                    'items' => $data,
+                    'pagination' => [
+                        'currentPage' => $page,
+                        'totalPages' => $totalPages,
+                        'itemsPerPage' => $perPage,
+                        'totalItems' => $totalItems
+                    ]
+                ];
+            } else {
+                $response = $data; 
+            }
+
+            $this->respuesta = $this->response(200, true, 'success', 'Usuarios obtenidos con éxito', $response);
+        } catch (\Exception $e) {
+            $this->respuesta = $this->response(500, false, 'error', 'Error al obtener los usuarios: ' . $e->getMessage());
+        }
+
+        return $this->respuesta;
+    }
+
     public function getById($id)
     {
         $this->isGetRequest();
