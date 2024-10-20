@@ -265,7 +265,7 @@ class UserController extends BaseController
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Error al sanitizar datos');
             }
 
-            $validateData = $this->validateUserData($data);
+            $validateData = $this->validateData($data);
             
             if ($validateData) {
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
@@ -384,7 +384,7 @@ class UserController extends BaseController
         return $this->response(200, true, 'success', 'Cierre de sesión exitoso');
     }
 
-    private function validateUserData($data)
+    private function validateData($data)
     {
 
         $rules = [

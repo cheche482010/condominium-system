@@ -37,7 +37,7 @@ class CondominiumController extends BaseController
         $this->isPutRequest();
     }
 
-    private function validateCondominiumData($data)
+    private function validateData($data)
     {
 
         $rules = [
