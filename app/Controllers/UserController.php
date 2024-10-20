@@ -6,7 +6,12 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(title="Condominium System", version="0.1")
+ * @OA\Server(
+ *     url="http://localhost/www/condominium-system",
+ *     description="Servidor Local"
+ * )
  */
+
 class UserController extends BaseController
 {
     private $datos;
@@ -94,79 +99,6 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/user/getAllPaginated",
-     *     summary="Obtener usuarios paginados",
-     *     description="Retorna una lista paginada de usuarios con información de paginación",
-     *     tags={"User"},
-     *     @OA\Parameter(
-     *         name="perPage",
-     *         in="query",
-     *         required=false,
-     *         description="Número de items por página",
-     *         @OA\Schema(
-     *             type="integer",
-     *             default=10
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="page",
-     *         in="query",
-     *         required=false,
-     *         description="Número de la página actual",
-     *         @OA\Schema(
-     *             type="integer",
-     *             default=1
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="details",
-     *         in="query",
-     *         required=false,
-     *         description="Indica si se desea mostrar detalles de paginación",
-     *         @OA\Schema(
-     *             type="boolean",
-     *             default=false
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Éxito",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 schema=@OA\Schema(
-     *                     type="object",
-     *                     properties={
-     *                         @OA\Property(property="items", type="array", items=@OA\Items(ref="#/components/schemas/User")),
-     *                         @OA\Property(property="pagination", type="object", properties={
-     *                             @OA\Property(property="currentPage", type="integer"),
-     *                             @OA\Property(property="totalPages", type="integer"),
-     *                             @OA\Property(property="itemsPerPage", type="integer"),
-     *                             @OA\Property(property="totalItems", type="integer")
-     *                         })
-     *                     }
-     *                 )
-     *             )
-     *         }
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Error de validación",
-     *         content={
-     *             @OA\MediaType(mediaType="application/json", schema=@OA\Schema(type="object"))
-     *         }
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Error interno del servidor",
-     *         content={
-     *             @OA\MediaType(mediaType="application/json", schema=@OA\Schema(type="object"))
-     *         }
-     *     )
-     * )
-     */  
     public function getAllPaginated()
     {
         $this->isGetRequest();
