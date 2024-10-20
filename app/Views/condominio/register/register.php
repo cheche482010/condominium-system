@@ -6,7 +6,7 @@
     <title><?= $this->config->get('APP_NAME'); ?></title>
     <?php include __DIR__ . "/../../includes/link.php"; ?>
 
-    <link href="<?= $this->assetsView; ?>condominio/list/list.scss" rel="stylesheet">
+    <link href="<?= $this->assetsView; ?>condominio/register/register.scss" rel="stylesheet">
     <?php include __DIR__ . "/../../includes/data-table.php"; ?>
 </head>
 
@@ -60,7 +60,7 @@
     <!-- ./wrapper -->
     <?php include __DIR__ . "/../../includes/script.php"; ?>
 
-    <script src="<?= $this->assetsView; ?>condominio/list/list.js"></script>
+    <script src="<?= $this->assetsView; ?>condominio/register/register.js"></script>
 </body>
 
 </html>
