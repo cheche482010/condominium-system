@@ -7,7 +7,7 @@ class ErrorController
     private function handleErrorCode($statusCode)
     {
         try {
-            $filePath = __DIR__ . "/../Views/error/$statusCode.php";
+            $filePath = __DIR__ . "/../Views/error/$statusCode/$statusCode.php";
             http_response_code($statusCode);
             require $filePath;
         } catch (\Exception $e) {
