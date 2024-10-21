@@ -80,7 +80,7 @@ $(document).ready(function () {
         
         if (validateForm()) {
             $.ajax({
-                url: PROJECT_URL + '/api/users/create',
+                url: PROJECT_URL + '/api/user/create',
                 method: 'POST',
                 data: {
                     user_data: formData,

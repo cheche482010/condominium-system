@@ -2,11 +2,6 @@
 
 namespace App\Controllers;
 
-use OpenApi\Annotations as OA;
-
-/**
- * @OA\Info(title="Condominium System", version="0.1")
- */
 class UserController extends BaseController
 {
     private $datos;
@@ -70,17 +65,6 @@ class UserController extends BaseController
         ];
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/user/getAll",
-     *     summary="Obtener todos los usuarios",
-     *     description="Devuelve una lista completa de todos los usuarios registrados.",
-     *     tags={"User"},
-     *     @OA\Response(response=200, description="Éxito"),
-     *     @OA\Response(response=404, description="No hay usuarios encontrados"),
-     *     @OA\Response(response=500, description="Error interno del servidor")
-     * )
-     */
     public function getAll()
     {
         $this->isGetRequest();
@@ -94,79 +78,6 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/user/getAllPaginated",
-     *     summary="Obtener usuarios paginados",
-     *     description="Retorna una lista paginada de usuarios con información de paginación",
-     *     tags={"User"},
-     *     @OA\Parameter(
-     *         name="perPage",
-     *         in="query",
-     *         required=false,
-     *         description="Número de items por página",
-     *         @OA\Schema(
-     *             type="integer",
-     *             default=10
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="page",
-     *         in="query",
-     *         required=false,
-     *         description="Número de la página actual",
-     *         @OA\Schema(
-     *             type="integer",
-     *             default=1
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="details",
-     *         in="query",
-     *         required=false,
-     *         description="Indica si se desea mostrar detalles de paginación",
-     *         @OA\Schema(
-     *             type="boolean",
-     *             default=false
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Éxito",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 schema=@OA\Schema(
-     *                     type="object",
-     *                     properties={
-     *                         @OA\Property(property="items", type="array", items=@OA\Items(ref="#/components/schemas/User")),
-     *                         @OA\Property(property="pagination", type="object", properties={
-     *                             @OA\Property(property="currentPage", type="integer"),
-     *                             @OA\Property(property="totalPages", type="integer"),
-     *                             @OA\Property(property="itemsPerPage", type="integer"),
-     *                             @OA\Property(property="totalItems", type="integer")
-     *                         })
-     *                     }
-     *                 )
-     *             )
-     *         }
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Error de validación",
-     *         content={
-     *             @OA\MediaType(mediaType="application/json", schema=@OA\Schema(type="object"))
-     *         }
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Error interno del servidor",
-     *         content={
-     *             @OA\MediaType(mediaType="application/json", schema=@OA\Schema(type="object"))
-     *         }
-     *     )
-     * )
-     */  
     public function getAllPaginated()
     {
         $this->isGetRequest();
@@ -225,32 +136,6 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    /**
-     * @OA\Post(
-     *     path="/api/user/register",
-     *     summary="Register new user",
-     *     description="Creates a new user account.",
-     *     tags={"User"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="nombre", type="string", description="Nombre"),
-     *             @OA\Property(property="apellido", type="string", description="Apellido"),
-     *             @OA\Property(property="cedula", type="integer", description="Número de cédula"),
-     *             @OA\Property(property="telefono", type="string", description="Teléfono"),
-     *             @OA\Property(property="email", type="string", description="Correo electrónico"),
-     *             @OA\Property(property="user_password", type="string", description="Contraseña"),
-     *             @OA\Property(property="rol", type="string", description="Rol del usuario"),
-     *             @OA\Property(property="token", type="string", description="Indentificador de Usuario")
-     *         )
-     *     ),
-     *     @OA\Response(response=200, description="Usuario creado exitosamente"),
-     *     @OA\Response(response=400, description="Error de validación"),
-     *     @OA\Response(response=409, description="Email ya registrado"),
-     *     @OA\Response(response=500, description="Error interno del servidor")
-     * )
-     */
     public function create()
     {
         $this->isPostRequest();
@@ -265,7 +150,7 @@ class UserController extends BaseController
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Error al sanitizar datos');
             }
 
-            $validateData = $this->validateUserData($data);
+            $validateData = $this->validateData($data);
             
             if ($validateData) {
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
@@ -384,7 +269,7 @@ class UserController extends BaseController
         return $this->response(200, true, 'success', 'Cierre de sesión exitoso');
     }
 
-    private function validateUserData($data)
+    private function validateData($data)
     {
 
         $rules = [

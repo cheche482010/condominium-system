@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use OpenApi\Annotations as OA;
 
-class CondominiumController extends BaseController
+class PagoController extends BaseController
 {
     private $datos;
     private $respuesta;
@@ -52,7 +52,7 @@ class CondominiumController extends BaseController
     public function renderView($viewName)
     {
         try {
-            require __DIR__ . "/../Views/condominio/{$viewName}/{$viewName}.php";
+            require __DIR__ . "/../Views/pago/{$viewName}/{$viewName}.php";
         } catch (\Exception $e) {
             throw new \Exception('Error al cargar la vista: ' . $e->getMessage());
         }

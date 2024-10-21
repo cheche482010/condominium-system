@@ -1,0 +1,200 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Sistema API de Condominios",
+      "version": "1.0.0",
+      "description": "Documentación API para la aplicación Sistema de Condominios"
+    },
+    "servers": [
+      {
+        "url": "http://localhost/www/condominium-system/api/",
+        "description": "Servidor local"
+      }
+    ],
+    "tags": [
+      {
+        "name": "User",
+        "description": "Operaciones relacionadas con la gestión de usuarios"
+      },
+      {
+        "name": "Condominio",
+        "description": "Operaciones relacionadas con la gestión de condominios"
+      }
+    ],
+    "paths": {
+      "/user/getAll": {
+        "get": {
+          "summary": "Obtener todos los usuarios",
+          "description": "Recuperar una lista de todos los usuarios registrados",
+          "tags": [
+            "User"
+          ],
+          "responses": {
+            "200": {
+              "description": "Operación exitosa"
+            },
+            "404": {
+              "description": "No se encontraron usuarios"
+            },
+            "500": {
+              "description": "Error interno del servidor"
+            }
+          }
+        }
+      },
+      "/user/create": {
+        "post": {
+          "summary": "Crear nuevo usuario",
+          "description": "Crear un nuevo registro de cuenta de usuario",
+          "tags": [
+            "User"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario creado exitosamente"
+            },
+            "400": {
+              "description": "Error de validación"
+            },
+            "409": {
+              "description": "Correo electrónico ya registrado"
+            },
+            "500": {
+              "description": "Error interno del servidor"
+            }
+          }
+        }
+      },
+      "/condominio/getAll": {
+        "get": {
+          "summary": "Obtener todos los condominios",
+          "description": "Recuperar una lista de todos los condominios registrados",
+          "tags": [
+            "Condominio"
+          ],
+          "responses": {
+            "200": {
+              "description": "Operación exitosa"
+            },
+            "404": {
+              "description": "No se encontraron condominios"
+            },
+            "500": {
+              "description": "Error interno del servidor"
+            }
+          }
+        }
+      },
+      "/condominio/create": {
+        "post": {
+          "summary": "Crear nuevo condominio",
+          "description": "Crear un nuevo registro de condominio",
+          "tags": [
+            "Condominio"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Condominio"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Condominio creado exitosamente"
+            },
+            "400": {
+              "description": "Error de validación"
+            },
+            "500": {
+              "description": "Error interno del servidor"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "nombre": {
+              "type": "string",
+              "description": "Nombre"
+            },
+            "apellido": {
+              "type": "string",
+              "description": "Apellido"
+            },
+            "cedula": {
+              "type": "integer",
+              "description": "Número de identificación"
+            },
+            "telefono": {
+              "type": "string",
+              "description": "Número telefónico"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "Dirección de correo electrónico"
+            },
+            "user_password": {
+              "type": "string",
+              "description": "Contraseña del usuario"
+            },
+            "rol": {
+              "type": "string",
+              "enum": ["admin", "user"],
+              "description": "Rol del usuario"
+            },
+            "token": {
+              "type": "string",
+              "description": "Token del usuario"
+            }
+          },
+          "required": ["nombre", "apellido", "cedula", "email", "user_password"]
+        },
+        "Condominio": {
+          "type": "object",
+          "properties": {
+            "nombre": {
+              "type": "string",
+              "description": "Nombre del condominio"
+            },
+            "direccion": {
+              "type": "string",
+              "description": "Dirección del condominio"
+            },
+            "ciudad": {
+              "type": "string",
+              "description": "Ciudad"
+            },
+            "pais": {
+              "type": "string",
+              "description": "País"
+            },
+            "codigoPostal": {
+              "type": "string",
+              "description": "Código postal"
+            }
+          },
+          "required": ["nombre", "direccion", "ciudad", "pais", "codigoPostal"]
+        }
+      }
+    }
+  }
+  

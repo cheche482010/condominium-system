@@ -6,7 +6,7 @@
     <title><?= $this->config->get('APP_NAME'); ?></title>
     <?php include __DIR__ . "/../../includes/link.php"; ?>
 
-    <link href="<?= $this->assetsView; ?>condominio/register/register.scss" rel="stylesheet">
+    <link href="<?= $this->assetsView; ?>cobranza/register/register.scss" rel="stylesheet">
     <?php include __DIR__ . "/../../includes/data-table.php"; ?>
 </head>
 
@@ -29,7 +29,7 @@
                 'titulo' =>  $this->config->get('APP_NAME'),  
                 'links' => [
                     ['label' =>  $this->config->get('APP_NAME'), 'url' => '#','active' => true],
-                    ['label' => 'Registrar', 'url' => 'javascript::void(0)'],
+                    ['label' => 'Listar', 'url' => 'javascript::void(0)'],
                 ],
             ])->view();
             ?>
@@ -60,7 +60,7 @@
     <!-- ./wrapper -->
     <?php include __DIR__ . "/../../includes/script.php"; ?>
 
-    <script src="<?= $this->assetsView; ?>condominio/register/register.js"></script>
+    <script src="<?= $this->assetsView; ?>cobranza/register/register.js"></script>
 </body>
 
 </html>
