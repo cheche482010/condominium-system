@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use OpenApi\Annotations as OA;
 
-class CondominiumController extends BaseController
+class CondominioController extends BaseController
 {
     private $datos;
     private $respuesta;

@@ -15,7 +15,9 @@ class BaseController
     protected $components = [];
     protected $session;
     protected $error;
-
+    protected $expectedApiKey;
+    protected $secretToken; 
+    
     public $config;
 
     const HTTP_OK = 200;
