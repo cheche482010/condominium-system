@@ -45,7 +45,7 @@ class Connection
             );
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            die("Error de conexión: " . $e->getMessage());
+            throw new \Exception("Error de conexión: " . $e->getMessage());
         }
 
     }

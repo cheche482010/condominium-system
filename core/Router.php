@@ -67,7 +67,11 @@ class Router
             }
         }
 
-        $this->error->_404_();
+        if ($this->isApiRequest()) {
+            $this->sendApiNotFoundResponse();
+        } else {
+            $this->error->_404_();
+        }
     }
 
     private function removeQueryString($url)
@@ -86,5 +90,24 @@ class Router
     private function getSession()
     {
         $this->session = isset($_SESSION['user']) && isset($_SESSION['user']['sesion_token']) ? $_SESSION['user'] : null;
+    }
+
+    private function isApiRequest()
+    {
+        return strpos($_GET['url'], 'api/') === 0;
+    }
+
+    private function sendApiNotFoundResponse()
+    {
+        http_response_code(404);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'code' => 404,
+            'status' => false,
+            'type' => 'error',
+            'message' => 'API endpoint not found',
+            'data' => null
+        ]);
+        exit();
     }
 }

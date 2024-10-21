@@ -15,7 +15,9 @@ class BaseController
     protected $components = [];
     protected $session;
     protected $error;
-
+    protected $expectedApiKey;
+    protected $secretToken; 
+    
     public $config;
 
     const HTTP_OK = 200;
@@ -203,4 +205,18 @@ class BaseController
         }
         return true;
     }
+
+    public function validateShortcode()
+    {
+        $shortcode = $_SERVER['HTTP_SHORTCODE'] ?? null;
+
+        if (!$shortcode) {
+            http_response_code(self::HTTP_BAD_REQUEST);
+            $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Shortcode is required.');
+            return false; 
+        }
+
+        return true; 
+    }
+
 }

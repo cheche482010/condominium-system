@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class CondominiumModel extends BaseModel
+class CondominioModel extends BaseModel
 {
     public string $id; 
     public string $nombre; 
