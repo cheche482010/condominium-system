@@ -19,12 +19,13 @@ class Router
         $this->error = new ErrorController();
 
         $this->routes = [
-            'home'           => 'HomeController@renderView|home',
+            'swagger'        => 'RouterController@swgger',
+            'home'           => 'RouterController@renderView|home',
             'login'          => 'UserController@renderView|login',
             'register'       => 'UserController@renderView|register',
             'list'           => 'UserController@renderView|list',
-            'user/create'   => 'UserController@create',
-            'user/auth'     => 'UserController@auth',
+            'user/create'    => 'UserController@create',
+            'user/auth'      => 'UserController@auth',
             'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
         ];

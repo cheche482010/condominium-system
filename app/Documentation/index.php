@@ -21,6 +21,10 @@
       margin: 0;
       background: #fafafa;
     }
+
+    .swagger-container .swagger-ui {
+      margin-inline: 5%;
+    }
   </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css" />
     <link rel="icon" type="image/x-icon" href="https://static-00.iconduck.com/assets.00/swagger-icon-2048x2048-563qbzey.png">
@@ -32,12 +36,8 @@
     
     <script>
         window.onload = function() {
-          const BASE_URL = window.location.origin;
-          const PATH_BASE = window.location.pathname.replace(/\/[^/]+$/, '');
-          const PROJECT_URL = BASE_URL + PATH_BASE;
-
             const ui = SwaggerUIBundle({
-                url: PROJECT_URL+"/api.json", 
+                url: "<?= $this->getFullUrl(); ?>/app/Documentation/api.json", 
                 dom_id: '#swagger-ui',
                 presets: [
                     SwaggerUIBundle.presets.apis,
