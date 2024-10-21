@@ -2,16 +2,6 @@
 
 namespace App\Controllers;
 
-use OpenApi\Annotations as OA;
-
-/**
- * @OA\Info(title="Condominium System", version="0.1")
- * @OA\Server(
- *     url="http://localhost/www/condominium-system",
- *     description="Servidor Local"
- * )
- */
-
 class UserController extends BaseController
 {
     private $datos;
@@ -75,17 +65,6 @@ class UserController extends BaseController
         ];
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/user/getAll",
-     *     summary="Obtener todos los usuarios",
-     *     description="Devuelve una lista completa de todos los usuarios registrados.",
-     *     tags={"User"},
-     *     @OA\Response(response=200, description="Éxito"),
-     *     @OA\Response(response=404, description="No hay usuarios encontrados"),
-     *     @OA\Response(response=500, description="Error interno del servidor")
-     * )
-     */
     public function getAll()
     {
         $this->isGetRequest();
@@ -157,32 +136,6 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    /**
-     * @OA\Post(
-     *     path="/api/user/register",
-     *     summary="Register new user",
-     *     description="Creates a new user account.",
-     *     tags={"User"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="nombre", type="string", description="Nombre"),
-     *             @OA\Property(property="apellido", type="string", description="Apellido"),
-     *             @OA\Property(property="cedula", type="integer", description="Número de cédula"),
-     *             @OA\Property(property="telefono", type="string", description="Teléfono"),
-     *             @OA\Property(property="email", type="string", description="Correo electrónico"),
-     *             @OA\Property(property="user_password", type="string", description="Contraseña"),
-     *             @OA\Property(property="rol", type="string", description="Rol del usuario"),
-     *             @OA\Property(property="token", type="string", description="Indentificador de Usuario")
-     *         )
-     *     ),
-     *     @OA\Response(response=200, description="Usuario creado exitosamente"),
-     *     @OA\Response(response=400, description="Error de validación"),
-     *     @OA\Response(response=409, description="Email ya registrado"),
-     *     @OA\Response(response=500, description="Error interno del servidor")
-     * )
-     */
     public function create()
     {
         $this->isPostRequest();

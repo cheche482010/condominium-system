@@ -23,8 +23,8 @@ class Router
             'login'          => 'UserController@renderView|login',
             'register'       => 'UserController@renderView|register',
             'list'           => 'UserController@renderView|list',
-            'users/create'   => 'UserController@create',
-            'users/auth'     => 'UserController@auth',
+            'user/create'   => 'UserController@create',
+            'user/auth'     => 'UserController@auth',
             'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
         ];
