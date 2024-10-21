@@ -21,6 +21,7 @@ class Router
         $this->routes = [
             'swagger'        => 'RouterController@swgger',
             'home'           => 'RouterController@renderView|home',
+            'contacto'       => 'RouterController@renderView|contacto',
             'login'          => 'UserController@renderView|login',
             'register'       => 'UserController@renderView|register',
             'list'           => 'UserController@renderView|list',
