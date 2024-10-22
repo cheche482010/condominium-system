@@ -56,7 +56,7 @@ class Connection
             $stmt->execute($params);
             return $stmt;
         } catch (PDOException $e) {
-            throw new \Exception("Error en la consulta: " . $e->getMessage(), 0, $e);
+            throw new \Exception($e->getMessage());
         }
     }
 

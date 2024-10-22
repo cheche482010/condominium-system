@@ -144,12 +144,6 @@ class UserController extends BaseController
         
         try {
 
-            $sanitizedData = $this->sanitizar($data);
-
-            if (!$sanitizedData) {
-                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Error al sanitizar datos');
-            }
-
             $validateData = $this->validateData($data);
             
             if ($validateData) {
@@ -175,14 +169,14 @@ class UserController extends BaseController
             $result = $this->model->execute('createUser', $data, 'create');
             $user = $this->model->lastInsertId();
             $userId = is_numeric($user) ? ['id' => $user] : null;
-
+            
             if ($result) {
                 $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario creado con éxito', $userId);
             } else {
                 $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el usuario');
             }
         } catch (\Exception $e) {
-            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al crear el usuario.', $e->getTrace());
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al crear el usuario.', $e->getMessage());
         }
 
         return $this->respuesta;
