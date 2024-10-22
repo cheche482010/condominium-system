@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     var table = createDataTable('#example', {
-        url: PROJECT_URL + '/api/user/getAll',
+        url:   '../api/user/getAll',
     },
         [{
             data: 'id'

@@ -41,7 +41,7 @@ function createDataTable(selector, ajaxConfig, columnConfig, functioname = null)
         ajax: ajaxConfig,
         columns: columnConfig,
         language: {
-            url: 'public/assets/json/Spanish.json',
+            url: '../public/assets/json/Spanish.json',
         },
         scrollX: true,
         scrollY: '500px',

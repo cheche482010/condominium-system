@@ -24,11 +24,13 @@ class Router
             'contacto'       => 'RouterController@renderView|contacto',
             'login'          => 'UserController@renderView|login',
             'register'       => 'UserController@renderView|register',
-            'list'           => 'UserController@renderView|list',
+            'user/list'           => 'UserController@renderView|list',
             'user/create'    => 'UserController@create',
             'user/auth'      => 'UserController@auth',
             'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
+            'condominio/list' => 'CondominioController@renderView|list',
+            'condominio/register' => 'CondominioController@renderView|register',
         ];
 
         $this->getSession();

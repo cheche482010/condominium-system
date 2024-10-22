@@ -26,7 +26,7 @@
             <!-- Content Header (Page header) -->
             <?php
             $this->ContentHeader([
-                'titulo' =>  $this->config->get('APP_NAME'),  
+                'titulo' =>  "Condominio" , 
                 'links' => [
                     ['label' =>  $this->config->get('APP_NAME'), 'url' => '#','active' => true],
                     ['label' => 'Listar', 'url' => 'javascript::void(0)'],
@@ -39,15 +39,42 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-
                     <div class="row">
                         <div class="col-md-12">
-                            
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Lista de Condominios</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table id="condominiosTable" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Deuda</th>
+                                                <th>Alícuota</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Deuda</th>
+                                                <th>Alícuota</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-
             </section>
             <!-- /.content -->
         </div>
