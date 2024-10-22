@@ -3,6 +3,8 @@
         $this->Script([
         $this->assets . 'plugins/jquery-ui/jquery-ui.min.js',
         $this->assets . 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
+        $this->assets . 'plugins/bootstrap/js/bootstrap.bundle.min.js',
+        $this->assets . 'plugins/moment/moment.min.js',
         $this->assets . 'js/adminlte.js',
         $this->assets . 'js/constants.js',
         $this->assets . 'js/function.js',
