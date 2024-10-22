@@ -24,7 +24,7 @@ class Router
             'contacto'       => 'RouterController@renderView|contacto',
             'login'          => 'UserController@renderView|login',
             'register'       => 'UserController@renderView|register',
-            'user/list'           => 'UserController@renderView|list',
+            'user/list'      => 'UserController@renderView|list',
             'user/create'    => 'UserController@create',
             'user/auth'      => 'UserController@auth',
             'user/getAll'    => 'UserController@getAll',
