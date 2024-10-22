@@ -112,7 +112,13 @@ $(document).ready(function () {
         }
     });
 
-
+    $('#clear').click(function() {
+        $('form')[0].reset();
+        $('.form-control').removeClass('invalid-input');
+        $('.progress-bar').css('width', '0%').attr('aria-valuenow', 0);
+        $('.security-level').text('');
+    });
+    
     $('#user_password').keyup(function () {
         checkPasswordStrength();
     });

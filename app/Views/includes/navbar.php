@@ -9,7 +9,7 @@
             <?php
             $this->NavbarNav([
                 ['url' => '../home', 'text' => 'Inicio'],
-                ['url' => '#', 'text' => 'Contacto'],
+                ['url' => '../contacto', 'text' => 'Contacto'],
             ])->view();
             ?>
 
