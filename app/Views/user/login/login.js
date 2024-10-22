@@ -22,7 +22,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: PROJECT_URL + '/api/users/auth',
+            url: PROJECT_URL + '/api/user/auth',
             method: 'POST',
             data: {
                 user_data: formData,

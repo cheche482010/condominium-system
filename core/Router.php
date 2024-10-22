@@ -19,16 +19,18 @@ class Router
         $this->error = new ErrorController();
 
         $this->routes = [
-            'home'           => 'HomeController@index',
+            'swagger'        => 'RouterController@swgger',
+            'home'           => 'RouterController@renderView|home',
+            'contacto'       => 'RouterController@renderView|contacto',
             'login'          => 'UserController@renderView|login',
             'register'       => 'UserController@renderView|register',
-            'list'           => 'UserController@renderView|list',
-            'users/create'   => 'UserController@create',
-            'users/auth'     => 'UserController@auth',
+            'user/list'           => 'UserController@renderView|list',
+            'user/create'    => 'UserController@create',
+            'user/auth'      => 'UserController@auth',
             'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
-            'condominio/list' => 'CondominiumController@renderView|list',
-            'condominio/register' => 'CondominiumController@renderView|register',
+            'condominio/list' => 'CondominioController@renderView|list',
+            'condominio/register' => 'CondominioController@renderView|register',
         ];
 
         $this->getSession();
@@ -67,7 +69,11 @@ class Router
             }
         }
 
-        $this->error->_404_();
+        if ($this->isApiRequest()) {
+            $this->sendApiNotFoundResponse();
+        } else {
+            $this->error->_404_();
+        }
     }
 
     private function removeQueryString($url)
@@ -86,5 +92,24 @@ class Router
     private function getSession()
     {
         $this->session = isset($_SESSION['user']) && isset($_SESSION['user']['sesion_token']) ? $_SESSION['user'] : null;
+    }
+
+    private function isApiRequest()
+    {
+        return strpos($_GET['url'], 'api/') === 0;
+    }
+
+    private function sendApiNotFoundResponse()
+    {
+        http_response_code(404);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'code' => 404,
+            'status' => false,
+            'type' => 'error',
+            'message' => 'API endpoint not found',
+            'data' => null
+        ]);
+        exit();
     }
 }

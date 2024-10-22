@@ -2,11 +2,6 @@
 
 namespace App\Controllers;
 
-use OpenApi\Annotations as OA;
-
-/**
- * @OA\Info(title="Condominium System", version="0.1")
- */
 class UserController extends BaseController
 {
     private $datos;
@@ -70,17 +65,6 @@ class UserController extends BaseController
         ];
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/user/getAll",
-     *     summary="Obtener todos los usuarios",
-     *     description="Devuelve una lista completa de todos los usuarios registrados.",
-     *     tags={"User"},
-     *     @OA\Response(response=200, description="Éxito"),
-     *     @OA\Response(response=404, description="No hay usuarios encontrados"),
-     *     @OA\Response(response=500, description="Error interno del servidor")
-     * )
-     */
     public function getAll()
     {
         $this->isGetRequest();
@@ -89,6 +73,51 @@ class UserController extends BaseController
             $this->respuesta = $this->response(200, true, 'success', 'Usuarios obtenidos con éxito', $data);
         } catch (\Exception $e) {
             $this->respuesta = $this->response(500, false, 'error', 'Error al obtener los Usuarios: ' . $e->getMessage());
+        }
+
+        return $this->respuesta;
+    }
+
+    public function getAllPaginated()
+    {
+        $this->isGetRequest();
+
+        $perPage = isset($_GET['perPage']) ? (int)$_GET['perPage'] : 10; 
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $details = isset($_GET['details']) ? filter_var($_GET['details'], FILTER_VALIDATE_BOOLEAN) : false;
+
+        try {
+            if ($page < 1 || $perPage < 1) {
+                throw new \InvalidArgumentException("Invalid page or perPage value");
+            }
+            
+            $offset = ($page - 1) * $perPage;
+
+            $totalItems = $this->model->execute('getCount', 'single');
+            $totalPages = ceil($totalItems / $perPage);
+
+            $data = $this->model->execute('getAllPaginated', [
+                'limit' => $perPage,
+                'offset' => $offset
+            ]);
+
+            if ($details) {
+                $response = [
+                    'items' => $data,
+                    'pagination' => [
+                        'currentPage' => $page,
+                        'totalPages' => $totalPages,
+                        'itemsPerPage' => $perPage,
+                        'totalItems' => $totalItems
+                    ]
+                ];
+            } else {
+                $response = $data; 
+            }
+
+            $this->respuesta = $this->response(200, true, 'success', 'Usuarios obtenidos con éxito', $response);
+        } catch (\Exception $e) {
+            $this->respuesta = $this->response(500, false, 'error', 'Error al obtener los usuarios: ' . $e->getMessage());
         }
 
         return $this->respuesta;
@@ -107,32 +136,6 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    /**
-     * @OA\Post(
-     *     path="/api/user/register",
-     *     summary="Register new user",
-     *     description="Creates a new user account.",
-     *     tags={"User"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="nombre", type="string", description="Nombre"),
-     *             @OA\Property(property="apellido", type="string", description="Apellido"),
-     *             @OA\Property(property="cedula", type="integer", description="Número de cédula"),
-     *             @OA\Property(property="telefono", type="string", description="Teléfono"),
-     *             @OA\Property(property="email", type="string", description="Correo electrónico"),
-     *             @OA\Property(property="user_password", type="string", description="Contraseña"),
-     *             @OA\Property(property="rol", type="string", description="Rol del usuario"),
-     *             @OA\Property(property="token", type="string", description="Indentificador de Usuario")
-     *         )
-     *     ),
-     *     @OA\Response(response=200, description="Usuario creado exitosamente"),
-     *     @OA\Response(response=400, description="Error de validación"),
-     *     @OA\Response(response=409, description="Email ya registrado"),
-     *     @OA\Response(response=500, description="Error interno del servidor")
-     * )
-     */
     public function create()
     {
         $this->isPostRequest();
@@ -147,7 +150,7 @@ class UserController extends BaseController
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Error al sanitizar datos');
             }
 
-            $validateData = $this->validateUserData($data);
+            $validateData = $this->validateData($data);
             
             if ($validateData) {
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
@@ -266,7 +269,7 @@ class UserController extends BaseController
         return $this->response(200, true, 'success', 'Cierre de sesión exitoso');
     }
 
-    private function validateUserData($data)
+    private function validateData($data)
     {
 
         $rules = [

@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="es">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swagger UI</title>
     <style>
     html {
@@ -22,17 +21,31 @@
       margin: 0;
       background: #fafafa;
     }
-  </style>
-    <link rel="stylesheet" type="text/css" href="../../swagger-ui/dist/swagger-ui.css" />
-    <link rel="stylesheet" type="text/css" href="index.css" />
-    <link rel="icon" type="image/png" href="../../swagger-ui/dist/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="../../swagger-ui/dist/favicon-16x16.png" sizes="16x16" />
-  </head>
 
-  <body>
+    .swagger-container .swagger-ui {
+      margin-inline: 5%;
+    }
+  </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css" />
+    <link rel="icon" type="image/x-icon" href="https://static-00.iconduck.com/assets.00/swagger-icon-2048x2048-563qbzey.png">
+</head>
+<body>
     <div id="swagger-ui"></div>
-    <script src="../../swagger-ui/dist/swagger-ui-bundle.js" charset="UTF-8"> </script>
-    <script src="../../swagger-ui/dist/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
-    <script src="../../swagger-ui/dist/swagger-initializer.js" charset="UTF-8"> </script>
-  </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.js"></script>
+    
+    <script>
+        window.onload = function() {
+            const ui = SwaggerUIBundle({
+                url: "<?= $this->getFullUrl(); ?>app/Documentation/api.json", 
+                dom_id: '#swagger-ui',
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                layout: "StandaloneLayout",
+            });
+        };
+    </script>
+</body>
 </html>

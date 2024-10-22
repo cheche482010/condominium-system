@@ -22,11 +22,14 @@ class UserModel extends BaseModel
 
         $this->sql = [
             'getAll' => "SELECT * FROM usuarios",
+            'getAllPaginated' => "SELECT * FROM usuarios LIMIT :limit OFFSET :offset",
+            'getCount' => "SELECT COUNT(*) as total FROM usuarios",
             'getById' => "SELECT (id, nombre, apellido, cedula, phone, email, user_password, rol, token, is_active) FROM usuarios WHERE id = :id",
             'getByEmail' => "SELECT id, nombre, apellido, cedula, phone, email, user_password, rol, token, is_active FROM usuarios WHERE email = :email",
             'createUser' => "INSERT INTO usuarios (nombre, apellido, cedula, phone, email, user_password, rol, token) VALUES (:nombre, :apellido, :cedula, :phone, :email, :user_password, :rol, :token)",
             'update' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email, user_password = :user_password, rol = :rol, token = :token WHERE id = :id",
             'delete' => "DELETE FROM usuarios WHERE id = :id",
+            'getWebsiteByShortcode' => "SELECT * FROM websites WHERE shortcode = :shortcode LIMIT 1", 
         ];               
     }
 
@@ -47,5 +50,10 @@ class UserModel extends BaseModel
         } else {
             throw new \InvalidArgumentException("Opción de obtención no válida: $fetchOption");
         }
+    }
+
+    public function getWebsiteByShortcode($shortcode)
+    {
+        return $this->execute('getWebsiteByShortcode', ['shortcode' => $shortcode], 'single');
     }
 }

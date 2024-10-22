@@ -35,3 +35,88 @@ function captureFormData() {
 
     return formData;
 }
+
+function createDataTable(selector, ajaxConfig, columnConfig, functioname = null) {
+    return $(selector).DataTable({
+        ajax: ajaxConfig,
+        columns: columnConfig,
+        language: {
+            url: '../public/assets/json/Spanish.json',
+        },
+        scrollX: true,
+        scrollY: '500px',
+        scrollCollapse: true,
+        paging: true,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        responsive: true,
+        processing: false,
+        pageLength: 10,
+        lengthMenu: [5, 10, 20, 30, 40, 50, 100],
+        buttons: [
+            {
+                extend: 'colvis',
+                text: 'Columna Visibles',
+                className: 'btn btn-secondary'
+            },
+            {
+                extend: 'collection',
+                text: 'Exportar <i class="fas fa-download"></i>', 
+                className: 'btn btn-secondary dropdown-toggle',
+                buttons: [ 
+                    {
+                        extend: 'copy',
+                        text: '<i class="fas fa-copy"></i> Copiar ',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: ':not(.no-print)'
+                        } 
+                    },
+                    {
+                        extend: 'csv',
+                        text: '<i class="fas fa-file-csv"></i> Csv',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: ':not(.no-print)'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: ':not(.no-print)'
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: '<i class="fas fa-file-pdf"></i> PDF',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: ':not(.no-print)'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fas fa-print"></i> Imprimir',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: ':not(.no-print)'
+                        }
+                    },{
+                        text: '<i class="fas fa-print"></i> Resumen', 
+                        className: 'dropdown-item',
+                        action: function (e, dt, node, config) {
+                            if (functioname) {
+                                functioname(); 
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        dom: '<"d-flex"lBf>rt<"d-flex justify-content-between"ip>', 
+    });
+}

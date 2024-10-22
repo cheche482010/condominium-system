@@ -1,23 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        <?= $this->config->get('APP_NAME'); ?>
-    </title>
-    <?php
-      $this->Link([
-        ['rel' => 'icon', 'href' => $this->assets . 'img/logo.jpg', 'type' => 'image/x-icon'],
-        ['rel' => 'stylesheet', 'href' => 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'],
-        ['rel' => 'stylesheet', 'href' => $this->assets . 'plugins/fontawesome-free/css/all.min.css'],
-        ['rel' => 'stylesheet', 'href' => $this->assets . 'plugins/icheck-bootstrap/icheck-bootstrap.min.css'],
-        ['rel' => 'stylesheet', 'href' => $this->assets . 'css/adminlte.min.css'],
-        ['rel' => 'stylesheet', 'href' => $this->assetsView . "user/login/login.scss"],
-        ['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css'],
-      ])->view();
-    ?>
+    <?php include __DIR__ . "/../../includes/meta.php"; ?>
+    <title><?= $this->config->get('APP_NAME'); ?></title>
+    <?php include __DIR__ . "/../../includes/link.php"; ?>
+    
+    <link href="<?= $this->assetsView; ?>user/login/login.scss" rel="stylesheet">
 </head>
 
 <body class="hold-transition login-page">
@@ -79,20 +68,9 @@
         <!-- /.card -->
     </div>
     <!-- /.login-box -->
+    <?php include __DIR__ . "/../../includes/script.php"; ?>
 
-    <?php
-      $this->Script([
-        $this->assets . 'plugins/jquery/jquery.min.js',
-        $this->assets . 'plugins/bootstrap/js/bootstrap.bundle.min.js',
-        $this->assets . 'js/adminlte.min.js',
-        $this->assets . 'js/constants.js',
-        $this->assets . 'js/function.js',
-        $this->assetsView . 'user/login/login.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js',
-        'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js',
-        'https://cdn.jsdelivr.net/npm/sweetalert2@11',
-      ])->view();
-    ?>
+    <script src="<?= $this->assetsView; ?>user/login/login.js"></script>
 </body>
 
 </html>

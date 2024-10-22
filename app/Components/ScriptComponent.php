@@ -16,7 +16,7 @@ class ScriptComponent extends Component
     public function view()
     {
         foreach ($this->scripts as $src) {
-            echo "\t".'<script src="' . $src . '"></script>'."\n";
+            echo "\n\t".'<script src="' . $src . '"></script>'."\n";
         }
     }
 }
