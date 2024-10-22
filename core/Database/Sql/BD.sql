@@ -3,6 +3,7 @@ USE `condominium-system`;
 
 CREATE TABLE usuarios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     cedula BIGINT NOT NULL UNIQUE,
@@ -18,6 +19,7 @@ CREATE TABLE usuarios (
 
 CREATE TABLE condominios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
     nombre VARCHAR(255) NOT NULL,
     deuda DECIMAL(10, 2) DEFAULT 0,
     alicuota DECIMAL(10, 2),
@@ -28,6 +30,7 @@ CREATE TABLE condominios (
 
 CREATE TABLE cobranza (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    
     usuario_id BIGINT REFERENCES usuarios(id),
     condominio_id BIGINT REFERENCES condominios(id),
     monto DECIMAL(10, 2) NOT NULL,
@@ -42,6 +45,7 @@ CREATE TABLE reportes (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     usuario_id BIGINT REFERENCES usuarios(id),
     condominio_id BIGINT REFERENCES condominios(id),
+    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
     tipo VARCHAR(50) NOT NULL,
     contenido TEXT NOT NULL,
     fecha DATE NOT NULL,
@@ -53,6 +57,7 @@ CREATE TABLE reportes (
 CREATE TABLE pagos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     condominio_id BIGINT REFERENCES condominios(id),
+    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
     cobranza_id BIGINT REFERENCES cobranza(id),
     monto DECIMAL(10, 2) NOT NULL,
     fecha DATE NOT NULL,
@@ -66,6 +71,7 @@ CREATE TABLE pagos (
 CREATE TABLE gastos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     cobranza_id BIGINT REFERENCES cobranza(id),
+    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
     concepto VARCHAR(255) NOT NULL,
     monto DECIMAL(10, 2) NOT NULL,
     tipo VARCHAR(50) NOT NULL,
@@ -77,6 +83,7 @@ CREATE TABLE gastos (
 CREATE TABLE bitacora (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     usuario_id BIGINT REFERENCES usuarios(id),
+    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
     accion VARCHAR(255) NOT NULL,
