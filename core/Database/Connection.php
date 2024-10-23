@@ -2,8 +2,12 @@
 
 namespace Core\Database;
 
+ini_set("max_execution_time", "0");
+error_reporting(E_ERROR);
+
 use PDO;
 use PDOException;
+class DatabaseConnectionException extends PDOException {}
 
 class Connection
 {
@@ -45,10 +49,31 @@ class Connection
             );
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            throw new \Exception("Error de conexión: " . $e->getMessage());
+            header('Content-Type: application/json');
+
+            $errorInfo = $e->errorInfo;
+            $errorMessage = [
+                "httpMethod" => $_SERVER['REQUEST_METHOD'],
+                "code" => $e->getCode(),
+                "sqlState" => $errorInfo[0],
+                "sqlMessage" => $errorInfo[1],
+                "line" => $e->getLine(),
+                "message" => $e->getMessage(),
+                "pdoCode" => $errorInfo[2],
+                "file" => $e->getFile(),
+                "className" => get_class($this),
+                "methodName" => __METHOD__,
+                "timestamp" => date('Y-m-d H:i:s'),
+            ];
+            $errorMessageJson = json_encode($errorMessage, JSON_PRETTY_PRINT);
+
+            throw new DatabaseConnectionException(
+                $errorMessageJson
+            );
         }
 
     }
+
     public function executeQuery($sql, $params = [])
     {
         try {
@@ -56,7 +81,25 @@ class Connection
             $stmt->execute($params);
             return $stmt;
         } catch (PDOException $e) {
-            throw new \Exception("Error en la consulta: " . $e->getMessage(), 0, $e);
+            $errorInfo = $e->errorInfo;
+            $errorMessage = [
+                "httpMethod" => $_SERVER['REQUEST_METHOD'],
+                "code" => $e->getCode(),
+                "sqlState" => $errorInfo[0],
+                "sqlMessage" => $errorInfo[1],
+                "line" => $e->getLine(),
+                "message" => $e->getMessage(),
+                "pdoCode" => $errorInfo[2],
+                "file" => $e->getFile(),
+                "className" => get_class($this),
+                "methodName" => __METHOD__,
+                "timestamp" => date('Y-m-d H:i:s'),
+            ];
+            $errorMessageJson = json_encode($errorMessage, JSON_PRETTY_PRINT);
+
+            throw new DatabaseConnectionException(
+                $errorMessageJson
+            );
         }
     }
 

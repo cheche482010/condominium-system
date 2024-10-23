@@ -72,7 +72,7 @@ class UserController extends BaseController
             $data = $this->model->execute('getAll');
             $this->respuesta = $this->response(200, true, 'success', 'Usuarios obtenidos con éxito', $data);
         } catch (\Exception $e) {
-            $this->respuesta = $this->response(500, false, 'error', 'Error al obtener los Usuarios: ' . $e->getMessage());
+            $this->respuesta = $this->response(500, false, 'error', 'Error al obtener los Usuarios: ', json_decode($e->getMessage(), true));
         }
 
         return $this->respuesta;
