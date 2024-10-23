@@ -8,6 +8,7 @@ use App\Controllers\ErrorController;
 
 class BaseController
 {
+    use \Core\Traits\ErrorMessage;
     protected $model;
     protected $validator;
     protected $assets;
@@ -20,19 +21,6 @@ class BaseController
     
     public $config;
 
-    const HTTP_OK = 200;
-    const HTTP_CREATED = 201;
-    const HTTP_BAD_REQUEST = 400;
-    const HTTP_UNAUTHORIZED = 401;
-    const HTTP_FORBIDDEN = 403;
-    const HTTP_NOT_FOUND = 404;
-    const HTTP_CONFLICT_STATUS_CODE = 409;
-    const HTTP_TOO_MANY_REQUESTS = 429;
-    const HTTP_INTERNAL_SERVER_ERROR = 500;
-
-    const MSG_SUCCESS = 'Operación realizada con éxito';
-    const MSG_ERROR = 'Ocurrió un error durante la operación';
-    
     public function __construct()
     {
         $controllerName = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
@@ -219,4 +207,12 @@ class BaseController
         return true; 
     }
 
+    protected function handlePDOExption($e, $method) {
+        $errorMessage = $this->formatErrorMessage($e, $method);
+        $errorMessageJson = json_encode($errorMessage, JSON_PRETTY_PRINT);
+        $errorLogEntry = "====================================\n{$errorMessageJson}\n";
+        error_log($errorLogEntry , 3, '../core/Logs/error.log');  
+
+        return $errorMessage;
+    }
 }

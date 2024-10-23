@@ -12,6 +12,8 @@ class DatabaseConnectionException extends PDOException {}
 class Connection
 {
     use \Core\Traits\EnvironmentLoader;
+    use \Core\Traits\ErrorMessage;
+
     private static $instance;
     private $pdo;
     private $credentials;
@@ -50,22 +52,8 @@ class Connection
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             header('Content-Type: application/json');
-
-            $errorInfo = $e->errorInfo;
-            $errorMessage = [
-                "httpMethod" => $_SERVER['REQUEST_METHOD'],
-                "code" => $e->getCode(),
-                "sqlState" => $errorInfo[0],
-                "sqlMessage" => $errorInfo[1],
-                "line" => $e->getLine(),
-                "message" => $e->getMessage(),
-                "pdoCode" => $errorInfo[2],
-                "file" => $e->getFile(),
-                "className" => get_class($this),
-                "methodName" => __METHOD__,
-                "timestamp" => date('Y-m-d H:i:s'),
-            ];
-            $errorMessageJson = json_encode($errorMessage, JSON_PRETTY_PRINT);
+            $errorMessage = $this->formatErrorMessage($e, __METHOD__);
+            $errorMessageJson = json_encode($errorMessage, JSON_PRETTY_PRINT); 
 
             throw new DatabaseConnectionException(
                 $errorMessageJson
@@ -80,40 +68,26 @@ class Connection
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
             return $stmt;
-        } catch (PDOException $e) {
-            $errorInfo = $e->errorInfo;
-            $errorMessage = [
-                "httpMethod" => $_SERVER['REQUEST_METHOD'],
-                "code" => $e->getCode(),
-                "sqlState" => $errorInfo[0],
-                "sqlMessage" => $errorInfo[1],
-                "line" => $e->getLine(),
-                "message" => $e->getMessage(),
-                "pdoCode" => $errorInfo[2],
-                "file" => $e->getFile(),
-                "className" => get_class($this),
-                "methodName" => __METHOD__,
-                "timestamp" => date('Y-m-d H:i:s'),
-            ];
-            $errorMessageJson = json_encode($errorMessage, JSON_PRETTY_PRINT);
-
-            throw new DatabaseConnectionException(
-                $errorMessageJson
-            );
+        } catch (PDOException $errorPdo) {
+            throw $errorPdo;
         }
     }
 
    
     public function getResults($sql, $params = [], $fetchOption = "all")
     {
-        $stmt = $this->executeQuery($sql, $params);
-        
-        if ($fetchOption === "all") {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } elseif ($fetchOption === "single") {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } else {
-            throw new \InvalidArgumentException("Opción de obtención no válida: $fetchOption");
+        try {
+            $stmt = $this->executeQuery($sql, $params);
+            
+            if ($fetchOption === "all") {
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } elseif ($fetchOption === "single") {
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            } else {
+                throw new \InvalidArgumentException("Opción de obtención no válida: $fetchOption");
+            }
+        } catch (PDOException $errorPdo) {
+            throw $errorPdo; 
         }
     }
 

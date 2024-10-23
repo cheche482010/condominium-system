@@ -70,9 +70,10 @@ class UserController extends BaseController
         $this->isGetRequest();
         try {
             $data = $this->model->execute('getAll');
-            $this->respuesta = $this->response(200, true, 'success', 'Usuarios obtenidos con éxito', $data);
-        } catch (\Exception $e) {
-            $this->respuesta = $this->response(500, false, 'error', 'Error al obtener los Usuarios: ', json_decode($e->getMessage(), true));
+            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Usuarios obtenidos con éxito', $data);
+        } catch (\PDOException $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los Usuarios', $errorMessage);
         }
 
         return $this->respuesta;
