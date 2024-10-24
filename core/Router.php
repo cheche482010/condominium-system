@@ -26,6 +26,7 @@ class Router
             'user/register'  => 'UserController@renderView|register',
             'user/list'      => 'UserController@renderView|list',
             'user/create'    => 'UserController@create',
+            'user/update'    => 'UserController@update',
             'user/auth'      => 'UserController@auth',
             'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
