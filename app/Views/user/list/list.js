@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    var table = createDataTable('#example', {
-        url:   '../api/user/getAll',
+    var table = createDataTable('#userTable', {
+        url: '../api/user/getAll',
     },
         [{
             data: 'id'
@@ -37,20 +37,44 @@ $(document).ready(function () {
         ]);
 
     // Edit button click handler
-    $('#example tbody').on('click', '.btn-edit', function () {
+    $('#userTable tbody').on('click', '.btn-edit', function () {
         var data = table.row($(this).parents('tr')).data();
-        alert('Edit User ID: ' + data.userId + ', ID: ' + data.id);
-        // Implement your edit logic here
-        table.ajax.reload(null, false);
+        $('#editUserForm').modal('show');
+
+        $.ajax({
+            url: '../api/user/update',
+            method: 'POST',
+            data: {
+                user_data: data,
+            },
+            success: function (response) {
+                if (response) {
+                    $('#editUserForm').modal('hide');
+                    table.ajax.reload(null, false);
+                } else {
+                    alert('Error al editar el usuario');
+                }
+            },
+            error: function (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error al registrar',
+                    text: 'Ha ocurrido un error al intentar registrarse. Por favor, inténtelo nuevamente.',
+                    icon: 'error'
+                });
+            }
+        });
+
     });
 
     // Delete button click handler
-    $('#example tbody').on('click', '.btn-delete', function () {
+    $('#userTable tbody').on('click', '.btn-delete', function () {
         var row = table.row($(this).parents('tr'));
         var data = row.data();
-        if (confirm('Are you sure you want to delete this row?')) {
-            // Implement your delete logic here (e.g., send an AJAX request to delete the record)
-            row.remove().draw(); // Remove row from the DataTable
+
+        if (deleteConfirmation()) {
+            // row.remove().draw();
         }
+
     });
 });

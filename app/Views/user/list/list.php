@@ -42,7 +42,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-striped table-bordered" id="example" style="width:100%">
+                            <table class="table table-striped table-bordered" id="userTable" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -72,6 +72,28 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="editUserForm" tabindex="-1" role="dialog" aria-labelledby="editUserFormLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editUserFormLabel">Editar Usuario</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form id="editForm">
+                                    <div class="modal-body">
+                                        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary" id="edit">Guardar</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
 
