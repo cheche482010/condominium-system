@@ -3,6 +3,7 @@ USE `condominium-system`;
 
 CREATE TABLE usuarios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    condominio_id BIGINT REFERENCES condominios(id),
     condominios_websites_id BIGINT REFERENCES condominios_websites(id),
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
@@ -30,7 +31,6 @@ CREATE TABLE condominios (
 
 CREATE TABLE cobranza (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    
     usuario_id BIGINT REFERENCES usuarios(id),
     condominio_id BIGINT REFERENCES condominios(id),
     monto DECIMAL(10, 2) NOT NULL,
