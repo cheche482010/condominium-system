@@ -1,34 +1,31 @@
 $(document).ready(function () {
 
     function validateForm() {
-        let isValid = true;
-        var toastQueue = [];
-
         $('.form-control').removeClass('invalid-input');
 
         // Validate cedula
         if ($('#cedula').val().trim() === '') {
             toastr.error('La cédula es obligatoria.');
             $('#cedula').addClass('invalid-input');
-            isValid = false;
+            return false;
         } else if (!/^\d{9}$/.test($('#cedula').val())) {
             toastr.error('La cédula debe ser un número de 9 dígitos.');
             $('#cedula').addClass('invalid-input');
-            isValid = false;
+            return false;
         }
 
         // Validate nombre
         if ($('#nombre').val().trim() === '') {
             toastr.error('El nombre es obligatorio.');
             $('#nombre').addClass('invalid-input');
-            isValid = false;
+            return false;
         }
 
         // Validate apellido
         if ($('#apellido').val().trim() === '') {
             toastr.error('El apellido es obligatorio.');
             $('#apellido').addClass('invalid-input');
-            isValid = false;
+            return false;
         }
 
         // Validate email
@@ -36,11 +33,11 @@ $(document).ready(function () {
         if (email.trim() === '') {
             toastr.error('El correo electrónico es obligatorio.');
             $('#email').addClass('invalid-input');
-            isValid = false;
+            return false;
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             toastr.error('Por favor, ingrese un correo electrónico válido.');
             $('#email').addClass('invalid-input');
-            isValid = false;
+            return false;
         }
 
         // Validate phone
@@ -48,11 +45,11 @@ $(document).ready(function () {
         if (phone.trim() === '') {
             toastr.error('El teléfono es obligatorio.');
             $('#phone').addClass('invalid-input');
-            isValid = false;
+            return false;
         } else if (!/^(\+58\s?)?[\d]{8}$/.test(phone)) {
             toastr.error('Por favor, ingrese un número de teléfono válido para Venezuela (+58).');
             $('#phone').addClass('invalid-input');
-            isValid = false;
+            return false;
         }
 
         // passwords
@@ -60,58 +57,66 @@ $(document).ready(function () {
         if (password.trim() === '') {
             toastr.error('La contraseña es obligatoria.');
             $('#user_password').addClass('invalid-input');
-            isValid = false;
+            return false;
         }
 
         let confirmPassword = $('#retryPassword').val();
         if (confirmPassword.trim() === '') {
             toastr.error('La confirmación de contraseña es obligatorias.');
             $('#retryPassword').addClass('invalid-input');
-            isValid = false;
+            return false;
         }
 
-        return isValid;
+        return true;
     }
 
     $('#register').click(function (e) {
         e.preventDefault();
         const formData = captureFormData();
         delete formData.retryPassword;
-        
-        if (validateForm()) {
-            $.ajax({
-                url: PROJECT_URL + '/api/user/create',
-                method: 'POST',
-                data: {
-                    user_data: formData,
-                    user_type: 0 // usuario registrado sin rol
-                },
-                dataType: 'json',
-                success: function (data) {
     
-                    if (!handleErrorValidate(data) || !handleErrorExisting(data)) {
-                        return; 
-                    }
-    
-                    Swal.fire({
-                        title: 'Registro Exitoso',
-                        text: 'Se ha registrado el usuario con éxito. Bienvenido a nuestro sistema!',
-                        icon: 'success',
-                        confirmButtonText: 'Continuar'
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', error);
-                    Swal.fire({
-                        title: 'Error al registrar',
-                        text: 'Ha ocurrido un error al intentar registrarse. Por favor, inténtelo nuevamente.',
-                        icon: 'error'
-                    });
-                }
-            });
+        if (!validateForm()) {
+            return;
         }
+
+        $.ajax({
+            url: '../api/user/create',
+            method: 'POST',
+            data: {
+                user_data: formData,
+                user_type: 0 // usuario registrado sin rol
+            },
+            dataType: 'json',
+            success: function (data) {
+
+                if (!handleErrorValidate(data) || !handleErrorExisting(data) || !handleError(data)) {
+                    return; 
+                }
+
+                Swal.fire({
+                    title: 'Registro Exitoso',
+                    text: 'Se ha registrado el usuario con éxito. Bienvenido a nuestro sistema!',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error al registrar',
+                    text: 'Ha ocurrido un error al intentar registrarse. Por favor, inténtelo nuevamente.',
+                    icon: 'error'
+                });
+            }
+        });
     });
 
+    $('#clear').click(function() {
+        $('form')[0].reset();
+        $('.form-control').removeClass('invalid-input');
+        $('.progress-bar').css('width', '0%').attr('aria-valuenow', 0);
+        $('.security-level').text('');
+    });
 
     $('#user_password').keyup(function () {
         checkPasswordStrength();

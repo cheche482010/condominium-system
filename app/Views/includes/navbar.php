@@ -8,8 +8,8 @@
             <!-- Left navbar links -->
             <?php
             $this->NavbarNav([
-                ['url' => 'home', 'text' => 'Inicio'],
-                ['url' => '#', 'text' => 'Contacto'],
+                ['url' => '../home', 'text' => 'Inicio'],
+                ['url' => '../contacto', 'text' => 'Contacto'],
             ])->view();
             ?>
 

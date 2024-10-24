@@ -4,6 +4,16 @@ namespace App\Controllers;
 
 class ErrorController
 {
+    public $URL;
+
+    function __construct()
+    {
+        $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+        $domain = $_SERVER['HTTP_HOST'];
+        $root = str_replace('/public/index.php', '', $_SERVER['SCRIPT_NAME']) . '/';
+        $this->URL = $protocol . $domain . $root;
+    }
+    
     private function handleErrorCode($statusCode)
     {
         try {
