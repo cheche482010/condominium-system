@@ -43,12 +43,16 @@ class UserModel extends BaseModel
             return $this->sanitize($param);
         }, $params);
         
-        if ($fetchOption === "create" || $fetchOption === "update" || $fetchOption === "delete") {
-            return $this->db->executeQuery($this->sql[$sqlKey], $sanitizedParams);
-        } elseif ($fetchOption === "single" || $fetchOption === "all") {
-            return $this->db->getResults($this->sql[$sqlKey], $sanitizedParams, $fetchOption);
-        } else {
-            throw new \InvalidArgumentException("Opción de obtención no válida: $fetchOption");
+        try {
+            if ($fetchOption === "create" || $fetchOption === "update" || $fetchOption === "delete") {
+                return $this->db->executeQuery($this->sql[$sqlKey], $sanitizedParams);
+            } elseif ($fetchOption === "single" || $fetchOption === "all") {
+                return $this->db->getResults($this->sql[$sqlKey], $sanitizedParams, $fetchOption);
+            } else {
+                throw new \InvalidArgumentException("Opción de obtención no válida: $fetchOption");
+            }
+        } catch (\PDOException $e) {
+            throw $e;
         }
     }
 

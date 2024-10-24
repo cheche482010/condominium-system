@@ -9,7 +9,7 @@ function handleErrorValidate(data) {
 
 function handleErrorExisting(data) {
     if (data.status === false && data.code === 409) {
-        toastr.error(data.data +" "+ data.message);
+        toastr.error(data.data + " " + data.message);
         return false;
     }
     return true;
@@ -63,16 +63,16 @@ function createDataTable(selector, ajaxConfig, columnConfig, functioname = null)
             },
             {
                 extend: 'collection',
-                text: 'Exportar <i class="fas fa-download"></i>', 
+                text: 'Exportar <i class="fas fa-download"></i>',
                 className: 'btn btn-secondary dropdown-toggle',
-                buttons: [ 
+                buttons: [
                     {
                         extend: 'copy',
                         text: '<i class="fas fa-copy"></i> Copiar ',
                         className: 'dropdown-item',
                         exportOptions: {
                             columns: ':not(.no-print)'
-                        } 
+                        }
                     },
                     {
                         extend: 'csv',
@@ -105,18 +105,43 @@ function createDataTable(selector, ajaxConfig, columnConfig, functioname = null)
                         exportOptions: {
                             columns: ':not(.no-print)'
                         }
-                    },{
-                        text: '<i class="fas fa-print"></i> Resumen', 
+                    }, {
+                        text: '<i class="fas fa-print"></i> Resumen',
                         className: 'dropdown-item',
                         action: function (e, dt, node, config) {
                             if (functioname) {
-                                functioname(); 
+                                functioname();
                             }
                         }
                     }
                 ]
             }
         ],
-        dom: '<"d-flex"lBf>rt<"d-flex justify-content-between"ip>', 
+        dom: '<"d-flex"lBf>rt<"d-flex justify-content-between"ip>',
     });
 }
+
+function deleteConfirmation() {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Quieres eliminar este registro?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Eliminado!",
+                text: "El registro ha sido eliminado",
+                icon: "success"
+            });
+            return true;
+        }
+        return false;
+    })
+}
+$(document).on('click', '[data-dismiss="modal"]', function () {
+    $(this).closest('.modal').modal('hide');
+});
