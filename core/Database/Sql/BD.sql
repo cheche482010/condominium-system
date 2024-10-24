@@ -4,23 +4,23 @@ USE `condominium-system`;
 CREATE TABLE usuarios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     condominio_id BIGINT REFERENCES condominios(id),
-    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
+    condominio_id_website BIGINT REFERENCES condominios_websites(id),
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     cedula BIGINT NOT NULL UNIQUE,
-    phone VARCHAR(20) NOT NULL,
+    telefono VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
     rol VARCHAR(50) NOT NULL,
     token VARCHAR(255),
-    is_active BOOLEAN DEFAULT TRUE,
+    is_active BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE condominios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
+    condominio_id_website BIGINT REFERENCES condominios_websites(id),
     nombre VARCHAR(255) NOT NULL,
     deuda DECIMAL(10, 2) DEFAULT 0,
     alicuota DECIMAL(10, 2),
@@ -29,36 +29,9 @@ CREATE TABLE condominios (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE cobranza (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    usuario_id BIGINT REFERENCES usuarios(id),
-    condominio_id BIGINT REFERENCES condominios(id),
-    monto DECIMAL(10, 2) NOT NULL,
-    fecha DATE NOT NULL,
-    estado VARCHAR(50) NOT NULL,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
-CREATE TABLE reportes (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    usuario_id BIGINT REFERENCES usuarios(id),
-    condominio_id BIGINT REFERENCES condominios(id),
-    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
-    tipo VARCHAR(50) NOT NULL,
-    contenido TEXT NOT NULL,
-    fecha DATE NOT NULL,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
 CREATE TABLE pagos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    condominio_id BIGINT REFERENCES condominios(id),
-    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
-    cobranza_id BIGINT REFERENCES cobranza(id),
+    condominio_id_website BIGINT REFERENCES condominios_websites(id),
     monto DECIMAL(10, 2) NOT NULL,
     fecha DATE NOT NULL,
     banco_id BIGINT REFERENCES bancos(id),
@@ -70,8 +43,7 @@ CREATE TABLE pagos (
 
 CREATE TABLE gastos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    cobranza_id BIGINT REFERENCES cobranza(id),
-    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
+    gastos_condominio_id BIGINT REFERENCES gastos_condominios(id),
     concepto VARCHAR(255) NOT NULL,
     monto DECIMAL(10, 2) NOT NULL,
     tipo VARCHAR(50) NOT NULL,
@@ -83,7 +55,7 @@ CREATE TABLE gastos (
 CREATE TABLE bitacora (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     usuario_id BIGINT REFERENCES usuarios(id),
-    condominios_websites_id BIGINT REFERENCES condominios_websites(id),
+    condominio_id_website BIGINT REFERENCES condominios_websites(id),
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
     accion VARCHAR(255) NOT NULL,
@@ -105,6 +77,26 @@ CREATE TABLE tipos_de_pago (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     codigo VARCHAR(20) NOT NULL,
     nombre VARCHAR(255) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gastos_condominio (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    gastos_id BIGINT REFERENCES gastos(id),
+    condominio_id BIGINT REFERENCES condominios(id),
+    condominio_id_website BIGINT REFERENCES condominios_websites(id),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE pago_gasto (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    pagos_id BIGINT REFERENCES pagos(id),
+    gastos_condominio_id BIGINT REFERENCES gastos_condominio(id),
+    condominio_id_website BIGINT REFERENCES condominios_websites(id),
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
