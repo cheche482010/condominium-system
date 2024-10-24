@@ -183,22 +183,29 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    public function update($id)
+    public function update()
     {
-        $this->isPutRequest();
+        $this->isPostRequest();
 
-        $data = $this->datos;
-        $data['usuarioId'] = $id;
+        $data = $this->datos["user_data"];
 
         try {
-            $result = $this->model->execute('update', $data, 'update');
-            if ($result) {
-                $this->respuesta = $this->response(200, true, 'success', 'usuario actualizado con éxito');
-            } else {
-                $this->respuesta = $this->response(400, false, 'error', 'No se pudo actualizar el usuario');
+
+            $validateData = $this->validateData($data, "update");
+            
+            if ($validateData) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
             }
-        } catch (\Exception $e) {
-            $this->respuesta = $this->response(500, false, 'error', 'Error al actualizar el usuario: ' . $e->getMessage());
+
+            $result = $this->model->execute('updateUser', $data, 'update');
+            if ($result) {
+                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario actualizado con éxito');
+            } else {
+                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo actualizar el usuario');
+            }
+        } catch (\PDOException $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al actualizar el usuario.', $errorMessage);
         }
 
         return $this->respuesta;
@@ -264,7 +271,7 @@ class UserController extends BaseController
         return $this->response(200, true, 'success', 'Cierre de sesión exitoso');
     }
 
-    private function validateData($data)
+    private function validateData($data,  $context = 'create')
     {
 
         $rules = [
@@ -273,8 +280,11 @@ class UserController extends BaseController
             'cedula' => 'required|regex:cedula|min:6|max:9',
             'phone' => 'required|regex:phone',
             'email' => 'required|email',
-            'user_password' => 'required|password|min:8',
         ];
+
+        if ($context === 'create') {
+            $rules['user_password'] = 'required|min:4';
+        }
 
         $errors = $this->validator->validate($data, $rules);
 

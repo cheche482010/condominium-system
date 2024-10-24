@@ -1,13 +1,19 @@
 $(document).ready(function () {
+    let selectedUserId; 
+    const $togglePasswordBtn = $('#togglePassword');
+    const $passwordSection = $('#passwordSection');
 
-    var table = createDataTable('#userTable', {
+    let isPasswordMode = false;
+    let table = createDataTable('#userTable', {
         url: '../api/user/getAll',
     },
-        [{
+    [
+        {
             data: null,
             title: '#',
             orderable: false,
             searchable: false,
+            className: 'text-center',
             render: function (data, type, row, meta) {
                 return meta.row + 1;
             }
@@ -31,19 +37,24 @@ $(document).ready(function () {
             data: 'rol'
         },
         {
-            data: 'is_active'
-        }, {
+            data: 'is_active',
+            render: function (data, type, row) {
+                return data === 1 || data === true ? '<span class="badge bg-success text-sm">Activo</span>' : '<span class="badge bg-danger text-dark text-lg">Inactivo</span>';
+            }
+        }, 
+        {
             data: null,
             className: 'no-print text-center',
             render: function (data, type, row) {
                 return generarBotonesAccion(data.id);
             }
         }
-        ]);
+    ]);
 
     // Edit button click handler
     $('#userTable tbody').on('click', '.btn-edit', function () {
         var data = table.row($(this).parents('tr')).data();
+        selectedUserId = data.id;
         $('#editUserForm').modal('show');
         
         rellenarFormulario('editForm', data, [
@@ -66,10 +77,56 @@ $(document).ready(function () {
 
     });
 
-    const $togglePasswordBtn = $('#togglePassword');
-    const $passwordSection = $('#passwordSection');
+    $('#editBtn').on('click', function(e) {
+        e.preventDefault();
+        
+        const userData = {
+            id: selectedUserId,
+            cedula: $('#cedula').val(),
+            nombre: $('#nombre').val(),
+            apellido: $('#apellido').val(),
+            email: $('#email').val(),
+            phone: $('#phone').val(),
+        };
+        
+        $.ajax({
+            url:  `../api/user/update`,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                user_data: userData,
+            },
+            success: function(data) {
+                console.log(data);
+                if (!handleErrorValidate(data) || !handleError(data)) {
+                    return; 
+                }
 
-    let isPasswordMode = false;
+                table.ajax.reload();
+                $('#editUserForm').modal('hide');
+
+                Swal.fire({
+                    title: 'Registro Exitoso',
+                    text: 'Se ha registrado el usuario con éxito. Bienvenido a nuestro sistema!',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                });
+            },
+            error: function(error) {
+                console.error(error);
+                Swal.fire({
+                    title: 'Error al alctualizar',
+                    text: 'Ha ocurrido un error al intentar alctualizar. Por favor, inténtelo nuevamente.',
+                    icon: 'error'
+                });
+            }
+        });
+    });
+    
+    $('#savePasswordBtn').on('click', function() {
+        const userPassword = $('#user_password').val();
+        const retryPassword = $('#retryPassword').val();
+    });
 
     $togglePasswordBtn.on('click', function() {
         if (!isPasswordMode) {
@@ -89,38 +146,6 @@ $(document).ready(function () {
             $('#editBtn').show();
             isPasswordMode = false;
         }
-    });
-
-    $('#editBtn').on('click', function(e) {
-        e.preventDefault();
-
-        const userData = {
-            cedula: $('#cedula').val(),
-            nombre: $('#nombre').val(),
-            apellido: $('#apellido').val(),
-            email: $('#email').val(),
-            phone: $('#phone').val(),
-        };
-        
-        $.ajax({
-            url: '../api/user/update',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                user_data: userData,
-            },
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.error('Error:', error);
-            }
-        });
-    });
-    
-    $('#savePasswordBtn').on('click', function() {
-        const userPassword = $('#user_password').val();
-        const retryPassword = $('#retryPassword').val();
     });
 
     $('#user_password').keyup(function () {

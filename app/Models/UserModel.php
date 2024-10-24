@@ -27,7 +27,7 @@ class UserModel extends BaseModel
             'getById' => "SELECT (id, nombre, apellido, cedula, phone, email, user_password, rol, token, is_active) FROM usuarios WHERE id = :id",
             'getByEmail' => "SELECT id, nombre, apellido, cedula, phone, email, user_password, rol, token, is_active FROM usuarios WHERE email = :email",
             'createUser' => "INSERT INTO usuarios (nombre, apellido, cedula, phone, email, user_password, rol, token) VALUES (:nombre, :apellido, :cedula, :phone, :email, :user_password, :rol, :token)",
-            'update' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email, user_password = :user_password, rol = :rol, token = :token WHERE id = :id",
+            'updateUser' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email WHERE id = :id",
             'delete' => "DELETE FROM usuarios WHERE id = :id",
             'getWebsiteByShortcode' => "SELECT * FROM websites WHERE shortcode = :shortcode LIMIT 1", 
         ];               

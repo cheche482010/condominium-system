@@ -46,7 +46,7 @@ $(document).ready(function () {
             toastr.error('El teléfono es obligatorio.');
             $('#phone').addClass('invalid-input');
             return false;
-        } else if (!/^(\+58\s?)?[\d]{8}$/.test(phone)) {
+        } else if (!/^\+?\d+$/.test(phone)) {
             toastr.error('Por favor, ingrese un número de teléfono válido para Venezuela (+58).');
             $('#phone').addClass('invalid-input');
             return false;

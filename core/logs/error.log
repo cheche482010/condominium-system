@@ -1,0 +1,77 @@
+[ERROR] strlen(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\Validation\Validator.php on line 56
+[ERROR] strlen(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\Validation\Validator.php on line 56
+[ERROR] preg_match(): Passing null to parameter #2 ($subject) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\Validation\Validator.php on line 76
+[ERROR] strlen(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\Validation\Validator.php on line 56
+====================================
+{
+    "httpMethod": "POST",
+    "code": "HY093",
+    "sqlState": "HY093",
+    "sqlMessage": 0,
+    "line": 69,
+    "message": "SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens",
+    "pdoCode": null,
+    "file": "C:\\xampp\\htdocs\\www\\proyectos\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::update",
+    "timestamp": "2024-10-24 21:09:55"
+}
+[ERROR] strlen(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\Validation\Validator.php on line 56
+[ERROR] strlen(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\Validation\Validator.php on line 56
+[ERROR] strlen(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\www\proyectos\condominium-system\app\Controllers\Validation\Validator.php on line 56
+====================================
+{
+    "httpMethod": "POST",
+    "code": "HY093",
+    "sqlState": "HY093",
+    "sqlMessage": 0,
+    "line": 69,
+    "message": "SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens",
+    "pdoCode": null,
+    "file": "C:\\xampp\\htdocs\\www\\proyectos\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::update",
+    "timestamp": "2024-10-24 21:16:14"
+}
+====================================
+{
+    "httpMethod": "POST",
+    "code": "23000",
+    "sqlState": "23000",
+    "sqlMessage": 1062,
+    "line": 69,
+    "message": "SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '26142326' for key 'usuarios.cedula'",
+    "pdoCode": "Duplicate entry '26142326' for key 'usuarios.cedula'",
+    "file": "C:\\xampp\\htdocs\\www\\proyectos\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::update",
+    "timestamp": "2024-10-24 21:17:52"
+}
+====================================
+{
+    "httpMethod": "POST",
+    "code": "42000",
+    "sqlState": "42000",
+    "sqlMessage": 1064,
+    "line": 69,
+    "message": "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'RETURNING *' at line 1",
+    "pdoCode": "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'RETURNING *' at line 1",
+    "file": "C:\\xampp\\htdocs\\www\\proyectos\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::update",
+    "timestamp": "2024-10-24 21:21:29"
+}
+====================================
+{
+    "httpMethod": "POST",
+    "code": "42000",
+    "sqlState": "42000",
+    "sqlMessage": 1064,
+    "line": 69,
+    "message": "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'RETURNING *' at line 1",
+    "pdoCode": "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'RETURNING *' at line 1",
+    "file": "C:\\xampp\\htdocs\\www\\proyectos\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::update",
+    "timestamp": "2024-10-24 21:26:36"
+}

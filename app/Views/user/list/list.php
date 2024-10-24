@@ -42,17 +42,17 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-striped table-bordered" id="userTable" style="width:100%">
+                            <table class="table table-hover table-bordered" id="userTable" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>Last Name</th>
                                         <th>CI</th>
-                                        <th>Phone</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Telefono</th>
                                         <th>Email</th>
                                         <th>Rol</th>
-                                        <th>Is Active</th>
+                                        <th>Activo</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -61,13 +61,13 @@
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>Last Name</th>
                                         <th>CI</th>
-                                        <th>Phone</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Telefono</th>
                                         <th>Email</th>
                                         <th>Rol</th>
-                                        <th>Is Active</th>
+                                        <th>Activo</th>
                                         <th>Actions</th>
                                     </tr>
                                 </tfoot>
