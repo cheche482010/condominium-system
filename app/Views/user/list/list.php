@@ -42,17 +42,17 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-striped table-bordered" id="userTable" style="width:100%">
+                            <table class="table table-hover table-bordered" id="userTable" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Last Name</th>
+                                        <th>#</th>
                                         <th>CI</th>
-                                        <th>Phone</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Telefono</th>
                                         <th>Email</th>
                                         <th>Rol</th>
-                                        <th>Is Active</th>
+                                        <th>Activo</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -60,14 +60,14 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Last Name</th>
+                                        <th>#</th>
                                         <th>CI</th>
-                                        <th>Phone</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Telefono</th>
                                         <th>Email</th>
                                         <th>Rol</th>
-                                        <th>Is Active</th>
+                                        <th>Activo</th>
                                         <th>Actions</th>
                                     </tr>
                                 </tfoot>
@@ -75,7 +75,8 @@
                         </div>
                     </div>
 
-                    <div class="modal fade" id="editUserForm" tabindex="-1" role="dialog" aria-labelledby="editUserFormLabel" aria-hidden="true">
+                    <div class="modal fade" id="editUserForm" tabindex="-1" role="dialog"
+                        aria-labelledby="editUserFormLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -84,13 +85,122 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form id="editForm">
+                                <form id="editForm" action="POST">
                                     <div class="modal-body">
-                                        
+                                        <div id="userDataForm">
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label for="cedula">Cedula</label>
+                                                    <div class="input-group">
+                                                        <input id="cedula" type="text" class="form-control"
+                                                            placeholder="Cedula....">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-id-card"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-6">
+                                                    <label for="nombre">Nombre</label>
+                                                    <div class="input-group">
+                                                        <input id="nombre" type="text" class="form-control"
+                                                            placeholder="Nombre....">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-user"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label for="apellido">Apellido</label>
+                                                    <div class="input-group">
+                                                        <input id="apellido" type="text" class="form-control"
+                                                            placeholder="Apellido....">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-user"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-6">
+                                                    <label for="email">Correo</label>
+                                                    <div class="input-group">
+                                                        <input id="email" type="email" class="form-control"
+                                                            placeholder="example@gmail.com">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-envelope"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label for="phone">Telefono</label>
+                                                    <div class="input-group">
+                                                        <input id="phone" type="phone" class="form-control"
+                                                            placeholder="+58 123 456 7890">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-phone"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-1 mt-3 button-style">
+                                            <div class="col-md-12">
+                                                <button type="button" class="btn btn-default"
+                                                    id="togglePassword">Modificar
+                                                    contraseña</button>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2" id="passwordSection" style="display: none;">
+                                            <div class="col-md-12">
+                                                <label for="user_password">Contraseña</label>
+                                                <div class="input-group">
+                                                    <input id="user_password" type="password"
+                                                        class="form-control password" placeholder="*****">
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text toggle-password">
+                                                            <span class="fas fa-eye-slash"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 mt-2">
+                                                <label for="retryPassword">Confirmar</label>
+                                                <div class="input-group">
+                                                    <input id="retryPassword" type="password"
+                                                        class="form-control password" placeholder="*****">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 mt-2 secure-password">
+                                                <span class="security-level"></span>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-primary" id="edit">Guardar</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary" id="editBtn">Guardar</button>
+                                        <button type="button" class="btn btn-primary" id="savePasswordBtn"
+                                            style="display: none;">Guardar Contraseña</button>
                                     </div>
                                 </form>
                             </div>

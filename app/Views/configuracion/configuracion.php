@@ -42,38 +42,81 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">All together</h3>
-
-                                    <div class="card-tools">
-
-                                        <button type="button" class="btn btn-tool" data-card-widget="maximize">
-                                            <i class="fas fa-expand"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-
+                            <div id="accordion">
+                                <div class="card card-outline card-secondary">
+                                    <div class="card-header" id="headingOne">
+                                        <div class="card-title">
+                                            <button type="button" class="btn btn-tool" data-toggle="collapse"
+                                                data-target="#collapseOne" aria-expanded="false"
+                                                aria-controls="collapseOne"><i class="fas fa-plus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-card-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                            </button>
+                                            <span class="card-subtitle">
+                                                Item #1
+                                            </span>
+                                        </div>
                                     </div>
-                                    <!-- /.card-tools -->
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    The body of the card
-                                </div>
-                                <!-- /.card-body -->
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                        data-parent="#accordion">
+                                        <div class="card-body">
 
-                                <div class="card-footer">
-                                    This is the card footer
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- /.card-footer -->
+                                <div class="card card-outline card-secondary">
+
+                                    <div class="card-header" id="headingTwo">
+                                        <div class="card-title">
+                                            <button type="button" class="btn btn-tool" data-toggle="collapse"
+                                                data-target="#collapseTwo" aria-expanded="false"
+                                                aria-controls="collapseTwo"><i class="fas fa-plus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-card-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                            </button>
+                                            <span class="card-subtitle">
+                                                Item #2
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                        data-parent="#accordion">
+                                        <div class="card-body">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-outline card-secondary">
+                                    <div class="card-header" id="headingThree">
+                                        <div class="card-title">
+                                            <button type="button" class="btn btn-tool" data-toggle="collapse"
+                                                data-target="#collapseThree" aria-expanded="false"
+                                                aria-controls="collapseThree"><i class="fas fa-plus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-card-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                            </button>
+                                            <span class="card-subtitle">
+                                                Item #2
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                        data-parent="#accordion">
+                                        <div class="card-body">
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="row">
-                        
+
                     </div>
                 </div>
 

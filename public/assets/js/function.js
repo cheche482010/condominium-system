@@ -142,6 +142,42 @@ function deleteConfirmation() {
         return false;
     })
 }
+
+function generarBotonesAccion(id) {
+    return `
+        <button id="edit" class="btn btn-primary btn-edit" alt="Editar" data-id="${id}">
+            <i class="fa fa-edit"></i>
+        </button>
+        <button id="delete" class="btn btn-danger btn-delete" alt="Eliminar" data-id="${id}">
+            <i class="fa fa-trash"></i>
+        </button>
+    `;
+}
+
+function rellenarFormulario(formId, data, campos) {
+    campos.forEach(campo => {
+        if (data.hasOwnProperty(campo)) {
+            $(`#${formId} #${campo}`).val(data[campo]);
+        }
+    });
+}
+
 $(document).on('click', '[data-dismiss="modal"]', function () {
     $(this).closest('.modal').modal('hide');
+    $('form')[0].reset();
+    $('.security-level').text('');
+});
+
+$('.toggle-password').click(function (e) {
+    e.preventDefault();
+    var passwordField = document.getElementById("user_password");
+    if (passwordField.type === "password") {
+        $(".password").attr("type", "text");
+        $(this).find('span').removeClass('fa-eye-slash').addClass('fa-eye');
+        $(".password").focus();
+    } else {
+        $(".password").attr("type", "password");
+        $(this).find('span').removeClass('fa-eye').addClass('fa-eye-slash');
+        $(".password").focus();
+    }
 });
