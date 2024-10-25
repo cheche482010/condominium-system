@@ -6,7 +6,7 @@
     <title><?= $this->config->get('APP_NAME'); ?></title>
     <?php include __DIR__ . "/../includes/link.php"; ?>
 
-    <link href="<?= $this->assetsView; ?>bitacora/list/list.scss" rel="stylesheet">
+    <link href="<?= $this->assetsView; ?>configuracion/configuracion.scss" rel="stylesheet">
     <?php include __DIR__ . "/../includes/data-table.php"; ?>
 </head>
 
@@ -54,14 +54,96 @@
                                                     class="fas fa-expand"></i>
                                             </button>
                                             <span class="card-subtitle">
-                                                Item #1
+                                                Bancos
                                             </span>
                                         </div>
                                     </div>
                                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
                                         data-parent="#accordion">
                                         <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <table class="table table-hover table-bordered" id="bancosTable"
+                                                        style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Código</th>
+                                                                <th>Nombre</th>
 
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Código</th>
+                                                                <th>Nombre</th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+                                                    <div class="modal fade" id="editBancForm" tabindex="-1"
+                                                        role="dialog" aria-labelledby="editFormLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg" role="dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="editFormLabel">
+                                                                        Editar Banco</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <form id="editForm" action="POST">
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 mb-2">
+                                                                                <label for="codigo">Codigo</label>
+                                                                                <div class="input-group">
+                                                                                    <input id="codigo" type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="0001">
+                                                                                    <div class="input-group-append">
+                                                                                        <div class="input-group-text">
+                                                                                            <span
+                                                                                                class="fas fa-hashtag"></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-12">
+                                                                                <label for="nombre">Nombre</label>
+                                                                                <div class="input-group">
+                                                                                    <input id="nombre" type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="Nombre....">
+                                                                                    <div class="input-group-append">
+                                                                                        <div class="input-group-text">
+                                                                                            <span
+                                                                                                class="fas fa-bookmark"></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Cancelar</button>
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            id="editBtn">Guardar</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -114,10 +196,6 @@
                         </div>
 
                     </div>
-
-                    <div class="row">
-
-                    </div>
                 </div>
 
             </section>
@@ -132,7 +210,7 @@
     <!-- ./wrapper -->
     <?php include __DIR__ . "/../includes/script.php"; ?>
 
-    <script src="<?= $this->assetsView; ?>bitacora/list/list.js"></script>
+    <script src="<?= $this->assetsView; ?>configuracion/configuracion.js"></script>
 </body>
 
 </html>

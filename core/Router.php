@@ -35,6 +35,7 @@ class Router
             'user/resetPassword'   => 'UserController@resetPassword',
             'condominio/list' => 'CondominioController@renderView|list',
             'condominio/register' => 'CondominioController@renderView|register',
+            'bancos/getAll'    => 'ConfiguracionController@getAll',
         ];
 
         $this->getSession();
