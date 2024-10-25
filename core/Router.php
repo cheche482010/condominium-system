@@ -23,6 +23,7 @@ class Router
             'home'           => 'RouterController@renderView|home',
             'contacto'       => 'RouterController@renderView|contacto',
             'login'          => 'UserController@renderView|login',
+            'bitacora'          => 'RouterController@renderView|bitacora',
             'user/register'  => 'UserController@renderView|register',
             'user/list'      => 'UserController@renderView|list',
             'user/create'    => 'UserController@create',

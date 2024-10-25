@@ -44,7 +44,7 @@ class SidebarMenuComponent extends Component
     {
         $url = isset($menuItem['url']) ? $menuItem['url'] : '#';
         echo "\t\t\t\t\t\t\t<li class=\"nav-item\">\n";
-        echo "\t\t\t\t\t\t\t\t<a href=\"" . $url . "\" class=\"nav-link\">\n";
+        echo "\t\t\t\t\t\t\t\t<a href=\"" . $GLOBALS["URL"]. $url . "\" class=\"nav-link\">\n";
         echo "\t\t\t\t\t\t\t\t\t<i class=\"" . (isset($menuItem['icon']) ? $menuItem['icon'] : '') . "\"></i>\n";
         echo "\t\t\t\t\t\t\t\t\t<p>\n";
         echo "\t\t\t\t\t\t\t\t\t\t".$menuItem['label']."\n";
