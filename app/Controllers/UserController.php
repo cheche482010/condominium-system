@@ -262,6 +262,27 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
+    public function resetPassword()
+    {
+        $this->isPostRequest();
+
+        $data = $this->datos["user_data"];
+
+        try {
+            $result = $this->model->execute('resetPassword', $data, 'update');
+            if ($result) {
+                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Contraseña actualizada con éxito');
+            } else {
+                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo actualizar la contraseña');
+            }
+        } catch (\PDOException $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al actualizar la contraseña.', $errorMessage);
+        }
+
+        return $this->respuesta;
+    }
+
     public function logout()
     {
         session_start();

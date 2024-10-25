@@ -97,7 +97,7 @@ $(document).ready(function () {
                 user_data: userData,
             },
             success: function(data) {
-                console.log(data);
+                
                 if (!handleErrorValidate(data) || !handleError(data)) {
                     return; 
                 }
@@ -106,8 +106,8 @@ $(document).ready(function () {
                 $('#editUserForm').modal('hide');
 
                 Swal.fire({
-                    title: 'Registro Exitoso',
-                    text: 'Se ha registrado el usuario con éxito. Bienvenido a nuestro sistema!',
+                    title: 'Usuario Actualizado',
+                    text: 'Se ha actualizado el usuario con éxito.',
                     icon: 'success',
                     confirmButtonText: 'Continuar'
                 });
@@ -126,6 +126,43 @@ $(document).ready(function () {
     $('#savePasswordBtn').on('click', function() {
         const userPassword = $('#user_password').val();
         const retryPassword = $('#retryPassword').val();
+
+        const userData = {
+            id: selectedUserId,
+            user_password: userPassword,
+        };
+        
+        $.ajax({
+            url:  `../api/user/resetPassword`,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                user_data: userData,
+            },
+            success: function(data) {
+                console.log(data);
+                if (!handleError(data)) {
+                    return; 
+                }
+
+                $('#editUserForm').modal('hide');
+
+                Swal.fire({
+                    title: 'Contraseña Actualizada',
+                    text: 'La contrase ha sido actualiza con exito.',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                });
+            },
+            error: function(error) {
+                console.error(error);
+                Swal.fire({
+                    title: 'Error al alctualizar',
+                    text: 'Ha ocurrido un error al intentar alctualizar. Por favor, inténtelo nuevamente.',
+                    icon: 'error'
+                });
+            }
+        });
     });
 
     $togglePasswordBtn.on('click', function() {
