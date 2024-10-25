@@ -1,6 +1,6 @@
 let table = $("#bancosTable").DataTable({
     ajax: {
-        url: 'api/user/getAll',
+        url: 'api/bancos/getAll',
     },
     columns: [
         {
@@ -14,7 +14,7 @@ let table = $("#bancosTable").DataTable({
             }
         },
         {
-            data: 'cedula'
+            data: 'codigo'
         },
         {
             data: 'nombre'
@@ -46,7 +46,7 @@ let table = $("#bancosTable").DataTable({
             className: 'btn-primary',
             action: function () {
                 if (selectedRow) {
-                    alert('Editando: ' + selectedRow.nombre); 
+                    $('#editBancForm').modal('show');
                 } else {
                     alert('Por favor, selecciona una fila para editar.');
                 }

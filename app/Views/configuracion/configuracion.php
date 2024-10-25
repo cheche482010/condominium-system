@@ -84,6 +84,64 @@
                                                             </tr>
                                                         </tfoot>
                                                     </table>
+
+                                                    <div class="modal fade" id="editBancForm" tabindex="-1"
+                                                        role="dialog" aria-labelledby="editFormLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg" role="dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="editFormLabel">
+                                                                        Editar Banco</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <form id="editForm" action="POST">
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 mb-2">
+                                                                                <label for="codigo">Codigo</label>
+                                                                                <div class="input-group">
+                                                                                    <input id="codigo" type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="0001">
+                                                                                    <div class="input-group-append">
+                                                                                        <div class="input-group-text">
+                                                                                            <span
+                                                                                                class="fas fa-hashtag"></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-12">
+                                                                                <label for="nombre">Nombre</label>
+                                                                                <div class="input-group">
+                                                                                    <input id="nombre" type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="Nombre....">
+                                                                                    <div class="input-group-append">
+                                                                                        <div class="input-group-text">
+                                                                                            <span
+                                                                                                class="fas fa-bookmark"></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Cancelar</button>
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            id="editBtn">Guardar</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
