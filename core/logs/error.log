@@ -75,3 +75,297 @@
     "methodName": "App\\Controllers\\UserController::update",
     "timestamp": "2024-10-24 21:26:36"
 }
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:15:24"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:16:35"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:16:53"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:17:00"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:17:08"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:18:21"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:19:08"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:19:28"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:19:34"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:20:05"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:20:08"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:20:11"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:20:17"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:20:20"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:21:49"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:22:27"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:22:35"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:23:10"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:23:38"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:23:44"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S02",
+    "sqlState": "42S02",
+    "sqlMessage": 1146,
+    "line": 69,
+    "message": "SQLSTATE[42S02]: Base table or view not found: 1146 Table 'condominium-system.usuarios' doesn't exist",
+    "pdoCode": "Table 'condominium-system.usuarios' doesn't exist",
+    "file": "C:\\xampp\\htdocs\\dashboard\\www\\condominium-system\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAll",
+    "timestamp": "2024-10-24 20:24:08"
+}

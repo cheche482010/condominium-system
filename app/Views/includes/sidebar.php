@@ -14,56 +14,119 @@
             $this->SidebarMenu([
                 [
                     'type'  => 'header',
-                    'label' => 'MULTI LEVEL EXAMPLE',
+                    'label' => 'MENU',
                 ],
                 [
-                    'url'   => '#',
-                    'icon'  => 'fas fa-circle nav-icon',
-                    'label' => 'Level 1',
+                    'url'   => 'home',
+                    'icon'  => 'fas fa-home nav-icon',
+                    'label' => 'INICIO',
                 ],
                 [
                     'url'      => '#',
-                    'icon'     => 'nav-icon fas fa-circle',
-                    'label'    => 'Level 1',
+                    'icon'     => 'nav-icon fa fa-user-circle',
+                    'label'    => 'USUARIOS',
                     'subItems' => [
                         [
-                            'url'   => '#',
-                            'icon'  => 'far fa-circle nav-icon',
-                            'label' => 'Level 2',
+                            'url'   => 'user/register',
+                            'icon'  => 'fa fa-plus-circle nav-icon',
+                            'label' => 'REGISTRAR',
                         ],
                         [
-                            'url'      => '#',
-                            'icon'     => 'far fa-circle nav-icon',
-                            'label'    => 'Level 2',
-                            'subItems' => [
-                                [
-                                    'url'   => '#',
-                                    'icon'  => 'far fa-dot-circle nav-icon',
-                                    'label' => 'Level 3',
-                                ],
-                                [
-                                    'url'   => '#',
-                                    'icon'  => 'far fa-dot-circle nav-icon',
-                                    'label' => 'Level 3',
-                                ],
-                                [
-                                    'url'   => '#',
-                                    'icon'  => 'far fa-dot-circle nav-icon',
-                                    'label' => 'Level 3',
-                                ],
-                            ],
-                        ],
-                        [
-                            'url'   => '#',
-                            'icon'  => 'far fa-circle nav-icon',
-                            'label' => 'Level 2',
+                            'url'   => 'user/list',
+                            'icon'  => 'fa fa-list nav-icon',
+                            'label' => 'LISTA',
                         ],
                     ],
                 ],
                 [
-                    'url'   => '#',
-                    'icon'  => 'fas fa-circle nav-icon',
-                    'label' => 'Level 1',
+                    'url'      => '#',
+                    'icon'     => 'nav-icon fa fa-building',
+                    'label'    => 'CONDOMINIOS',
+                    'subItems' => [
+                        [
+                            'url'   => 'condominio/register',
+                            'icon'  => 'fa fa-plus-circle nav-icon',
+                            'label' => 'REGISTRAR',
+                        ],
+                        [
+                            'url'   => 'condominio/list',
+                            'icon'  => 'fa fa-list nav-icon',
+                            'label' => 'LISTA',
+                        ],
+                    ],
+                ],
+                [
+                    'url'      => '#',
+                    'icon'     => 'nav-icon fas fa-dollar-sign',
+                    'label'    => 'PAGOS',
+                    'subItems' => [
+                        [
+                            'url'   => 'pago/register',
+                            'icon'  => 'fa fa-plus-circle nav-icon',
+                            'label' => 'PROCESAR',
+                        ],
+                        [
+                            'url'   => 'pago/list',
+                            'icon'  => 'fa fa-list nav-icon',
+                            'label' => 'LISTA',
+                        ],
+                    ],
+                ],
+                [
+                    'url'      => '#',
+                    'icon'     => 'nav-icon fa fa-money-bill-wave',
+                    'label'    => 'GASTOS',
+                    'subItems' => [
+                        [
+                            'url'   => 'gasto/register',
+                            'icon'  => 'fa fa-plus-circle nav-icon',
+                            'label' => 'AGREGAR',
+                        ],
+                        [
+                            'url'   => 'gasto/list',
+                            'icon'  => 'fa fa-list nav-icon',
+                            'label' => 'LISTA',
+                        ],
+                    ],
+                ],
+                [
+                    'type'  => 'header',
+                    'label' => 'REPORTES',
+                ],
+                [
+                    'url'      => '#',
+                    'icon'     => 'nav-icon fas fa-receipt',
+                    'label'    => 'RELACION DE GASTOS',
+                    'subItems' => [
+                        [
+                            'url'   => 'user/register',
+                            'icon'  => 'fa fa-building nav-icon',
+                            'label' => 'POR CONDOMINIO',
+                        ],
+                        [
+                            'url'   => 'user/list',
+                            'icon'  => 'fa fa-users nav-icon',
+                            'label' => 'POR USUARIO',
+                        ],
+                    ],
+                ],
+                [
+                    'type'  => 'header',
+                    'label' => 'SEGURIDAD',
+                ],
+                [
+                    'url'   => 'bitacora',
+                    'icon'  => 'fa fa-calendar nav-icon',
+                    'label' => 'BITACORA',
+                ],
+                [
+                    'type'  => 'header',
+                    'label' => 'ADMINISTRACION',
+                ],
+                [
+                    'url'   => 'configuracion',
+                    'icon'  => 'fa fa-cog nav-icon',
+                    'label' => 'CONFIGURACION',
                 ],
             ])->view();
             ?>
