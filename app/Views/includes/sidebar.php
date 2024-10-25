@@ -119,7 +119,15 @@
                     'icon'  => 'fa fa-calendar nav-icon',
                     'label' => 'BITACORA',
                 ],
-
+                [
+                    'type'  => 'header',
+                    'label' => 'ADMINISTRACION',
+                ],
+                [
+                    'url'   => 'configuracion',
+                    'icon'  => 'fa fa-cog nav-icon',
+                    'label' => 'CONFIGURACION',
+                ],
             ])->view();
             ?>
             <!-- /.sidebar -->

@@ -22,6 +22,7 @@ class Router
             'swagger'        => 'RouterController@swgger',
             'home'           => 'RouterController@renderView|home',
             'contacto'       => 'RouterController@renderView|contacto',
+            'configuracion'       => 'RouterController@renderView|configuracion',
             'login'          => 'UserController@renderView|login',
             'bitacora'          => 'RouterController@renderView|bitacora',
             'user/register'  => 'UserController@renderView|register',
