@@ -33,6 +33,7 @@ class BaseController
         $this->config = new Config();
         $this->session = $_SESSION;
         $this->error = new ErrorController();
+        $GLOBALS["URL"] = $this->getFullUrl();
     }
 
     protected function createComponent($className, $data = [])

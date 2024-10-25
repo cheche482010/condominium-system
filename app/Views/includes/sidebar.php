@@ -17,7 +17,7 @@
                     'label' => 'MENU',
                 ],
                 [
-                    'url'   => '../home',
+                    'url'   => 'home',
                     'icon'  => 'fas fa-home nav-icon',
                     'label' => 'INICIO',
                 ],
@@ -27,12 +27,12 @@
                     'label'    => 'USUARIOS',
                     'subItems' => [
                         [
-                            'url'   => '../user/register',
+                            'url'   => 'user/register',
                             'icon'  => 'fa fa-plus-circle nav-icon',
                             'label' => 'REGISTRAR',
                         ],
                         [
-                            'url'   => '../user/list',
+                            'url'   => 'user/list',
                             'icon'  => 'fa fa-list nav-icon',
                             'label' => 'LISTA',
                         ],
@@ -44,12 +44,12 @@
                     'label'    => 'CONDOMINIOS',
                     'subItems' => [
                         [
-                            'url'   => '../condominio/register',
+                            'url'   => 'condominio/register',
                             'icon'  => 'fa fa-plus-circle nav-icon',
                             'label' => 'REGISTRAR',
                         ],
                         [
-                            'url'   => '../condominio/list',
+                            'url'   => 'condominio/list',
                             'icon'  => 'fa fa-list nav-icon',
                             'label' => 'LISTA',
                         ],
@@ -61,12 +61,12 @@
                     'label'    => 'PAGOS',
                     'subItems' => [
                         [
-                            'url'   => '../pago/register',
+                            'url'   => 'pago/register',
                             'icon'  => 'fa fa-plus-circle nav-icon',
                             'label' => 'PROCESAR',
                         ],
                         [
-                            'url'   => '../pago/list',
+                            'url'   => 'pago/list',
                             'icon'  => 'fa fa-list nav-icon',
                             'label' => 'LISTA',
                         ],
@@ -78,12 +78,12 @@
                     'label'    => 'GASTOS',
                     'subItems' => [
                         [
-                            'url'   => '../gasto/register',
+                            'url'   => 'gasto/register',
                             'icon'  => 'fa fa-plus-circle nav-icon',
                             'label' => 'AGREGAR',
                         ],
                         [
-                            'url'   => '../gasto/list',
+                            'url'   => 'gasto/list',
                             'icon'  => 'fa fa-list nav-icon',
                             'label' => 'LISTA',
                         ],
@@ -99,13 +99,13 @@
                     'label'    => 'RELACION DE GASTOS',
                     'subItems' => [
                         [
-                            'url'   => '../user/register',
-                            'icon'  => 'fa fa-list nav-icon',
+                            'url'   => 'user/register',
+                            'icon'  => 'fa fa-building nav-icon',
                             'label' => 'POR CONDOMINIO',
                         ],
                         [
-                            'url'   => '../user/list',
-                            'icon'  => 'fa fa-list nav-icon',
+                            'url'   => 'user/list',
+                            'icon'  => 'fa fa-users nav-icon',
                             'label' => 'POR USUARIO',
                         ],
                     ],
@@ -115,11 +115,19 @@
                     'label' => 'SEGURIDAD',
                 ],
                 [
-                    'url'   => '../bitacora/list',
-                    'icon'  => 'fa fa-book nav-icon',
+                    'url'   => 'bitacora',
+                    'icon'  => 'fa fa-calendar nav-icon',
                     'label' => 'BITACORA',
                 ],
-
+                [
+                    'type'  => 'header',
+                    'label' => 'ADMINISTRACION',
+                ],
+                [
+                    'url'   => 'configuracion',
+                    'icon'  => 'fa fa-cog nav-icon',
+                    'label' => 'CONFIGURACION',
+                ],
             ])->view();
             ?>
             <!-- /.sidebar -->
