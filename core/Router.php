@@ -32,6 +32,7 @@ class Router
             'user/auth'      => 'UserController@auth',
             'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
+            'user/deactivate/:id'   => 'UserController@deactivate',
             'user/resetPassword'   => 'UserController@resetPassword',
             'condominio/list' => 'CondominioController@renderView|list',
             'condominio/register' => 'CondominioController@renderView|register',
