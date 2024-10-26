@@ -16,3 +16,19 @@ VALUES
     ('0117', 'Banco Comercial Latino', 1),
     ('0118', 'Banco Continental', 1),
     ('0119', 'Banco Caribe', 1);
+
+-- DATOS PERMISOS 
+INSERT INTO roles (nombre, descripcion)
+VALUES ('user', 'Usuario básico'),
+       ('admin', 'Administrador del negocio'),
+       ('dev', 'Desarrollador');
+
+INSERT INTO permisos (nombre, descripcion)
+VALUES ('ver_pagos', 'Verificar pagos'),
+       ('consultar_deudas', 'Consultar deudas'),
+       ('verificar_pagos', 'Verificar pagos'),
+       ('administracion_negocio', 'Administrar el negocio'),
+       ('configuracion_web', 'Configurar el sitio web'),
+       ('gestion_banco', 'Gestionar bancos'),
+       ('gestion_tipos_pago', 'Gestionar tipos de pago'),
+       ('gestion_condominios_websites', 'Gestionar condominios_websites');
