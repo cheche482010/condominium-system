@@ -6,6 +6,8 @@ class UserController extends BaseController
 {
     private $datos;
     private $respuesta;
+    private $maxAttempts = 5;
+    private $attemptCount = 0;
 
     public function __construct()
     {
@@ -116,9 +118,9 @@ class UserController extends BaseController
                 $response = $data; 
             }
 
-            $this->respuesta = $this->response(200, true, 'success', 'Usuarios obtenidos con éxito', $response);
+            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Usuarios obtenidos con éxito', $response);
         } catch (\Exception $e) {
-            $this->respuesta = $this->response(500, false, 'error', 'Error al obtener los usuarios: ' . $e->getMessage());
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los usuarios: ' . $e->getMessage());
         }
 
         return $this->respuesta;
@@ -129,9 +131,9 @@ class UserController extends BaseController
         $this->isGetRequest();
         try {
             $data = $this->model->execute('getById', ['usuarioId' => $id], 'single');
-            $this->respuesta = $this->response(200, true, 'success', 'usuario obtenido con éxito', $data);
+            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario obtenido con éxito', $data);
         } catch (\Exception $e) {
-            $this->respuesta = $this->response(500, false, 'error', 'Error al obtener el usuario: ' . $e->getMessage());
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener el usuario: ' . $e->getMessage());
         }
 
         return $this->respuesta;
@@ -211,19 +213,62 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    public function delete($id)
+    public function deactivate($id)
     {
-        $this->isDeleteRequest();
-
+        $this->isPostRequest();
+        $this->handleAuthorization();
+        
         try {
-            $result = $this->model->execute('delete', ['usuarioId' => $id], 'delete');
-            if ($result) {
-                $this->respuesta = $this->response(200, true, 'success', 'usuario eliminado con éxito');
-            } else {
-                $this->respuesta = $this->response(400, false, 'error', 'No se pudo eliminar el usuario');
+            $this->model->db->beginTransaction();
+            
+            $sanitizedId = intval(filter_var($id, FILTER_SANITIZE_NUMBER_INT));
+
+            if (!$sanitizedId) {
+                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'ID inválido');
+                $this->model->db->rollBack();
+                return $this->respuesta;
             }
-        } catch (\Exception $e) {
-            $this->respuesta = $this->response(500, false, 'error', 'Error al eliminar el usuario: ' . $e->getMessage());
+
+            $userId = $this->model->execute('getById', ['id' => $sanitizedId], 'single');
+
+            if (!$userId) {
+                $this->respuesta = $this->response(self::HTTP_NOT_FOUND, false, 'error', 'Usuario no encontrado');
+                return $this->respuesta;
+            }
+
+
+            if ($this->attemptCount >= $this->maxAttempts) {
+                $this->respuesta = $this->response(self::HTTP_TOO_MANY_REQUESTS, false, 'error', 'Demasiados intentos de desactivación');
+                $this->model->db->rollBack();
+                return $this->respuesta;
+            }
+            
+            $this->attemptCount++;
+
+            $result = $this->model->execute('deactivate', ['id' => $sanitizedId]);
+
+            if ($result) {
+                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario desactivado con éxito',
+                [
+                    'id' => $sanitizedId,
+                    'estado' => 'desactivado'
+                ]
+            );
+            } else {
+                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo desactivar el usuario');
+            }
+
+            $this->model->db->commit();
+        } catch (\PDOException $e) {
+            if ($e->getCode() === 'HY000' && strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                $errorMessage = $this->handlePDOExption($e, __METHOD__);
+                $this->respuesta = $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'El usuario ya está desactivado',$errorMessage);
+            }
+            $this->model->db->rollBack();
+        } catch (\PDOException $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al desactivar usuario', $errorMessage);
+            $this->model->db->rollBack();
         }
 
         return $this->respuesta;
@@ -253,10 +298,10 @@ class UserController extends BaseController
             }
             
             $this->initializeSession($user);
-            $this->respuesta = $this->response(200, true, 'success', 'Inicio de sesión exitoso', $user);
+            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Inicio de sesión exitoso', $user);
 
         } catch (\Exception $e) {
-            $this->respuesta = $this->response(500, false, 'error', 'Error al iniciar sesión: ' . $e->getMessage());
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al iniciar sesión: ' . $e->getMessage());
         }
 
         return $this->respuesta;
@@ -289,7 +334,7 @@ class UserController extends BaseController
         session_unset();
         session_destroy();
 
-        return $this->response(200, true, 'success', 'Cierre de sesión exitoso');
+        return $this->response(self::HTTP_OK, true, 'success', 'Cierre de sesión exitoso');
     }
 
     private function validateData($data,  $context = 'create')

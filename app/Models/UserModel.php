@@ -21,7 +21,7 @@ class UserModel extends BaseModel
         parent::__construct();
 
         $this->sql = [
-            'getAll' => "SELECT * FROM usuarios",
+            'getAll' => "SELECT * FROM usuarios WHERE is_active = TRUE",
             'getAllPaginated' => "SELECT * FROM usuarios LIMIT :limit OFFSET :offset",
             'getCount' => "SELECT COUNT(*) as total FROM usuarios",
             'getById' => "SELECT (id, nombre, apellido, cedula, phone, email, user_password, rol, token, is_active) FROM usuarios WHERE id = :id",
@@ -30,7 +30,8 @@ class UserModel extends BaseModel
             'updateUser' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email WHERE id = :id",
             'resetPassword' => "UPDATE usuarios SET user_password = :user_password WHERE id = :id",
             'delete' => "DELETE FROM usuarios WHERE id = :id",
-            'getWebsiteByShortcode' => "SELECT * FROM websites WHERE shortcode = :shortcode LIMIT 1", 
+            'deactivate' => "UPDATE usuarios SET is_active = FALSE WHERE id = :id",
+            'getWebsiteByShortcode' => "SELECT * FROM websites WHERE shortcode = :shortcode LIMIT 1",  
         ];               
     }
 
