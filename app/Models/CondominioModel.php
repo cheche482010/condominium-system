@@ -17,7 +17,7 @@ class CondominioModel extends BaseModel
         parent::__construct();
 
         $this->sql = [
-            'getAll' => "",
+            'getAll' => "SELECT c.id, c.nombre, c.deuda, c.alicuota, c.is_active, cw.shortcode FROM condominios c JOIN condominios_websites cw ON c.condominio_id_website = cw.id WHERE c.is_active = TRUE ORDER BY c.nombre ASC;",
             'getById' => "",
             'create' => "",
             'update' => "",

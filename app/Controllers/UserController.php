@@ -370,6 +370,60 @@ class UserController extends BaseController
         return $sanitizedData;
     }
 
+    public function assignRoleToUser($userId, $roleId)
+    {
+        $this->isPostRequest();
+        $this->handleAuthorization();
+
+        try {
+            $result = $this->model->execute('assignRoleToUser', ['userId' => $userId, 'roleId' => $roleId], 'update');
+            if ($result) {
+                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Rol asignado correctamente');
+            } else {
+                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo asignar el rol');
+            }
+        } catch (\PDOException $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al asignar el rol:', $errorMessage);
+        }
+
+        return $this->respuesta;
+    }
+
+    public function removeRoleFromUser($userId, $roleId)
+    {
+        $this->isPostRequest();
+        $this->handleAuthorization();
+
+        try {
+            $result = $this->model->execute('removeRoleFromUser', ['userId' => $userId, 'roleId' => $roleId], 'update');
+            if ($result) {
+                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Rol removido correctamente');
+            } else {
+                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo remover el rol');
+            }
+        } catch (\PDOException $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al remover el rol:', $errorMessage);
+        }
+
+        return $this->respuesta;
+    }
+
+    public function getPermissions($userId)
+    {
+        $this->isGetRequest();
+        try {
+            $permissions = $this->model->execute('getUserPermissions', ['id' => $userId], 'all');
+            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Permisos obtenidos correctamente', $permissions);
+        } catch (\Exception $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los permisos:', $errorMessage);
+        }
+
+        return $this->respuesta;
+    }
+
     public function renderView($viewName)
     {
         try {

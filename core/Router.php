@@ -35,6 +35,7 @@ class Router
             'user/deactivate/:id'   => 'UserController@deactivate',
             'user/resetPassword'   => 'UserController@resetPassword',
             'condominio/list' => 'CondominioController@renderView|list',
+            'condominio/getAll'    => 'CondominioController@getAll',
             'condominio/register' => 'CondominioController@renderView|register',
             'bancos/getAll'    => 'ConfiguracionController@getAll',
         ];
