@@ -122,6 +122,18 @@
 
                                         <div class="row mb-2">
                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="condominio">Condominio</label>
+                                                    <select id="condominio" name="condominio"
+                                                        class="form-control custom-select">
+                                                        <option value="">Seleccione un condominio</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
                                                 <label for="user_password">Contraseña</label>
                                                 <div class="input-group">
                                                     <input id="user_password" type="password"
@@ -160,8 +172,7 @@
                                             <div class="col-12">
                                                 <button id="register" type="button"
                                                     class="btn btn-primary">Register</button>
-                                                <button id="clear" type="button"
-                                                    class="btn btn-danger">Limpiar</button>
+                                                <button id="clear" type="button" class="btn btn-danger">Limpiar</button>
                                             </div>
                                             <!-- /.col -->
                                         </div>
@@ -188,3 +199,43 @@
 </body>
 
 </html>
+
+<div class="form-group">
+    <label for="condominio">Condominio</label>
+    <select id="condominio" name="condominio" class="form-control custom-select">
+        <option value="">Seleccione un condominio</option>
+    </select>
+</div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#condominio').selectpicker({
+        liveSearch: true,
+        liveSearchNormalize: false,
+        size: 10,
+        style: 'btn btn-default'
+    });
+
+    fetch('../condominio/getAll', {
+            method: 'GET',
+            headers: {
+                'API-Key': 'CA'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            var options = '<option value="">Seleccione un condominio</option>';
+            $.each(data.data, function(index, item) {
+                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
+            });
+            $('#condominio').html(options);
+            $('#condominio').selectpicker('refresh');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+});
+</script>
