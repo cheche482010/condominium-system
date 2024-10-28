@@ -22,6 +22,7 @@ class CondominioModel extends BaseModel
             'create' => "",
             'update' => "",
             'delete' => "",
+            'getWebsiteByShortcode' => "SELECT shortcode  FROM condominios_websites WHERE shortcode = :shortcode LIMIT 1",
         ];               
     }
 
