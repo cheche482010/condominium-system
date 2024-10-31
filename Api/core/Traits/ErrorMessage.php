@@ -43,6 +43,7 @@ trait ErrorMessage
     protected function handle404Error(string $message = ''): void
     {
         http_response_code(self::HTTP_NOT_FOUND);
+        header("HTTP/1.0 404 Not Found");
         header('Content-Type: application/json');
         echo json_encode(
             $this->response(self::HTTP_NOT_FOUND, false, 'error', $message ?: self::MSG_NOT_FOUND),
