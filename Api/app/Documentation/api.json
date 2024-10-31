@@ -15,7 +15,7 @@
           "description": "Servidor de la aplicación"
         },
         "repository": {
-          "default": "api-condominio",
+          "default": "condominium-system",
           "description": "repositorio de la api"
         }
       }
