@@ -1,11 +1,12 @@
 <?php
+define('URL', (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']) . "/");
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $route = str_replace('/www/proyectos/condominium-system/', '', $uri);
 
 if (empty($route) || $route === '/') {
-    $route = 'home/home';
+    $route = 'home';
 } else {
     $route = trim($route, '/');
 }
