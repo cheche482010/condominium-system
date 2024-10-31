@@ -3,7 +3,7 @@
 
 <head>
     <?php include __DIR__ . "/../includes/meta.php"; ?>
-    <title><?= $this->config->get('APP_NAME'); ?></title>
+    <title><?= TITLE; ?></title>
     <?php include __DIR__ . "/../includes/link.php"; ?>
 </head>
 
@@ -22,16 +22,21 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <?php
-              $this->ContentHeader([
-                  'titulo' =>  "Contacto",  
-                  'links' => [
-                      ['label' =>  $this->config->get('APP_NAME') ,'active' => true],
-                      ['label' => 'Contacto', 'url' => 'home'],
-                  ],
-              ])->view();
-            ?>
-
+            <div class='content-header'>
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Contacto</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item active">Condominium System</li>
+                                <li class="breadcrumb-item"><a href="home">Inicio</a></li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
             <!-- /.content-header -->
 
             <!-- Main content -->
@@ -64,7 +69,7 @@
                                                             </ul>
                                                         </div>
                                                         <div class="col-5 text-center">
-                                                            <img src="<?= $this->assets . 'img/sethar.png'; ?>"
+                                                            <img src="<?= URL . 'Frontend/assets/img/sethar.png'; ?>"
                                                                 alt="user-avatar" class="img-circle img-fluid"
                                                                 width="100">
                                                         </div>
