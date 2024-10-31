@@ -3,7 +3,7 @@
 
 <head>
     <?php include __DIR__ . "/../includes/meta.php"; ?>
-    <title>Condominium System</title>
+    <title><?= TITLE; ?></title>
     <?php include __DIR__ . "/../includes/link.php"; ?>
 </head>
 
