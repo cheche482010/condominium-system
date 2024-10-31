@@ -1,0 +1,14 @@
+====================================
+{
+    "httpMethod": "GET",
+    "code": 1045,
+    "sqlState": "HY000",
+    "sqlMessage": 1045,
+    "line": 47,
+    "message": "SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)",
+    "pdoCode": "Access denied for user 'root'@'localhost' (using password: YES)",
+    "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+    "className": "Core\\Database\\Connection",
+    "methodName": "Core\\Database\\Connection::connect",
+    "timestamp": "2024-11-01 00:42:49"
+}

@@ -4,7 +4,7 @@ define("TITLE", "Condominium System");
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$route = str_replace('/www/proyectos/condominium-system/', '', $uri);
+$route = str_replace('/www/condominium-system/', '', $uri);
 
 if (empty($route) || $route === '/') {
     $route = 'home';
