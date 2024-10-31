@@ -1,7 +1,7 @@
 <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake"
-                src="http://localhost/www/proyectos/condominium-system/Frontend/assets/img/logo.jpg" alt="Logo"
+                src="<?= URL; ?>Frontend/assets/img/logo.jpg" alt="Logo"
                 height="60" width="60">
         </div>
 

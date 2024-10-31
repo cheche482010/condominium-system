@@ -1,13 +1,13 @@
 
-	<link rel="icon" href="http://localhost/www/proyectos/condominium-system/Frontend/assets/img/logo.jpg" type="image/x-icon" >
+	<link rel="icon" href="<?= URL; ?>Frontend/assets/img/logo.jpg" type="image/x-icon" >
 
-	<link rel="stylesheet" href="http://localhost/www/proyectos/condominium-system/Frontend/assets/plugins/fontawesome-free/css/all.min.css" >
+	<link rel="stylesheet" href="<?= URL; ?>Frontend/assets/plugins/fontawesome-free/css/all.min.css" >
 
-	<link rel="stylesheet" href="http://localhost/www/proyectos/condominium-system/Frontend/assets/css/adminlte.min.css" >
+	<link rel="stylesheet" href="<?= URL; ?>Frontend/assets/css/adminlte.min.css" >
 
-	<link rel="stylesheet" href="http://localhost/www/proyectos/condominium-system/Frontend/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" >
+	<link rel="stylesheet" href="<?= URL; ?>Frontend/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" >
 
-	<link rel="stylesheet" href="http://localhost/www/proyectos/condominium-system/Frontend/assets/scss/style.scss" >
+	<link rel="stylesheet" href="<?= URL; ?>Frontend/assets/scss/style.scss" >
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" >
 
