@@ -6,9 +6,14 @@ class Validator
 {
     protected $errors = [];
     protected $patterns = [
+        "cedula" => "/^([0-9]{7,9})$/",
+        "rif" => "/^([vejpgVEJPG]{1})([0-9]{9})$/",
+        "string"  => "/^([A-Za-zñÑáéíóúÁÉÍÓÚ\s-]{2,50})+$/",
+        "phone" => "/0{0,2}([\+]?[\d]{1,3} ?)?([\(]([\d]{2,3})[)] ?)?[0-9][0-9 \-]{6,}( ?([xX]|([eE]xt[\.]?)) ?([\d]{1,5}))?/",
+        'password' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/',
         'numeric' => '/^[0-9]+$/',
         'alphanumeric' => '/^[a-zA-Z0-9]+$/',
-        'email' => '/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/', 
+        'email' => "/^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/", 
     ];
 
     public function validate($data, $rules)
@@ -29,13 +34,11 @@ class Validator
                         $this->$methodName($field, $data[$field] ?? null);
                     }
                 }
-
-        
-                if (strpos($rule, 'regex:') === 0) {
-                    $patternKey = substr($rule, 6);
-                    $this->validateRegex($field, $data[$field] ?? null, $patternKey);
-                }
-
+            }
+            
+            if (strpos($rule, 'regex:') === 0) {
+                $patternKey = substr($rule, 6);
+                $this->validateRegex($field, $data[$field] ?? null, $patternKey);
             }
         }
         return $this->errors;
@@ -64,13 +67,14 @@ class Validator
 
     public function validateRegex($field, $value, $patternKey)
     {
-        if (array_key_exists($patternKey, $this->patterns)) {
-            $pattern = $this->patterns[$patternKey];
-            if (!preg_match($pattern, $value)) {
-                $this->errors[$field][] = "$field no tiene el formato correcto según el patrón '$patternKey'.";
-            }
-        } else {
+        if (!array_key_exists($patternKey, $this->patterns)) {
             $this->errors[$field][] = "Patrón '$patternKey' no definido.";
+            return; 
+        }
+        
+        $pattern = $this->patterns[$patternKey];
+        if (!preg_match($pattern, $value)) {
+            $this->errors[$field][] = "$field no tiene el formato correcto según el patrón '$patternKey'.";
         }
     }
 }

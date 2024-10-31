@@ -8,27 +8,49 @@ class Router
 {
     private $routes = [];
     private $error;
+    private $session;
 
     public function __construct()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $this->error = new ErrorController();
 
         $this->routes = [
-            'home'           => 'HomeController@index',
+            'swagger'        => 'RouterController@swgger',
+            'home'           => 'RouterController@renderView|home',
+            'contacto'       => 'RouterController@renderView|contacto',
+            'configuracion'       => 'RouterController@renderView|configuracion',
             'login'          => 'UserController@renderView|login',
-            'users/create'   => 'UserController@create',
-            'users/login'    => 'UserController@login',
+            'bitacora'          => 'RouterController@renderView|bitacora',
+            'user/register'  => 'UserController@renderView|register',
+            'user/list'      => 'UserController@renderView|list',
+            'user/create'    => 'UserController@create',
+            'user/update'    => 'UserController@update',
+            'user/auth'      => 'UserController@auth',
+            'user/getAll'    => 'UserController@getAll',
             'user/get/:id'   => 'UserController@get',
+            'user/deactivate/:id'   => 'UserController@deactivate',
+            'user/resetPassword'   => 'UserController@resetPassword',
+            'condominio/list' => 'CondominioController@renderView|list',
+            'condominio/getAll'    => 'CondominioController@getAll',
+            'condominio/register' => 'CondominioController@renderView|register',
+            'bancos/getAll'    => 'ConfiguracionController@getAll',
         ];
+
+        $this->getSession();
     }
 
     public function route($url)
     {
         $url = $this->removeQueryString($url);
-        $url = empty($url) ? 'home' : $url;
-
+        $url = strtolower($url);
+        $url = $this->isAuthenticated($url);
+        
         foreach ($this->routes as $route => $action) {
-
+            $route = strtolower($route);
             $pattern = preg_replace('/(:\w+)/', '(\w+)', $route);
             $pattern = '#^' . $pattern . '$#';
 
@@ -54,7 +76,11 @@ class Router
             }
         }
 
-        $this->error->_404_();
+        if ($this->isApiRequest()) {
+            $this->sendApiNotFoundResponse();
+        } else {
+            $this->error->_404_();
+        }
     }
 
     private function removeQueryString($url)
@@ -63,5 +89,34 @@ class Router
             $url = substr($url, 0, $pos);
         }
         return $url;
+    }
+
+    private function isAuthenticated($url)
+    {
+        return (empty($this->session) && empty($url)) ? 'login' : (!empty($this->session) && empty($url) ? 'home' : $url);
+    }
+
+    private function getSession()
+    {
+        $this->session = isset($_SESSION['user']) && isset($_SESSION['user']['sesion_token']) ? $_SESSION['user'] : null;
+    }
+
+    private function isApiRequest()
+    {
+        return strpos($_GET['url'], 'api/') === 0;
+    }
+
+    private function sendApiNotFoundResponse()
+    {
+        http_response_code(404);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'code' => 404,
+            'status' => false,
+            'type' => 'error',
+            'message' => 'API endpoint not found',
+            'data' => null
+        ]);
+        exit();
     }
 }

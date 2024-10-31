@@ -2,24 +2,32 @@
 
 namespace Core\Database;
 
+ini_set("max_execution_time", "0");
+error_reporting(E_ERROR);
+
 use PDO;
 use PDOException;
+class DatabaseConnectionException extends PDOException {}
 
 class Connection
 {
+    use \Core\Traits\EnvironmentLoader;
+    use \Core\Traits\ErrorMessage;
+
     private static $instance;
     private $pdo;
     private $credentials;
 
     private function __construct()
     {
+        $this->loadEnvironmentVariables();
         $this->credentials = [
-            'Servidor'   => 'mysql',
-            'Host'       => 'localhost',
-            'Base_Datos' => 'condominium-system',
-            'Puerto'     => '3306',
-            'Usuario'    => 'root',
-            'Contraseña' => 'root',
+            'Servidor'   => $_ENV['DB_SERVER'],
+            'Host'       => $_ENV['DB_HOST'],
+            'Base_Datos' => $_ENV['DB_NAME'],
+            'Puerto'     => $_ENV['DB_PORT'],
+            'Usuario'    => $_ENV['DB_USER'],
+            'Contraseña' => $_ENV['DB_PASS'],
         ];
 
         $this->connect();
@@ -43,31 +51,43 @@ class Connection
             );
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            die("Error de conexión: " . $e->getMessage());
+            header('Content-Type: application/json');
+            $errorMessage = $this->formatErrorMessage($e, __METHOD__);
+            $errorMessageJson = json_encode($errorMessage, JSON_PRETTY_PRINT); 
+
+            throw new DatabaseConnectionException(
+                $errorMessageJson
+            );
         }
 
     }
+
     public function executeQuery($sql, $params = [])
     {
         try {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
             return $stmt;
-        } catch (PDOException $e) {
-            die("Error en la consulta: " . $e->getMessage());
+        } catch (PDOException $errorPdo) {
+            throw $errorPdo;
         }
     }
 
    
     public function getResults($sql, $params = [], $fetchOption = "all")
     {
-        $stmt = $this->executeQuery($sql, $params);
-       if ($fetchOption === "all") {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } elseif ($fetchOption === "single") {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } else {
-            throw new \InvalidArgumentException("Opción de obtención no válida: $fetchOption");
+        try {
+            $stmt = $this->executeQuery($sql, $params);
+            
+            if ($fetchOption === "all") {
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } elseif ($fetchOption === "single") {
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            } else {
+                throw new \InvalidArgumentException("Opción de obtención no válida: $fetchOption");
+            }
+        } catch (PDOException $errorPdo) {
+            throw $errorPdo; 
         }
     }
 
@@ -90,5 +110,4 @@ class Connection
     {
         $this->pdo->rollBack();
     }
-
 }

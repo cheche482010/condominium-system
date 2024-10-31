@@ -4,9 +4,44 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdf0e3945719bcfcc57666cc0e0fb8729
+class ComposerStaticInit1c92a5434419519767b56e2918f147b6
 {
+    public static $files = array (
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '0ccdf99b8f62f02c52cba55802e0c2e7' => __DIR__ . '/..' . '/zircote/swagger-php/src/functions.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Php80\\' => 23,
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Symfony\\Component\\Yaml\\' => 23,
+            'Symfony\\Component\\Finder\\' => 25,
+        ),
+        'P' => 
+        array (
+            'Psr\\Cache\\' => 10,
+            'PhpOption\\' => 10,
+        ),
+        'O' => 
+        array (
+            'OpenApi\\' => 8,
+        ),
+        'G' => 
+        array (
+            'GrahamCampbell\\ResultType\\' => 26,
+        ),
+        'D' => 
+        array (
+            'Dotenv\\' => 7,
+            'Doctrine\\Deprecations\\' => 22,
+            'Doctrine\\Common\\Lexer\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
+        ),
         'C' => 
         array (
             'Core\\' => 5,
@@ -18,6 +53,58 @@ class ComposerStaticInitdf0e3945719bcfcc57666cc0e0fb8729
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Php80\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Polyfill\\Ctype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+        'Symfony\\Component\\Yaml\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Symfony\\Component\\Finder\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/finder',
+        ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'PhpOption\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'OpenApi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zircote/swagger-php/src',
+        ),
+        'GrahamCampbell\\ResultType\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Doctrine\\Deprecations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/deprecations/lib/Doctrine/Deprecations',
+        ),
+        'Doctrine\\Common\\Lexer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/lexer/src',
+        ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
+        ),
         'Core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core',
@@ -29,37 +116,20 @@ class ComposerStaticInitdf0e3945719bcfcc57666cc0e0fb8729
     );
 
     public static $classMap = array (
-        'App\\Components\\ButtonComponent' => __DIR__ . '/../..' . '/app/Components/ButtonComponent.php',
-        'App\\Components\\CardComponent' => __DIR__ . '/../..' . '/app/Components/CardComponent.php',
-        'App\\Components\\Component' => __DIR__ . '/../..' . '/app/Components/Component.php',
-        'App\\Components\\ContentHeaderComponent' => __DIR__ . '/../..' . '/app/Components/ContentHeaderComponent.php',
-        'App\\Components\\FooterComponent' => __DIR__ . '/../..' . '/app/Components/FooterComponent.php',
-        'App\\Components\\ImageComponent' => __DIR__ . '/../..' . '/app/Components/ImageComponent.php',
-        'App\\Components\\LinkComponent' => __DIR__ . '/../..' . '/app/Components/LinkComponent.php',
-        'App\\Components\\MetaComponent' => __DIR__ . '/../..' . '/app/Components/MetaComponent.php',
-        'App\\Components\\NavbarNavComponent' => __DIR__ . '/../..' . '/app/Components/NavbarNavComponent.php',
-        'App\\Components\\NotificationsComponent' => __DIR__ . '/../..' . '/app/Components/NotificationsComponent.php',
-        'App\\Components\\PageHeaderComponent' => __DIR__ . '/../..' . '/app/Components/PageHeaderComponent.php',
-        'App\\Components\\ScriptComponent' => __DIR__ . '/../..' . '/app/Components/ScriptComponent.php',
-        'App\\Components\\SidebarMenuComponent' => __DIR__ . '/../..' . '/app/Components/SidebarMenuComponent.php',
-        'App\\Components\\SmallBoxComponent' => __DIR__ . '/../..' . '/app/Components/SmallBoxComponent.php',
-        'App\\Controllers\\BaseController' => __DIR__ . '/../..' . '/app/Controllers/BaseController.php',
-        'App\\Controllers\\ErrorController' => __DIR__ . '/../..' . '/app/Controllers/ErrorController.php',
-        'App\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Controllers/HomeController.php',
-        'App\\Models\\BaseModel' => __DIR__ . '/../..' . '/app/Models/BaseModel.php',
-        'App\\Models\\HomeModel' => __DIR__ . '/../..' . '/app/Models/HomeModel.php',
+        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Core\\Database\\Connection' => __DIR__ . '/../..' . '/core/Database/Connection.php',
-        'Core\\FrontController' => __DIR__ . '/../..' . '/core/FrontController.php',
-        'Core\\Router' => __DIR__ . '/../..' . '/core/Router.php',
+        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdf0e3945719bcfcc57666cc0e0fb8729::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdf0e3945719bcfcc57666cc0e0fb8729::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitdf0e3945719bcfcc57666cc0e0fb8729::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1c92a5434419519767b56e2918f147b6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1c92a5434419519767b56e2918f147b6::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1c92a5434419519767b56e2918f147b6::$classMap;
 
         }, null, ClassLoader::class);
     }
