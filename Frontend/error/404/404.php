@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-    
+
 <head>
     <title>404 Not Found</title>
-    <link rel="icon" type="image/x-icon" href="public/assets/img/404.png">
-    <link rel="stylesheet" href="app/Views/error/404/404.scss">
+    <link rel="icon" type="image/x-icon" href="<?=  $this->URL?>public/assets/img/404.png">
+    <link rel="stylesheet" href="<?=  $this->URL?>app/Views/error/404/404.scss">
 </head>
 
 <body>

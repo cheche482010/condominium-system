@@ -26,9 +26,9 @@
             <!-- Content Header (Page header) -->
             <?php
             $this->ContentHeader([
-                'titulo' =>  "Condominio" , 
+                'titulo' =>  "Condominios" , 
                 'links' => [
-                    ['label' =>  $this->config->get('APP_NAME'), 'url' => '#','active' => true],
+                    ['label' =>  "Condominios", 'url' => '#','active' => true],
                     ['label' => 'Listar', 'url' => 'javascript::void(0)'],
                 ],
             ])->view();
