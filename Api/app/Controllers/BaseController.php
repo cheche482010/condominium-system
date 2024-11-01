@@ -159,7 +159,7 @@ class BaseController
         $errorMessage = $this->formatErrorMessage($e, $method);
         $errorMessageJson = json_encode($errorMessage, JSON_PRETTY_PRINT);
         $errorLogEntry = "====================================\n{$errorMessageJson}\n";
-        error_log($errorLogEntry , 3, '../core/Logs/error.log');  
+        error_log($errorLogEntry , 3, 'core/Logs/error.log');  
 
         return $errorMessage;
     }

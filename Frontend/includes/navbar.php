@@ -12,10 +12,10 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a href="home" class="nav-link">Inicio</a>
+                    <a href="<?= URL; ?>home" class="nav-link">Inicio</a> 
                 </li>
                 <li class="nav-item">
-                    <a href="contacto" class="nav-link">Contacto</a>
+                    <a href="<?= URL; ?>contacto" class="nav-link">Contacto</a>
                 </li>
             </ul>
 

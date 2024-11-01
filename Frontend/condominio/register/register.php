@@ -3,12 +3,11 @@
 
 <head>
     <?php include __DIR__ . "/../../includes/meta.php"; ?>
-    <title><?= $this->config->get('APP_NAME'); ?></title>
+    <title><?= TITLE; ?></title>
     <?php include __DIR__ . "/../../includes/link.php"; ?>
 
-    <link href="<?= $this->assetsView; ?>condominio/register/register.scss" rel="stylesheet">
-    <?php include __DIR__ . "/../../includes/data-table.php"; ?>
-</head>
+    <link href="<?= URL; ?>Frontend/condominio/register/register.scss" rel="stylesheet">
+</head> 
 
 <body class="layout-navbar-fixed accent-primary layout-footer-fixed layout-fixed sidebar-mini sidebar-collapse">
     <div class="wrapper">
@@ -24,16 +23,21 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <?php
-            $this->ContentHeader([
-                'titulo' =>  $this->config->get('APP_NAME'),  
-                'links' => [
-                    ['label' =>  $this->config->get('APP_NAME'), 'url' => '#','active' => true],
-                    ['label' => 'Registrar', 'url' => 'javascript::void(0)'],
-                ],
-            ])->view();
-            ?>
-
+            <div class='content-header'>
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Condominios</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item active">Condominium System</li>
+                                <li class="breadcrumb-item"><a href="register">Registrar</a></li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
             <!-- /.content-header -->
 
             <!-- Main content -->
@@ -92,8 +96,7 @@
     <!-- ./wrapper -->
     <?php include __DIR__ . "/../../includes/script.php"; ?>
     
-
-    <script src="<?= $this->assetsView; ?>condominio/register/register.js"></script>
+    <script src="<?= URL; ?>Frontend/condominio/register/register.js"></script>
 </body>
 
 </html>
