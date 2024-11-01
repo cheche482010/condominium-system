@@ -3,8 +3,8 @@
 
 <head>
     <title>403 Forbidden</title>
-    <link rel="icon" type="image/x-icon" href="public/assets/img/403.svg">
-    <link rel="stylesheet" href="app/Views/error/403/403.scss">
+    <link rel="icon" type="image/x-icon" href="<?= URL; ?>Frontend/assets/img/403.svg">
+    <link rel="stylesheet" href="<?= URL; ?>Frontend/error/403/403.scss">
 </head>
 
 <body>
@@ -39,24 +39,7 @@
         <p>> <span>QUE TENGAS UN DÍA.</span></p>
     </div>
 
-
+    <script src="<?= URL; ?>Frontend/error/403/403.js"></script>
 </body>
 
 </html>
-
-<script>
-    var str = document.getElementsByTagName('div')[0].innerHTML.toString();
-    var i = 0;
-    document.getElementsByTagName('div')[0].innerHTML = "";
-
-    setTimeout(function() {
-        var se = setInterval(function() {
-            i++;
-            document.getElementsByTagName('div')[0].innerHTML = str.slice(0, i) + "|";
-            if (i == str.length) {
-                clearInterval(se);
-                document.getElementsByTagName('div')[0].innerHTML = str;
-            }
-        }, 5);
-    }, 0);
-</script>
