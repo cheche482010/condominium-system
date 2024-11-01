@@ -70,6 +70,66 @@ $(document).ready(function () {
         return true;
     }
 
+    function checkPasswordStrength() {
+        let password = $('#user_password').val();
+
+        let hasLowercase = /[a-z]/.test(password);
+        let hasUppercase = /[A-Z]/.test(password);
+        let hasNumber = /\d/.test(password);
+        let hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        let minLength = 4;
+        let maxLength = 20;
+
+        let strength = 0;
+
+        if (password.length < minLength) {
+            $('.progress-bar').width(`${(minLength / maxLength) * 100}%`);
+            updateSecurityLevel(`La contraseña debe tener al menos ${minLength} caracteres`);
+        } else if (password.length > maxLength) {
+            $('.progress-bar').width(`${(maxLength / maxLength) * 100}%`);
+            updateSecurityLevel(`La contraseña no debe exceder ${maxLength} caracteres`);
+        } else if (!hasLowercase) {
+            $('.progress-bar').width(`${(2 / 5) * 100}%`);
+            updateSecurityLevel('Falta minúsculas');
+        } else if (!hasUppercase) {
+            $('.progress-bar').width(`${(2 / 5) * 100}%`);
+            updateSecurityLevel('Falta mayúsculas');
+        } else if (!hasNumber) {
+            $('.progress-bar').width(`${(2 / 5) * 100}%`);
+            updateSecurityLevel('Falta números');
+        } else if (!hasSpecialChar) {
+            $('.progress-bar').width(`${(3 / 5) * 100}%`);
+            updateSecurityLevel('Falta caracteres especiales');
+        } else {
+            $('.progress-bar').width('90%');
+            updateSecurityLevel('Las Contraseñas Deben Coincidir');
+        }
+    }
+
+    function updateSecurityLevel(level) {
+        const securityLevelSpan = $('.security-level');
+        securityLevelSpan.text(level);
+        securityLevelSpan.css('color', getSecurityColor(level));
+    }
+
+    function getSecurityColor(level) {
+        switch (level) {
+            case 'La contraseña debe tener al menos 4 caracteres':
+            case 'La contraseña no debe exceder 20 caracteres':
+                return '#FF4B47';
+            case 'Falta minúsculas':
+            case 'Falta mayúsculas':
+            case 'Falta números':
+                return '#FF4B47';
+            case 'Falta caracteres especiales':
+                return '#F9AE35';
+            case 'Las Contraseñas Deben Coincidir':
+                return '#F9AE35';
+            default:
+                return '#2ECC71';
+        }
+    }
+
     $('#register').click(function (e) {
         e.preventDefault();
         const formData = captureFormData();
@@ -135,64 +195,30 @@ $(document).ready(function () {
         }
     });
 
-    function checkPasswordStrength() {
-        let password = $('#user_password').val();
+    $('#condominio').selectpicker({
+        liveSearch: true,
+        liveSearchNormalize: false,
+        size: 10,
+        style: 'btn btn-default'
+    });
 
-        let hasLowercase = /[a-z]/.test(password);
-        let hasUppercase = /[A-Z]/.test(password);
-        let hasNumber = /\d/.test(password);
-        let hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-        let minLength = 4;
-        let maxLength = 20;
-
-        let strength = 0;
-
-        if (password.length < minLength) {
-            $('.progress-bar').width(`${(minLength / maxLength) * 100}%`);
-            updateSecurityLevel(`La contraseña debe tener al menos ${minLength} caracteres`);
-        } else if (password.length > maxLength) {
-            $('.progress-bar').width(`${(maxLength / maxLength) * 100}%`);
-            updateSecurityLevel(`La contraseña no debe exceder ${maxLength} caracteres`);
-        } else if (!hasLowercase) {
-            $('.progress-bar').width(`${(2 / 5) * 100}%`);
-            updateSecurityLevel('Falta minúsculas');
-        } else if (!hasUppercase) {
-            $('.progress-bar').width(`${(2 / 5) * 100}%`);
-            updateSecurityLevel('Falta mayúsculas');
-        } else if (!hasNumber) {
-            $('.progress-bar').width(`${(2 / 5) * 100}%`);
-            updateSecurityLevel('Falta números');
-        } else if (!hasSpecialChar) {
-            $('.progress-bar').width(`${(3 / 5) * 100}%`);
-            updateSecurityLevel('Falta caracteres especiales');
-        } else {
-            $('.progress-bar').width('90%');
-            updateSecurityLevel('Las Contraseñas Deben Coincidir');
-        }
-    }
-
-    function updateSecurityLevel(level) {
-        const securityLevelSpan = $('.security-level');
-        securityLevelSpan.text(level);
-        securityLevelSpan.css('color', getSecurityColor(level));
-    }
-
-    function getSecurityColor(level) {
-        switch (level) {
-            case 'La contraseña debe tener al menos 4 caracteres':
-            case 'La contraseña no debe exceder 20 caracteres':
-                return '#FF4B47';
-            case 'Falta minúsculas':
-            case 'Falta mayúsculas':
-            case 'Falta números':
-                return '#FF4B47';
-            case 'Falta caracteres especiales':
-                return '#F9AE35';
-            case 'Las Contraseñas Deben Coincidir':
-                return '#F9AE35';
-            default:
-                return '#2ECC71';
-        }
-    }
+    fetch(PROJECT_URL + 'api/condominio/getAll', {
+            method: 'GET',
+            headers: {
+                'API-Key': 'CA'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            var options = '<option value="">Seleccione un condominio</option>';
+            $.each(data.data, function(index, item) {
+                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
+            });
+            $('#condominio').html(options);
+            $('#condominio').selectpicker('refresh');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+    });
 
 });

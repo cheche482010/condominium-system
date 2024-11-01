@@ -3,10 +3,10 @@
 
 <head>
     <?php include __DIR__ . "/../../includes/meta.php"; ?>
-    <title><?= $this->config->get('APP_NAME'); ?></title>
+    <title><?= TITLE; ?></title>
     <?php include __DIR__ . "/../../includes/link.php"; ?>
 
-    <link href="<?= $this->assetsView; ?>user/register/register.scss" rel="stylesheet">
+    <link href="<?= URL; ?>Frontend/user/register/register.scss" rel="stylesheet">
 </head>
 
 <body class="layout-navbar-fixed accent-primary layout-footer-fixed layout-fixed sidebar-mini sidebar-collapse">
@@ -24,16 +24,21 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <?php
-              $this->ContentHeader([
-                  'titulo' =>  "Usuarios",  
-                  'links' => [
-                      ['label' =>  $this->config->get('APP_NAME') ,'active' => true],
-                      ['label' => 'Inicio', 'url' => 'home'],
-                  ],
-              ])->view();
-            ?>
-
+            <div class='content-header'>
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Usuarios</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item active">Condominium System</li>
+                                <li class="breadcrumb-item"><a href="home">Inicio</a></li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
             <!-- /.content-header -->
 
             <!-- Main content -->
@@ -195,47 +200,7 @@
     <!-- ./wrapper -->
     <?php include __DIR__ . "/../../includes/script.php"; ?>
 
-    <script src="<?= $this->assetsView; ?>user/register/register.js"></script>
+    <script src="<?= URL; ?>Frontend/user/register/register.js"></script>
 </body>
 
 </html>
-
-<div class="form-group">
-    <label for="condominio">Condominio</label>
-    <select id="condominio" name="condominio" class="form-control custom-select">
-        <option value="">Seleccione un condominio</option>
-    </select>
-</div>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-<script>
-$(document).ready(function() {
-    $('#condominio').selectpicker({
-        liveSearch: true,
-        liveSearchNormalize: false,
-        size: 10,
-        style: 'btn btn-default'
-    });
-
-    fetch('../condominio/getAll', {
-            method: 'GET',
-            headers: {
-                'API-Key': 'CA'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            var options = '<option value="">Seleccione un condominio</option>';
-            $.each(data.data, function(index, item) {
-                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
-            });
-            $('#condominio').html(options);
-            $('#condominio').selectpicker('refresh');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-});
-</script>
