@@ -33,7 +33,7 @@
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item active">Condominium System</li>
-                                <li class="breadcrumb-item"><a href="home">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="register">Registrar</a></li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->

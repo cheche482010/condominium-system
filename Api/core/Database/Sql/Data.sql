@@ -32,7 +32,7 @@ VALUES
 (1, 'Test10', 19000.00, 570.00);
 
 INSERT INTO 
-    condominios_websites (name, shortcode, tagid)
+    websites (name, shortcode, tagid)
 VALUES
 ('Condominio A', 'CA', 001),
 ('Condominio B', 'CB', 002),
@@ -70,4 +70,4 @@ VALUES ('ver_pagos', 'Verificar pagos'),
        ('configuracion_web', 'Configurar el sitio web'),
        ('gestion_banco', 'Gestionar bancos'),
        ('gestion_tipos_pago', 'Gestionar tipos de pago'),
-       ('gestion_condominios_websites', 'Gestionar condominios_websites');
+       ('gestion_websites', 'Gestionar websites');

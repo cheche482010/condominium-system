@@ -4,11 +4,11 @@ USE `condominium-system`;
 CREATE TABLE usuarios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     condominio_id BIGINT REFERENCES condominios(id),
-    condominio_id_website BIGINT REFERENCES condominios_websites(id),
+    id_website BIGINT REFERENCES websites(id),
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     cedula BIGINT NOT NULL UNIQUE,
-    telefono VARCHAR(20) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
     rol_id INT,
@@ -21,7 +21,7 @@ CREATE TABLE usuarios (
 
 CREATE TABLE condominios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    condominio_id_website BIGINT REFERENCES condominios_websites(id),
+    id_website BIGINT REFERENCES websites(id),
     nombre VARCHAR(255) NOT NULL,
     deuda DECIMAL(10, 2) DEFAULT 0,
     alicuota DECIMAL(10, 2),
@@ -32,7 +32,7 @@ CREATE TABLE condominios (
 
 CREATE TABLE pagos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    condominio_id_website BIGINT REFERENCES condominios_websites(id),
+    id_website BIGINT REFERENCES websites(id),
     monto DECIMAL(10, 2) NOT NULL,
     fecha DATE NOT NULL,
     banco_id BIGINT REFERENCES bancos(id),
@@ -56,7 +56,7 @@ CREATE TABLE gastos (
 CREATE TABLE bitacora (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     usuario_id BIGINT REFERENCES usuarios(id),
-    condominio_id_website BIGINT REFERENCES condominios_websites(id),
+    id_website BIGINT REFERENCES websites(id),
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
     accion VARCHAR(255) NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE gastos_condominio (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     gastos_id BIGINT REFERENCES gastos(id),
     condominio_id BIGINT REFERENCES condominios(id),
-    condominio_id_website BIGINT REFERENCES condominios_websites(id),
+    id_website BIGINT REFERENCES websites(id),
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -98,17 +98,18 @@ CREATE TABLE pago_gasto (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     pagos_id BIGINT REFERENCES pagos(id),
     gastos_condominio_id BIGINT REFERENCES gastos_condominio(id),
-    condominio_id_website BIGINT REFERENCES condominios_websites(id),
+    id_website BIGINT REFERENCES websites(id),
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE condominios_websites (
+CREATE TABLE websites (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     shortcode VARCHAR(10) NOT NULL,
     tagid BIGINT NOT NULL,
+    descripcion TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

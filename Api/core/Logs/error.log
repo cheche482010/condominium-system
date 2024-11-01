@@ -12,3 +12,9 @@
     "methodName": "Core\\Database\\Connection::connect",
     "timestamp": "2024-11-01 00:42:49"
 }
+[ERROR] error_log(../core/Logs/error.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\www\condominium-system\Api\app\Controllers\BaseController.php on line 162
+[ERROR] error_log(../core/Logs/error.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\www\condominium-system\Api\app\Controllers\BaseController.php on line 162
+[ERROR] error_log(../core/Logs/error.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\www\condominium-system\Api\app\Controllers\BaseController.php on line 162
+[ERROR] error_log(../core/Logs/error.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\www\condominium-system\Api\app\Controllers\BaseController.php on line 162
+[ERROR] error_log(../core/Logs/error.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\www\condominium-system\Api\app\Controllers\BaseController.php on line 162
+[ERROR] error_log(../core/Logs/error.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\www\condominium-system\Api\app\Controllers\BaseController.php on line 162
