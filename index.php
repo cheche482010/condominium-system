@@ -21,6 +21,6 @@ if (file_exists($filePath)) {
 } else {
     header("HTTP/1.0 404 No Encontrado");
     http_response_code(404);
-    echo "404 - Página no encontrada";
+    header("Location: " . URL . "error/404");
 }
 ?>

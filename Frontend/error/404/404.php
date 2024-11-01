@@ -3,8 +3,8 @@
 
 <head>
     <title>404 Not Found</title>
-    <link rel="icon" type="image/x-icon" href="<?=  $this->URL?>public/assets/img/404.png">
-    <link rel="stylesheet" href="<?=  $this->URL?>app/Views/error/404/404.scss">
+    <link rel="icon" type="image/x-icon" href="<?= URL; ?>Frontend/assets/img/404.png">
+    <link rel="stylesheet" href="<?= URL; ?>Frontend/error/404/404.scss">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
             temporalmente no disponible.
         </p>
         <p class="output">
-            Por favor, intente <a href="home">volver a la página de inicio</a>.
+            Por favor, intente <a href="<?= URL; ?>home">volver a la página de inicio</a>.
         </p>
         <p class="output">Buena suerte.</p>
     </div>
