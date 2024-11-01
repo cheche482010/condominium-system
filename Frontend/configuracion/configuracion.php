@@ -3,10 +3,10 @@
 
 <head>
     <?php include __DIR__ . "/../includes/meta.php"; ?>
-    <title><?= $this->config->get('APP_NAME'); ?></title>
+    <title><?= TITLE; ?></title>
     <?php include __DIR__ . "/../includes/link.php"; ?>
-
-    <link href="<?= $this->assetsView; ?>configuracion/configuracion.scss" rel="stylesheet">
+ 
+    <link href="<?= URL; ?>Frontend/configuracion/configuracion.scss" rel="stylesheet">
     <?php include __DIR__ . "/../includes/data-table.php"; ?>
 </head>
 
@@ -24,16 +24,21 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <?php
-            $this->ContentHeader([
-                'titulo' =>  "Configuracion Web",  
-                'links' => [
-                    ['label' =>  "Administracion", 'url' => 'javascript::void(0)','active' => true],
-                    ['label' => 'Configuracion', 'url' => 'javascript::void(0)'],
-                ],
-            ])->view();
-            ?>
-
+            <div class='content-header'>
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Configuracion Web</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item active">Administracion</li>
+                                <li class="breadcrumb-item"><a href="configuracion">Configuracion</a></li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
             <!-- /.content-header -->
 
             <!-- Main content -->
@@ -210,7 +215,7 @@
     <!-- ./wrapper -->
     <?php include __DIR__ . "/../includes/script.php"; ?>
 
-    <script src="<?= $this->assetsView; ?>configuracion/configuracion.js"></script>
+    <script src="<?= URL; ?>Frontend/configuracion/configuracion.js"></script>
 </body>
 
 </html>

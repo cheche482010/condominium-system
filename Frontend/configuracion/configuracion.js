@@ -1,6 +1,6 @@
 let table = $("#bancosTable").DataTable({
     ajax: {
-        url: 'api/bancos/getAll',
+        url: 'api/configuracion/getAll',
     },
     columns: [
         {
@@ -21,7 +21,7 @@ let table = $("#bancosTable").DataTable({
         }
     ],
     language: {
-        url: 'public/assets/json/Spanish.json',
+        url: 'Frontend/assets/json/Spanish.json',
     },
     searching: true,
     ordering: true,
