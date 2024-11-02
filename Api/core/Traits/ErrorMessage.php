@@ -43,7 +43,7 @@ trait ErrorMessage
     protected function handle404Error(string $message = ''): void
     {
         http_response_code(self::HTTP_NOT_FOUND);
-        header("HTTP/1.0 404 Not Found");
+        header($_SERVER['SERVER_PROTOCOL']. " 404 Not Found");
         header('Content-Type: application/json');
         echo json_encode(
             $this->response(self::HTTP_NOT_FOUND, false, 'error', $message ?: self::MSG_NOT_FOUND),
@@ -55,6 +55,7 @@ trait ErrorMessage
     protected function handle403Error(string $message = ''): void
     {
         http_response_code(self::HTTP_FORBIDDEN);
+        header($_SERVER['SERVER_PROTOCOL']." 403 Forbidden");
         header('Content-Type: application/json');
         echo json_encode(
             $this->response(self::HTTP_FORBIDDEN, false, 'error', $message ?: self::MSG_FORBIDDEN),
@@ -66,6 +67,7 @@ trait ErrorMessage
     private function handleInternalServerError(string $message): void
     {
         http_response_code(self::HTTP_INTERNAL_SERVER_ERROR);
+        header($_SERVER['SERVER_PROTOCOL']." Internal Server Error");
         header('Content-Type: application/json');
         echo json_encode(
             $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', $message, $this->formatErrorMessage(new \Exception($message), __METHOD__)),
