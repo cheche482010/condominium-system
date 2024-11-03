@@ -160,6 +160,11 @@ function rellenarFormulario(formId, data, campos) {
             $(`#${formId} #${campo}`).val(data[campo]);
         }
     });
+
+    if (data.hasOwnProperty('is_active')) {
+        const checkbox = $(`#${formId} #is_active`);
+        checkbox.prop('checked', data.is_active);
+    }
 }
 
 $(document).on('click', '[data-dismiss="modal"]', function () {

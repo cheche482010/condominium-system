@@ -36,6 +36,7 @@ trait ErrorMessage
             "file" => $e->getFile(),
             "className" => get_class($this),
             "methodName" => $method,
+            // "trace" => $e->getTrace(),
             "timestamp" => date('Y-m-d H:i:s'),
         ];
     }

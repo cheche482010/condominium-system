@@ -18,7 +18,7 @@ VALUES
     ('0119', 'Banco Caribe', 1);
 
 INSERT INTO 
-    condominios (condominio_id_website, nombre, deuda, alicuota)
+    condominios (id_website, nombre, deuda, alicuota)
 VALUES
 (1, 'Test1', 15000.00, 450.00),
 (2, 'Test2', 20000.00, 600.00),

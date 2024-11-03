@@ -103,7 +103,7 @@
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
-                                                                <form id="editForm" action="POST">
+                                                                <form id="editForm" action="POST"> 
                                                                     <div class="modal-body">
                                                                         <div class="row">
                                                                             <div class="col-md-12 mb-2">
@@ -132,6 +132,15 @@
                                                                                             <span
                                                                                                 class="fas fa-bookmark"></span>
                                                                                         </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-12 mt-3">
+                                                                                <div class="form-group">
+                                                                                    <div class="custom-control custom-switch">
+                                                                                        <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" checked>
+                                                                                        <label class="custom-control-label" for="is_active">Activo</label>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>

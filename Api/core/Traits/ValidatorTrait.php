@@ -6,6 +6,7 @@ trait ValidatorTrait
 {
     protected $errors = [];
     protected $patterns = [
+        'bank_code' => '/^\d{4}$/',
         "cedula" => "/^([0-9]{7,9})$/",
         "rif" => "/^([vejpgVEJPG]{1})([0-9]{9})$/",
         "string"  => "/^([A-Za-zñÑáéíóúÁÉÍÓÚ\s-]{2,50})+$/",

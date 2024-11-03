@@ -1,6 +1,6 @@
 let table = $("#bancosTable").DataTable({
     ajax: {
-        url: 'api/configuracion/getAll',
+        url: 'api/configuracion/getAllBancos',
     },
     columns: [
         {
@@ -46,6 +46,7 @@ let table = $("#bancosTable").DataTable({
             className: 'btn-primary',
             action: function () {
                 if (selectedRow) {
+                    rellenarFormulario('editBancForm', selectedRow, ['codigo', 'nombre', 'is_active']);
                     $('#editBancForm').modal('show');
                 } else {
                     alert('Por favor, selecciona una fila para editar.');
@@ -82,4 +83,49 @@ $('#bancosTable tbody').on('click', 'tr', function () {
         $(this).addClass('selected');
         selectedRow = table.row(this).data(); 
     }
+});
+
+$('#editBancForm #editBtn').on('click', function(e) {
+    e.preventDefault();
+    
+    const bancosData = {
+        id: selectedRow.id,
+        codigo: $('#codigo').val(),
+        nombre: $('#nombre').val(),
+        is_active: $('#is_active').prop('checked')
+    };
+    
+    $.ajax({
+        url:  `api/configuracion/updateBancos`,
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            bancos_data: JSON.stringify(bancosData),
+        },
+        success: function(data) {
+
+            if (!handleError(data)) {
+                return; 
+            }
+
+            table.ajax.reload();
+
+            $('#editBancForm').modal('hide');
+
+            Swal.fire({
+                title: 'Banco Actualizado',
+                text: 'Se ha actualizado el banco con éxito.',
+                icon: 'success',
+                confirmButtonText: 'Continuar'
+            });
+        },
+        error: function(error) {
+            console.error(error);
+            Swal.fire({
+                title: 'Error al alctualizar',
+                text: 'Ha ocurrido un error al intentar alctualizar. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
+        }
+    });
 });

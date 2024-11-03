@@ -1,0 +1,410 @@
+====================================
+{
+    "httpMethod": "POST",
+    "code": "HY093",
+    "sqlState": "HY093",
+    "sqlMessage": 0,
+    "line": 69,
+    "message": "SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens",
+    "pdoCode": null,
+    "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\ConfiguracionController",
+    "methodName": "App\\Controllers\\ConfiguracionController::updateBancos",
+    "timestamp": "2024-11-03 02:12:03"
+}
+====================================
+{
+    "httpMethod": "POST",
+    "code": "HY093",
+    "sqlState": "HY093",
+    "sqlMessage": 0,
+    "line": 69,
+    "message": "SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens",
+    "pdoCode": null,
+    "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\ConfiguracionController",
+    "methodName": "App\\Controllers\\ConfiguracionController::updateBancos",
+    "tace": [
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+            "line": 69,
+            "function": "execute",
+            "class": "PDOStatement",
+            "type": "->",
+            "args": [
+                {
+                    "id": 12,
+                    "codigo": "0116",
+                    "nombre": "Banco Agr\u00edcola Latino a"
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\ConfiguracionModel.php",
+            "line": 57,
+            "function": "executeQuery",
+            "class": "Core\\Database\\Connection",
+            "type": "->",
+            "args": [
+                "UPDATE bancos SET codigo = :codigo, nombre = :nombre, is_active = :is_active,  WHERE id = :id",
+                {
+                    "id": 12,
+                    "codigo": "0116",
+                    "nombre": "Banco Agr\u00edcola Latino a"
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Controllers\\ConfiguracionController.php",
+            "line": 56,
+            "function": "execute",
+            "class": "App\\Models\\ConfiguracionModel",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Router.php",
+            "line": 51,
+            "function": "updateBancos",
+            "class": "App\\Controllers\\ConfiguracionController",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\FrontController.php",
+            "line": 17,
+            "function": "route",
+            "class": "Core\\Router",
+            "type": "->",
+            "args": [
+                "configuracion\/updatebancos"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\index.php",
+            "line": 8,
+            "function": "__construct",
+            "class": "Core\\FrontController",
+            "type": "->",
+            "args": []
+        }
+    ],
+    "timestamp": "2024-11-03 02:14:25"
+}
+====================================
+{
+    "httpMethod": "POST",
+    "code": "HY093",
+    "sqlState": "HY093",
+    "sqlMessage": 0,
+    "line": 69,
+    "message": "SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens",
+    "pdoCode": null,
+    "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\ConfiguracionController",
+    "methodName": "App\\Controllers\\ConfiguracionController::updateBancos",
+    "timestamp": "2024-11-03 02:15:50"
+}
+====================================
+{
+    "httpMethod": "POST",
+    "code": "HY093",
+    "sqlState": "HY093",
+    "sqlMessage": 0,
+    "line": 69,
+    "message": "SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens",
+    "pdoCode": null,
+    "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\ConfiguracionController",
+    "methodName": "App\\Controllers\\ConfiguracionController::updateBancos",
+    "tace": [
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+            "line": 69,
+            "function": "execute",
+            "class": "PDOStatement",
+            "type": "->",
+            "args": [
+                {
+                    "id": 12,
+                    "codigo": "0116",
+                    "nombre": "Banco Agr\u00edcola Latino a"
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\ConfiguracionModel.php",
+            "line": 56,
+            "function": "executeQuery",
+            "class": "Core\\Database\\Connection",
+            "type": "->",
+            "args": [
+                "UPDATE bancos SET codigo = :codigo, nombre = :nombre, is_active = :is_active WHERE id = :id",
+                {
+                    "id": 12,
+                    "codigo": "0116",
+                    "nombre": "Banco Agr\u00edcola Latino a"
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Controllers\\ConfiguracionController.php",
+            "line": 56,
+            "function": "execute",
+            "class": "App\\Models\\ConfiguracionModel",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Router.php",
+            "line": 51,
+            "function": "updateBancos",
+            "class": "App\\Controllers\\ConfiguracionController",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\FrontController.php",
+            "line": 17,
+            "function": "route",
+            "class": "Core\\Router",
+            "type": "->",
+            "args": [
+                "configuracion\/updatebancos"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\index.php",
+            "line": 8,
+            "function": "__construct",
+            "class": "Core\\FrontController",
+            "type": "->",
+            "args": []
+        }
+    ],
+    "timestamp": "2024-11-03 02:16:07"
+}
+====================================
+{
+    "httpMethod": "POST",
+    "code": "HY093",
+    "sqlState": "HY093",
+    "sqlMessage": 0,
+    "line": 69,
+    "message": "SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens",
+    "pdoCode": null,
+    "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\ConfiguracionController",
+    "methodName": "App\\Controllers\\ConfiguracionController::updateBancos",
+    "tace": [
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+            "line": 69,
+            "function": "execute",
+            "class": "PDOStatement",
+            "type": "->",
+            "args": [
+                {
+                    "id": 12,
+                    "codigo": "0116",
+                    "nombre": "Banco Agr\u00edcola Latino a"
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\ConfiguracionModel.php",
+            "line": 56,
+            "function": "executeQuery",
+            "class": "Core\\Database\\Connection",
+            "type": "->",
+            "args": [
+                "UPDATE bancos SET codigo = :codigo, nombre = :nombre, is_active = :is_active WHERE id = :id",
+                {
+                    "id": 12,
+                    "codigo": "0116",
+                    "nombre": "Banco Agr\u00edcola Latino a"
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Controllers\\ConfiguracionController.php",
+            "line": 56,
+            "function": "execute",
+            "class": "App\\Models\\ConfiguracionModel",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Router.php",
+            "line": 51,
+            "function": "updateBancos",
+            "class": "App\\Controllers\\ConfiguracionController",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\FrontController.php",
+            "line": 17,
+            "function": "route",
+            "class": "Core\\Router",
+            "type": "->",
+            "args": [
+                "configuracion\/updatebancos"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\index.php",
+            "line": 8,
+            "function": "__construct",
+            "class": "Core\\FrontController",
+            "type": "->",
+            "args": []
+        }
+    ],
+    "timestamp": "2024-11-03 02:18:26"
+}
+====================================
+{
+    "code": 2,
+    "status": "error",
+    "type": 2,
+    "message": "Warning: foreach() argument must be of type array|object, string given",
+    "data": {
+        "trace": [
+            {
+                "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\ConfiguracionModel.php",
+                "line": 28,
+                "function": "{closure}",
+                "args": [
+                    2,
+                    "foreach() argument must be of type array|object, string given",
+                    "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\ConfiguracionModel.php",
+                    28
+                ]
+            },
+            {
+                "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Controllers\\ConfiguracionController.php",
+                "line": 56,
+                "function": "param",
+                "class": "App\\Models\\ConfiguracionModel",
+                "object": {},
+                "type": "->",
+                "args": [
+                    "{\"id\":12,\"codigo\":\"0116\",\"nombre\":\"Banco Agr\\u00edcola Latino a\"}"
+                ]
+            },
+            {
+                "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Router.php",
+                "line": 51,
+                "function": "updateBancos",
+                "class": "App\\Controllers\\ConfiguracionController",
+                "object": {
+                    "config": {},
+                    "respuesta": []
+                },
+                "type": "->",
+                "args": []
+            },
+            {
+                "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\FrontController.php",
+                "line": 17,
+                "function": "route",
+                "class": "Core\\Router",
+                "object": {},
+                "type": "->",
+                "args": [
+                    "configuracion/updatebancos"
+                ]
+            },
+            {
+                "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\index.php",
+                "line": 8,
+                "function": "__construct",
+                "class": "Core\\FrontController",
+                "object": {},
+                "type": "->",
+                "args": []
+            }
+        ]
+    },
+    "timestamp": "2024-11-03 02:19:42"
+}
+====================================
+{
+    "httpMethod": "POST",
+    "code": "HY093",
+    "sqlState": "HY093",
+    "sqlMessage": 0,
+    "line": 69,
+    "message": "SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens",
+    "pdoCode": null,
+    "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\ConfiguracionController",
+    "methodName": "App\\Controllers\\ConfiguracionController::updateBancos",
+    "tace": [
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+            "line": 69,
+            "function": "execute",
+            "class": "PDOStatement",
+            "type": "->",
+            "args": [
+                {
+                    "id": 12,
+                    "codigo": "0116",
+                    "nombre": "Banco Agr\u00edcola Latino a"
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\ConfiguracionModel.php",
+            "line": 56,
+            "function": "executeQuery",
+            "class": "Core\\Database\\Connection",
+            "type": "->",
+            "args": [
+                "UPDATE bancos SET codigo = :codigo, nombre = :nombre, is_active = :is_active WHERE id = :id",
+                {
+                    "id": 12,
+                    "codigo": "0116",
+                    "nombre": "Banco Agr\u00edcola Latino a"
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Controllers\\ConfiguracionController.php",
+            "line": 56,
+            "function": "execute",
+            "class": "App\\Models\\ConfiguracionModel",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Router.php",
+            "line": 51,
+            "function": "updateBancos",
+            "class": "App\\Controllers\\ConfiguracionController",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\FrontController.php",
+            "line": 17,
+            "function": "route",
+            "class": "Core\\Router",
+            "type": "->",
+            "args": [
+                "configuracion\/updatebancos"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\index.php",
+            "line": 8,
+            "function": "__construct",
+            "class": "Core\\FrontController",
+            "type": "->",
+            "args": []
+        }
+    ],
+    "timestamp": "2024-11-03 02:20:19"
+}
