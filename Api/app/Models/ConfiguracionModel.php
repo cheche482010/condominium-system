@@ -15,7 +15,10 @@ class ConfiguracionModel extends BaseModel
 
     private const SQL_CONFIG = [
         'getAllBancos' => "SELECT id, codigo, nombre, is_active FROM bancos  ORDER BY nombre ASC",
+        'getBancoById' => "SELECT id, codigo, nombre, is_active FROM bancos WHERE id = :id",
         'updateBancos' => "UPDATE bancos SET codigo = :codigo, nombre = :nombre, is_active = :is_active WHERE id = :id",
+        'addBanco' => "INSERT INTO bancos (codigo, nombre, is_active) VALUES (:codigo, :nombre, :is_active)",
+        'deleteBanco' => "DELETE FROM bancos WHERE id = :id",
     ];
 
     public function __construct()

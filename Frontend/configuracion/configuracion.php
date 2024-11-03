@@ -90,7 +90,7 @@
                                                         </tfoot>
                                                     </table>
 
-                                                    <div class="modal fade" id="editBancForm" tabindex="-1"
+                                                    <div class="modal fade" id="BancForm" tabindex="-1"
                                                         role="dialog" aria-labelledby="editFormLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="dialog">
