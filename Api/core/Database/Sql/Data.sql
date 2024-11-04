@@ -32,15 +32,6 @@ VALUES
 (1, 'Test10', 19000.00, 570.00);
 
 INSERT INTO 
-    websites (name, shortcode, tagid)
-VALUES
-('Condominio A', 'CA', 001),
-('Condominio B', 'CB', 002),
-('Condominio C', 'CC', 003),
-('Condominio D', 'CD', 004),
-('Condominio E', 'CE', 005);
-
-INSERT INTO 
     tipos_de_pago (codigo, nombre, descripcion)
 VALUES
 ('TPE', 'Efectivo', 'Pago de efectivo en Bolivares'),
@@ -55,6 +46,15 @@ VALUES
 ('TPI', 'PayPal Instant Transfer', 'Transferencia instantánea desde PayPal'),
 ('TAT', 'Tarjeta Débito', 'Pagos con tarjeta débito'),
 ('TCT', 'Tarjeta Crédito', 'Pagos con tarjeta de crédito');
+
+INSERT INTO 
+    websites (name, shortcode, tagid)
+VALUES
+('Condominio A', 'CA', 001),
+('Condominio B', 'CB', 002),
+('Condominio C', 'CC', 003),
+('Condominio D', 'CD', 004),
+('Condominio E', 'CE', 005);
 
 -- DATOS PERMISOS 
 INSERT INTO roles (nombre, descripcion)
@@ -71,3 +71,28 @@ VALUES ('ver_pagos', 'Verificar pagos'),
        ('gestion_banco', 'Gestionar bancos'),
        ('gestion_tipos_pago', 'Gestionar tipos de pago'),
        ('gestion_websites', 'Gestionar websites');
+
+INSERT INTO usuarios (condominio_id, id_website, nombre, apellido, cedula, phone, email, user_password, rol_id, permisos_id, token, is_active) VALUES
+(1, 1, 'Juan', 'Pérez', 12345678, '123-456-7890', 'juan.perez@example.com', 'password123', 1, 1, NULL, TRUE),
+(2, 1, 'Maria', 'Gomez', 87654321, '987-654-3210', 'maria.gomez@example.com', 'password123', 2, 1, NULL, FALSE),
+(1, 2, 'Carlos', 'Ramirez', 12344321, '321-654-9870', 'carlos.ramirez@example.com', 'password123', 3, 2, NULL, TRUE);
+
+INSERT INTO usuarios_roles (usuario_id, rol_id)
+VALUES
+(1, 1),  -- Juan Pérez como Usuario básico
+(2, 2),  -- Maria Gomez como Administrador del negocio
+(3, 3);  -- Carlos Ramirez como Desarrollador
+
+INSERT INTO usuarios_permisos (usuario_id, permiso_id)
+VALUES
+(1, 1),  -- Juan Pérez con permiso para ver pagos
+(1, 2),  -- Juan Pérez con permiso para consultar deudas
+(2, 4),  -- Maria Gomez con permiso para administrar el negocio
+(2, 5),  -- Maria Gomez con permiso para configurar el sitio web
+(3, 1),  -- Carlos Ramirez con permiso para ver pagos
+(3, 2),  -- Carlos Ramirez con permiso para consultar deudas
+(3, 3),  -- Carlos Ramirez con permiso para verificar pagos
+(3, 4),  -- Carlos Ramirez con permiso para administrar el negocio
+(3, 5),  -- Carlos Ramirez con permiso para configurar el sitio web
+(3, 6),  -- Carlos Ramirez con permiso para gestionar bancos
+(3, 7);  -- Carlos Ramirez con permiso para gestionar tipos de pago

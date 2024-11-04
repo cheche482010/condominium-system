@@ -68,12 +68,51 @@ class UserController extends BaseController
         ];
     }
 
+    private function usuariosArray($data)
+    {
+        $usuarios = [];
+        foreach ($data as $usuario) {
+            $id = $usuario['id'];
+            if (!isset($usuarios[$id])) {
+                $usuarios[$id] = [
+                    'id' => $usuario['id'],
+                    'nombre' => $usuario['nombre'],
+                    'apellido' => $usuario['apellido'],
+                    'cedula' => $usuario['cedula'],
+                    'phone' => $usuario['phone'],
+                    'email' => $usuario['email'],
+                    'user_password' => $usuario['user_password'],
+                    'condominio' => [
+                        'id' => $usuario['condominio_id'],
+                        'nombre' => $usuario['condominio_nombre'],
+                    ],
+                    'website' => [
+                        'id' => $usuario['website_id'] ?? null, 
+                        'shortcode' => $usuario['website_shortcode'],
+                        'tagid' => $usuario['website_tagid'],
+                    ],
+                    'permisos' => [] 
+                ];
+            }
+        
+            if ($usuario['permiso_id']) {
+                $usuarios[$id]['permisos'][] = [
+                    'id' => $usuario['permiso_id'],
+                    'nombre' => $usuario['permiso_nombre'],
+                    'descripcion' => $usuario['permiso_descripcion'],
+                ];
+            }
+        }
+        return array_values($usuarios); 
+    }
+
     public function getAll()
     {
         $this->isGetRequest();
         try {
-            $data = $this->model->getAll()->fetch('all');
-            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Usuarios obtenidos con éxito', $data);
+            $data = $this->model->getAllUser()->fetch('all');
+            $usuarios = $this->usuariosArray($data);
+            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Usuarios obtenidos con éxito', $usuarios);
         } catch (\PDOException $e) {
             $errorMessage = $this->handlePDOExption($e, __METHOD__);
             $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los Usuarios', $errorMessage);

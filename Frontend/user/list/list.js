@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     let isPasswordMode = false;
     let table = createDataTable('#userTable', {
-        url: '../api/user/getAll',
+        url: PROJECT_URL + 'api/user/getAll',
     },
     [
         {
