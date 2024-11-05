@@ -48,6 +48,15 @@
                                         </p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="<?= URL; ?>user/permits"
+                                        class="nav-link">
+                                        <i class="fa fa-lock nav-icon"></i>
+                                        <p>
+                                            PERMISOS
+                                        </p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">

@@ -202,7 +202,7 @@ $(document).ready(function () {
         style: 'btn btn-default'
     });
 
-    fetch(PROJECT_URL + 'api/condominio/getAll', {
+    fetch(PROJECT_URL + 'api/condominio/getAllCondomains', { 
             method: 'GET',
             headers: {
                 'API-Key': 'CA'
