@@ -82,32 +82,23 @@ class UserController extends BaseController
                     'phone' => $usuario['phone'],
                     'email' => $usuario['email'],
                     'user_password' => $usuario['user_password'],
+                    'rol' => $usuario['rol'],
                     'is_active' => $usuario['is_active'],
                     'condominio' => [
                         'id' => $usuario['condominio_id'],
                         'nombre' => $usuario['condominio_nombre'],
                     ],
                     'website' => [
-                        'id' => $usuario['website_id'] ?? null, 
                         'shortcode' => $usuario['website_shortcode'],
                         'tagid' => $usuario['website_tagid'],
                     ],
-                    'permisos' => [] 
-                ];
-            }
-        
-            if ($usuario['permiso_id']) {
-                $usuarios[$id]['permisos'][] = [
-                    'id' => $usuario['permiso_id'],
-                    'nombre' => $usuario['permiso_nombre'],
-                    'descripcion' => $usuario['permiso_descripcion'],
                 ];
             }
         }
         return array_values($usuarios); 
     }
 
-    public function getAll()
+    public function getAllUser()
     {
         $this->isGetRequest();
         try {

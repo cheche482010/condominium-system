@@ -110,6 +110,7 @@ CREATE TABLE websites (
     shortcode VARCHAR(10) NOT NULL,
     tagid VARCHAR(4) NOT NULL,
     descripcion TEXT,
+    is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -121,6 +122,7 @@ CREATE TABLE roles (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL UNIQUE,
     descripcion TEXT,
+    is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -129,6 +131,7 @@ CREATE TABLE permisos (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL,
     descripcion TEXT,
+    is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -144,6 +147,7 @@ CREATE TABLE usuarios_roles (
 CREATE TABLE usuarios_permisos (
     usuario_id BIGINT NOT NULL,
     permiso_id INT NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (usuario_id, permiso_id),
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     FOREIGN KEY (permiso_id) REFERENCES permisos(id)

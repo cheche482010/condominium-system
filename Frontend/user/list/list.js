@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     let isPasswordMode = false;
     let table = createDataTable('#userTable', {
-        url: PROJECT_URL + 'api/user/getAll',
+        url: PROJECT_URL + 'api/user/getAllUser',
     },
     [
         {
@@ -39,14 +39,18 @@ $(document).ready(function () {
         {
             data: 'is_active',
             render: function (data, type, row) {
-                return data === 1 || data === true ? '<span class="badge bg-success text-sm">Activo</span>' : '<span class="badge bg-danger text-dark text-lg">Inactivo</span>';
+                return data === 1 || data === true
+                    ? '<span class="badge bg-success text-sm">Activo</span>'
+                    : '<span class="badge bg-danger text-dark text-lg">Inactivo</span>';
             }
-        }, 
+        },
         {
             data: null,
+            orderable: false,
+            searchable: false,
             className: 'no-print text-center',
             render: function (data, type, row) {
-                return generarBotonesAccion(data.id);
+                return  generarBotonesAccion(row.id);
             }
         }
     ]);
