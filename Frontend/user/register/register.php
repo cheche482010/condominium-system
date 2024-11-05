@@ -135,6 +135,15 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="rol">Rol</label>
+                                                    <select id="rol" name="rol"
+                                                        class="form-control custom-select">
+                                                        <option value="">Seleccione un rol</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row mb-2">

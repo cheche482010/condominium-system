@@ -202,23 +202,66 @@ $(document).ready(function () {
         style: 'btn btn-default'
     });
 
-    fetch(PROJECT_URL + 'api/condominio/getAllCondomains', { 
-            method: 'GET',
-            headers: {
-                'API-Key': 'CA'
+    $('#rol').selectpicker({
+        liveSearch: true,
+        liveSearchNormalize: false,
+        size: 10,
+        style: 'btn btn-default'
+    });
+
+    $.ajax({
+        url: PROJECT_URL + 'api/condominio/getAllCondomains',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            if (!handleError(data)) {
+                return; 
             }
-        })
-        .then(response => response.json())
-        .then(data => {
+
             var options = '<option value="">Seleccione un condominio</option>';
             $.each(data.data, function(index, item) {
                 options += '<option value="' + item.id + '">' + item.nombre + '</option>';
             });
             $('#condominio').html(options);
             $('#condominio').selectpicker('refresh');
-        })
-        .catch(error => {
+           
+        },
+        error: function (error) {
             console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
+        }
+    });
+
+    $.ajax({
+        url: PROJECT_URL + 'api/user/getAllRols',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            if (!handleError(data)) {
+                return; 
+            }
+
+            var options = '<option value="">Seleccione un rol</option>';
+            $.each(data.data, function(index, item) {
+                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
+            });
+            $('#rol').html(options);
+            $('#rol').selectpicker('refresh');
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
+        }
     });
 
 });

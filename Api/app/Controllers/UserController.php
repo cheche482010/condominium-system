@@ -113,6 +113,20 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
+    public function getAllRols()
+    {
+        $this->isGetRequest();
+        try {
+            $data = $this->model->getAllRols()->fetch('all');
+            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Roles obtenidos con éxito', $data);
+        } catch (\PDOException $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los Roles', $errorMessage);
+        }
+
+        return $this->respuesta;
+    }
+
     public function getAllPaginated()
     {
         $this->isGetRequest();
