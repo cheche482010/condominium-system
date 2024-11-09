@@ -8,8 +8,8 @@ $(document).ready(function () {
             toastr.error('La cédula es obligatoria.');
             $('#cedula').addClass('invalid-input');
             return false;
-        } else if (!/^\d{9}$/.test($('#cedula').val())) {
-            toastr.error('La cédula debe ser un número de 9 dígitos.');
+        } else if (!/^(?:\d{7}|\d{8}|\d{9})$/.test($('#cedula').val())) {
+            toastr.error('La cédula debe ser un número valido.');
             $('#cedula').addClass('invalid-input');
             return false;
         }
@@ -132,25 +132,32 @@ $(document).ready(function () {
 
     $('#register').click(function (e) {
         e.preventDefault();
-        const formData = captureFormData();
-        delete formData.retryPassword;
-    
+        
+        const userData = {
+            cedula: $('#cedula').val() || '',
+            nombre: $('#nombre').val() || '',
+            apellido: $('#apellido').val() || '',
+            email: $('#email').val() || '',
+            phone: $('#phone').val() || '',
+            condominio: $('#condominio').val() || '',
+            rol: $('#rol').val() || '',
+            is_active: $('#is_active').prop('checked'),
+            user_password: $('#user_password').val() || ''
+        };
+
         if (!validateForm()) {
             return;
         }
 
         $.ajax({
-            url: '../api/user/create',
+            url: PROJECT_URL + 'api/user/createNewUser',
             method: 'POST',
-            data: {
-                user_data: formData,
-                user_type: 0 // usuario registrado sin rol
-            },
             dataType: 'json',
+            data: { user_data: JSON.stringify(userData) },
             success: function (data) {
-
+                console.log(data);
                 if (!handleErrorValidate(data) || !handleErrorExisting(data) || !handleError(data)) {
-                    return; 
+                    return;
                 }
 
                 Swal.fire({
@@ -171,7 +178,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#clear').click(function() {
+    $('#clear').click(function () {
         $('form')[0].reset();
         $('.form-control').removeClass('invalid-input');
         $('.progress-bar').css('width', '0%').attr('aria-valuenow', 0);
@@ -202,13 +209,6 @@ $(document).ready(function () {
         style: 'btn btn-default'
     });
 
-    $('#rol').selectpicker({
-        liveSearch: true,
-        liveSearchNormalize: false,
-        size: 10,
-        style: 'btn btn-default'
-    });
-
     $.ajax({
         url: PROJECT_URL + 'api/condominio/getAllCondomains',
         method: 'GET',
@@ -216,16 +216,15 @@ $(document).ready(function () {
         success: function (data) {
 
             if (!handleError(data)) {
-                return; 
+                return;
             }
 
             var options = '<option value="">Seleccione un condominio</option>';
-            $.each(data.data, function(index, item) {
+            $.each(data.data, function (index, item) {
                 options += '<option value="' + item.id + '">' + item.nombre + '</option>';
             });
             $('#condominio').html(options);
             $('#condominio').selectpicker('refresh');
-           
         },
         error: function (error) {
             console.error('Error:', error);
@@ -244,11 +243,11 @@ $(document).ready(function () {
         success: function (data) {
 
             if (!handleError(data)) {
-                return; 
+                return;
             }
 
             var options = '<option value="">Seleccione un rol</option>';
-            $.each(data.data, function(index, item) {
+            $.each(data.data, function (index, item) {
                 options += '<option value="' + item.id + '">' + item.nombre + '</option>';
             });
             $('#rol').html(options);

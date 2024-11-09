@@ -13,7 +13,7 @@ CREATE TABLE usuarios (
     user_password VARCHAR(255) NOT NULL,
     rol_id INT,
     permisos_id INT,
-    token VARCHAR(255),
+    token VARCHAR(255) NOT NULL,
     is_active BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

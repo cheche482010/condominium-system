@@ -23,19 +23,6 @@ function handleError(data) {
     return true;
 }
 
-function captureFormData() {
-    const formData = {};
-
-    $('.form-control').each(function (index) {
-        const $input = $(this);
-        const name = $input.attr('id');
-        const value = $input.val();
-        formData[name] = value;
-    });
-
-    return formData;
-}
-
 function createDataTable(selector, ajaxConfig, columnConfig, functioname = null) {
     return $(selector).DataTable({
         ajax: ajaxConfig,

@@ -114,7 +114,7 @@
                                             <div class="col-md-6">
                                                 <label for="phone">Telefono</label>
                                                 <div class="input-group">
-                                                    <input id="phone" type="phone" class="form-control"
+                                                    <input id="phone" type="tel" class="form-control"
                                                         placeholder="+58 123 456 7890">
                                                     <div class="input-group-append">
                                                         <div class="input-group-text">
@@ -138,8 +138,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="rol">Rol</label>
-                                                    <select id="rol" name="rol"
-                                                        class="form-control custom-select">
+                                                    <select id="rol" name="rol" class="form-control custom-select">
                                                         <option value="">Seleccione un rol</option>
                                                     </select>
                                                 </div>
@@ -147,6 +146,16 @@
                                         </div>
 
                                         <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="is_active" name="is_active" checked>
+                                                        <label class="custom-control-label"
+                                                            for="is_active">Activo</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="col-md-12">
                                                 <label for="user_password">Contraseña</label>
                                                 <div class="input-group">

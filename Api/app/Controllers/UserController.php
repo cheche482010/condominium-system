@@ -185,22 +185,21 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    public function create()
+    public function createNewUser()
     {
         $this->isPostRequest();
-        
-        $data = $this->datos["user_data"];
-        
-        try {
+        $data = json_decode($this->datos["user_data"], true);
 
+        try { 
+            
             $validateData = $this->validateData($data);
             
             if ($validateData) {
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
             }
 
-            $existingUser = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
-            
+            $existingUser = $this->model->getByEmail()->param(['email' => $data['email']])->fetch('single');
+           
             if ($existingUser) {
                 return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'Email ya registrado. ', $data["email"]);
             }
@@ -211,21 +210,25 @@ class UserController extends BaseController
                 return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error',  ($passwordHashResult['error'] ?? 'No especificado'));
             }
             
-            $data['rol'] = $this->datos["user_type"] ? "admin" : "user";
             $data['user_password'] = $passwordHash['data'];
             $data['token'] = $this->generateToken($data['nombre'], $data['apellido'], $data['cedula']);
+            $data['id_website'] = 1;
             
-            $result = $this->model->execute('createUser', $data, 'create');
+            $result = $this->model->createUser()->param($data)->execute();
             $user = $this->model->lastInsertId();
-            $userId = is_numeric($user) ? ['id' => $user] : null;
             
-            if ($result) {
-                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario creado con éxito', $userId);
-            } else {
-                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el usuario');
+            if (!$result) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el usuario', $result);
             }
+            
+            $this->assignRolesAndPermissions($userId, $defaultRole);
+
+            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Usuario creado con éxito', [
+                'userId' => $userId,
+            ]);
         } catch (\Exception $e) {
-            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al crear el usuario.', $e->getMessage());
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al crear el usuario.', $errorMessage);
         }
 
         return $this->respuesta;
