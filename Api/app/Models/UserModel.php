@@ -30,6 +30,7 @@ class UserModel extends BaseModel
         'delete' => "DELETE FROM usuarios WHERE id = :id",
         'deactivate' => "UPDATE usuarios SET is_active = FALSE WHERE id = :id",
         //permisos y roles
+        'getAllRols' => "SELECT id, nombre, descripcion, is_active FROM roles WHERE is_active = 1 ORDER BY nombre ASC",
         'assignRoleToUser' => "INSERT INTO usuarios_roles (usuario_id, rol_id) VALUES (:usuario_id, :rol_id)",
         'getAllPermissions' => "SELECT id, nombre, descripcion FROM permisos WHERE is_active = 1 ORDER BY nombre ASC",
     ];
