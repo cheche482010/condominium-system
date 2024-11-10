@@ -215,14 +215,24 @@ class UserController extends BaseController
             $data['id_website'] = 1;
             
             $result = $this->model->createUser()->param($data)->execute();
-            $user = $this->model->lastInsertId();
+            $userId = $this->model->lastInsertId();
             
             if (!$result) {
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el usuario', $result);
             }
             
-            $this->assignRolesAndPermissions($userId, $defaultRole);
+            if (!empty($data['rol_id'])) {
+                $assignRoleResponse = $this->assignRole(['usuario_id' => $userId, 'rol_id' => $data['rol_id']]);
+                return (!$assignRoleResponse) ? $assignRoleResponse : null;
+            }
 
+            // Asigna los permisos al usuario
+            if (!empty($data['permisos']) && is_array($data['permisos'])) {
+                foreach ($data['permisos'] as $permisoId) {
+                    $this->model->assignPermissionToUser()->param(['usuario_id' => $userId, 'permiso_id' => $permisoId])->execute();
+                }
+            }
+            
             $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Usuario creado con éxito', [
                 'userId' => $userId,
             ]);
@@ -419,57 +429,15 @@ class UserController extends BaseController
         return $sanitizedData;
     }
 
-    public function assignRoleToUser($userId, $roleId)
+    public function assignRole(array $data)
     {
-        $this->isPostRequest();
-        $this->handleAuthorization();
+        $assignRoleResult = $this->model->assignRoleToUser()->param($data)->execute();
 
-        try {
-            $result = $this->model->execute('assignRoleToUser', ['userId' => $userId, 'roleId' => $roleId], 'update');
-            if ($result) {
-                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Rol asignado correctamente');
-            } else {
-                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo asignar el rol');
-            }
-        } catch (\PDOException $e) {
-            $errorMessage = $this->handlePDOExption($e, __METHOD__);
-            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al asignar el rol:', $errorMessage);
+        if (!$assignRoleResult) {
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al asignar rol al usuario.', $assignRoleResult);
         }
 
-        return $this->respuesta;
+        return true;
     }
 
-    public function removeRoleFromUser($userId, $roleId)
-    {
-        $this->isPostRequest();
-        $this->handleAuthorization();
-
-        try {
-            $result = $this->model->execute('removeRoleFromUser', ['userId' => $userId, 'roleId' => $roleId], 'update');
-            if ($result) {
-                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Rol removido correctamente');
-            } else {
-                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo remover el rol');
-            }
-        } catch (\PDOException $e) {
-            $errorMessage = $this->handlePDOExption($e, __METHOD__);
-            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al remover el rol:', $errorMessage);
-        }
-
-        return $this->respuesta;
-    }
-
-    public function getPermissions($userId)
-    {
-        $this->isGetRequest();
-        try {
-            $permissions = $this->model->execute('getUserPermissions', ['id' => $userId], 'all');
-            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Permisos obtenidos correctamente', $permissions);
-        } catch (\Exception $e) {
-            $errorMessage = $this->handlePDOExption($e, __METHOD__);
-            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los permisos:', $errorMessage);
-        }
-
-        return $this->respuesta;
-    }
 }
