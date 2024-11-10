@@ -113,15 +113,13 @@ CREATE TABLE pagos (
 CREATE TABLE gastos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     id_website BIGINT,
-    gastos_condominio_id BIGINT,
     concepto VARCHAR(255) NOT NULL,
     monto DECIMAL(10, 2) NOT NULL,
     tipo VARCHAR(50) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (gastos_condominio_id) REFERENCES gastos_condominio(id) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE gastos_condominio (
@@ -134,7 +132,6 @@ CREATE TABLE gastos_condominio (
     FOREIGN KEY (gastos_id) REFERENCES gastos(id),
     FOREIGN KEY (condominio_id) REFERENCES condominios(id)
 );
-
 
 CREATE TABLE pago_gasto (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,

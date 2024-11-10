@@ -1,3 +1,12 @@
+INSERT INTO 
+    websites (name, shortcode, tagid)
+VALUES
+('Condominio A', 'CA', 001),
+('Condominio B', 'CB', 002),
+('Condominio C', 'CC', 003),
+('Condominio D', 'CD', 004),
+('Condominio E', 'CE', 005);
+
 INSERT INTO
     bancos (codigo, nombre)
 VALUES
@@ -18,20 +27,6 @@ VALUES
     ('0119', 'Banco Caribe');
 
 INSERT INTO 
-    condominios (id_website, nombre, deuda, alicuota)
-VALUES
-(1, 'Test1', 15000.00, 450.00),
-(2, 'Test2', 20000.00, 600.00),
-(3, 'Test3', 25000.00, 750.00),
-(1, 'Test4', 18000.00, 540.00),
-(2, 'Test5', 22000.00, 660.00),
-(3, 'Test6', 28000.00, 840.00),
-(1, 'Test7', 16000.00, 480.00),
-(2, 'Test8', 21000.00, 630.00),
-(3, 'Test9', 26000.00, 780.00),
-(1, 'Test10', 19000.00, 570.00);
-
-INSERT INTO 
     tipos_de_pago (codigo, nombre, descripcion)
 VALUES
 ('TPE', 'Efectivo', 'Pago de efectivo en Bolivares'),
@@ -48,13 +43,18 @@ VALUES
 ('TCT', 'Tarjeta Crédito', 'Pagos con tarjeta de crédito');
 
 INSERT INTO 
-    websites (name, shortcode, tagid)
+    condominios (id_website, nombre, deuda, alicuota)
 VALUES
-('Condominio A', 'CA', 001),
-('Condominio B', 'CB', 002),
-('Condominio C', 'CC', 003),
-('Condominio D', 'CD', 004),
-('Condominio E', 'CE', 005);
+(1, 'Test1', 15000.00, 450.00),
+(2, 'Test2', 20000.00, 600.00),
+(3, 'Test3', 25000.00, 750.00),
+(1, 'Test4', 18000.00, 540.00),
+(2, 'Test5', 22000.00, 660.00),
+(3, 'Test6', 28000.00, 840.00),
+(1, 'Test7', 16000.00, 480.00),
+(2, 'Test8', 21000.00, 630.00),
+(3, 'Test9', 26000.00, 780.00),
+(1, 'Test10', 19000.00, 570.00);
 
 -- DATOS PERMISOS 
 INSERT INTO roles (nombre, descripcion)
@@ -73,10 +73,15 @@ VALUES ('ver_pagos', 'Verificar pagos'),
        ('gestion_tipos_pago', 'Gestionar tipos de pago'),
        ('gestion_websites', 'Gestionar websites');
 
-INSERT INTO usuarios (condominio_id, id_website, nombre, apellido, cedula, phone, email, user_password, rol_id, token, is_active) VALUES
-(1, 1, 'Juan', 'Pérez', 12345678, '123-456-7890', 'juan.perez@example.com', 'password123', 1,  NULL, TRUE),
-(2, 1, 'Maria', 'Gomez', 87654321, '987-654-3210', 'maria.gomez@example.com', 'password123', 2,  NULL, FALSE),
-(1, 2, 'Carlos', 'Ramirez', 12344321, '321-654-9870', 'carlos.ramirez@example.com', 'password123', 3, NULL, TRUE);
+INSERT INTO usuarios (condominio_id, id_website, nombre, apellido, cedula, phone, email, user_password, rol_id, token, is_active)
+VALUES
+-- Usuario básico
+(1, 1, 'Juan Pérez', 'Pérez Gómez', 12345678, '123-456-7890', 'juan.perez@example.com', 'password123', 1, NULL, TRUE),
+-- Administrador del negocio
+(2, 1, 'María González', 'González López', 87654321, '987-654-3210', 'maria.gonzalez@example.com', 'password123', 2, NULL, FALSE),
+-- Desarrollador
+(3, 2, 'Carlos Hernández', 'Hernández Martínez', 111222333, '555-666-7777', 'carlos.hernandez@example.com', 'password123', 3, NULL, TRUE);
+
 
 INSERT INTO usuarios_roles (usuario_id, rol_id)
 VALUES
@@ -98,7 +103,7 @@ VALUES
     (2, 2),  -- consultar_deudas
     (2, 3),  -- pagar_deudas
     (2, 4),  -- verificar_pagos
-    (2, 5),  -- administracion_negocio
+    (2, 5);  -- administracion_negocio
     
 -- Asignar permisos al rol 'dev'
 INSERT INTO roles_permisos (rol_id, permiso_id)
