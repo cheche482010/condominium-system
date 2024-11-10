@@ -65,6 +65,7 @@ VALUES ('user', 'Usuario básico'),
 INSERT INTO permisos (nombre, descripcion)
 VALUES ('ver_pagos', 'Verificar pagos'),
        ('consultar_deudas', 'Consultar deudas'),
+       ('pagar_deudas', 'Pagar deudas'),
        ('verificar_pagos', 'Verificar pagos'),
        ('administracion_negocio', 'Administrar el negocio'),
        ('configuracion_web', 'Configurar el sitio web'),
@@ -72,10 +73,10 @@ VALUES ('ver_pagos', 'Verificar pagos'),
        ('gestion_tipos_pago', 'Gestionar tipos de pago'),
        ('gestion_websites', 'Gestionar websites');
 
-INSERT INTO usuarios (condominio_id, id_website, nombre, apellido, cedula, phone, email, user_password, rol_id, permisos_id, token, is_active) VALUES
-(1, 1, 'Juan', 'Pérez', 12345678, '123-456-7890', 'juan.perez@example.com', 'password123', 1, 1, NULL, TRUE),
-(2, 1, 'Maria', 'Gomez', 87654321, '987-654-3210', 'maria.gomez@example.com', 'password123', 2, 1, NULL, FALSE),
-(1, 2, 'Carlos', 'Ramirez', 12344321, '321-654-9870', 'carlos.ramirez@example.com', 'password123', 3, 2, NULL, TRUE);
+INSERT INTO usuarios (condominio_id, id_website, nombre, apellido, cedula, phone, email, user_password, rol_id, token, is_active) VALUES
+(1, 1, 'Juan', 'Pérez', 12345678, '123-456-7890', 'juan.perez@example.com', 'password123', 1,  NULL, TRUE),
+(2, 1, 'Maria', 'Gomez', 87654321, '987-654-3210', 'maria.gomez@example.com', 'password123', 2,  NULL, FALSE),
+(1, 2, 'Carlos', 'Ramirez', 12344321, '321-654-9870', 'carlos.ramirez@example.com', 'password123', 3, NULL, TRUE);
 
 INSERT INTO usuarios_roles (usuario_id, rol_id)
 VALUES
@@ -83,16 +84,32 @@ VALUES
 (2, 2),  -- Maria Gomez como Administrador del negocio
 (3, 3);  -- Carlos Ramirez como Desarrollador
 
-INSERT INTO usuarios_permisos (usuario_id, permiso_id)
+-- Asignar permisos al rol 'user'
+INSERT INTO roles_permisos (rol_id, permiso_id)
 VALUES
-(1, 1),  -- Juan Pérez con permiso para ver pagos
-(1, 2),  -- Juan Pérez con permiso para consultar deudas
-(2, 4),  -- Maria Gomez con permiso para administrar el negocio
-(2, 5),  -- Maria Gomez con permiso para configurar el sitio web
-(3, 1),  -- Carlos Ramirez con permiso para ver pagos
-(3, 2),  -- Carlos Ramirez con permiso para consultar deudas
-(3, 3),  -- Carlos Ramirez con permiso para verificar pagos
-(3, 4),  -- Carlos Ramirez con permiso para administrar el negocio
-(3, 5),  -- Carlos Ramirez con permiso para configurar el sitio web
-(3, 6),  -- Carlos Ramirez con permiso para gestionar bancos
-(3, 7);  -- Carlos Ramirez con permiso para gestionar tipos de pago
+    (1, 1),  -- ver_pagos
+    (1, 2),  -- consultar_deudas
+    (1, 3);  -- pagar_deudas
+
+-- Asignar permisos al rol 'admin'
+INSERT INTO roles_permisos (rol_id, permiso_id)
+VALUES
+    (2, 1),  -- ver_pagos
+    (2, 2),  -- consultar_deudas
+    (2, 3),  -- pagar_deudas
+    (2, 4),  -- verificar_pagos
+    (2, 5),  -- administracion_negocio
+    
+-- Asignar permisos al rol 'dev'
+INSERT INTO roles_permisos (rol_id, permiso_id)
+VALUES
+    (3, 1),  -- ver_pagos
+    (3, 2),  -- consultar_deudas
+    (3, 3),  -- pagar_deudas
+    (3, 4),  -- verificar_pagos
+    (3, 5),  -- administracion_negocio
+    (3, 6),  -- configuracion_web
+    (3, 7),  -- gestion_banco
+    (3, 8),  -- gestion_tipos_pago
+    (3, 9);  -- gestion_websites
+

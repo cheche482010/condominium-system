@@ -3,66 +3,79 @@ USE `condominium-system`;
 
 CREATE TABLE usuarios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    condominio_id BIGINT REFERENCES condominios(id),
-    id_website BIGINT REFERENCES websites(id),
+    id_website BIGINT,
+    condominio_id BIGINT NOT NULL,
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     cedula BIGINT NOT NULL UNIQUE,
     phone VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
-    rol_id INT,
-    permisos_id INT,
+    rol_id INT NOT NULL,
     token VARCHAR(255) NOT NULL,
     is_active BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (condominio_id) REFERENCES condominios(id),
+    FOREIGN KEY (rol_id) REFERENCES roles(id),
+    FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE condominios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    id_website BIGINT REFERENCES websites(id),
+    id_website BIGINT,
     nombre VARCHAR(255) NOT NULL,
     deuda DECIMAL(10, 2) DEFAULT 0,
     alicuota DECIMAL(10, 2),
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE pagos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    id_website BIGINT REFERENCES websites(id),
+    id_website BIGINT,
     monto DECIMAL(10, 2) NOT NULL,
     fecha DATE NOT NULL,
-    banco_id BIGINT REFERENCES bancos(id),
-    tipo_pago_id BIGINT REFERENCES tipos_de_pago(id),
+    banco_id BIGINT,
+    tipo_pago_id BIGINT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (banco_id) REFERENCES bancos(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (tipo_pago_id) REFERENCES tipos_de_pago(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
+
 
 CREATE TABLE gastos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    gastos_condominio_id BIGINT REFERENCES gastos_condominios(id),
+    id_website BIGINT,
+    gastos_condominio_id BIGINT,
     concepto VARCHAR(255) NOT NULL,
     monto DECIMAL(10, 2) NOT NULL,
     tipo VARCHAR(50) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (gastos_condominio_id) REFERENCES gastos_condominio(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
+
 
 CREATE TABLE bitacora (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    usuario_id BIGINT REFERENCES usuarios(id),
-    id_website BIGINT REFERENCES websites(id),
+    usuario_id BIGINT,
+    id_website BIGINT,
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
     accion VARCHAR(255) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE bancos (
@@ -86,35 +99,38 @@ CREATE TABLE tipos_de_pago (
 
 CREATE TABLE gastos_condominio (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    gastos_id BIGINT REFERENCES gastos(id),
-    condominio_id BIGINT REFERENCES condominios(id),
-    id_website BIGINT REFERENCES websites(id),
+    gastos_id BIGINT,
+    condominio_id BIGINT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (gastos_id) REFERENCES gastos(id),
+    FOREIGN KEY (condominio_id) REFERENCES condominios(id)
 );
+
 
 CREATE TABLE pago_gasto (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    pagos_id BIGINT REFERENCES pagos(id),
-    gastos_condominio_id BIGINT REFERENCES gastos_condominio(id),
-    id_website BIGINT REFERENCES websites(id),
+    pagos_id BIGINT,
+    gastos_condominio_id BIGINT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (pagos_id) REFERENCES pagos(id),
+    FOREIGN KEY (gastos_condominio_id) REFERENCES gastos_condominio(id)
 );
+
 
 CREATE TABLE websites (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    shortcode VARCHAR(10) NOT NULL,
-    tagid VARCHAR(4) NOT NULL,
+    shortcode VARCHAR(10) NOT NULL UNIQUE,
+    tagid VARCHAR(4) NOT NULL UNIQUE,
     descripcion TEXT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 
 -- AJUSTE NUEVO 
 
@@ -144,11 +160,10 @@ CREATE TABLE usuarios_roles (
     FOREIGN KEY (rol_id) REFERENCES roles(id)
 );
 
-CREATE TABLE usuarios_permisos (
-    usuario_id BIGINT NOT NULL,
+CREATE TABLE roles_permisos (
+    rol_id INT NOT NULL,
     permiso_id INT NOT NULL,
-    is_active BOOLEAN DEFAULT TRUE,
-    PRIMARY KEY (usuario_id, permiso_id),
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    PRIMARY KEY (rol_id, permiso_id),
+    FOREIGN KEY (rol_id) REFERENCES roles(id),
     FOREIGN KEY (permiso_id) REFERENCES permisos(id)
 );
