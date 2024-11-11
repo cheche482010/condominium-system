@@ -165,6 +165,13 @@ $(document).ready(function () {
                     text: 'Se ha registrado el usuario con éxito. Bienvenido a nuestro sistema!',
                     icon: 'success',
                     confirmButtonText: 'Continuar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('form')[0].reset();
+                        $('.form-control').removeClass('invalid-input');
+                        $('.progress-bar').css('width', '0%').attr('aria-valuenow', 0);
+                        $('.security-level').text('');
+                    }
                 });
             },
             error: function (xhr, status, error) {

@@ -223,7 +223,11 @@ class UserController extends BaseController
             
             if (!empty($data['id_rol'])) {
                 $assignRoleData = ['id_usuario' => $userId, 'id_rol' => $data['id_rol']];
-                $this->respuesta = $this->model->assignRoleToUser()->param($assignRoleData)->execute();
+                $assignRoleResult = $this->model->assignRoleToUser()->param($assignRoleData)->execute();
+
+                if (!$assignRoleResult) {
+                    return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al asignar rol al usuario.', $assignRoleResult);
+                }
             }
 
             $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Usuario creado con éxito', [

@@ -1,0 +1,186 @@
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S22",
+    "sqlState": "42S22",
+    "sqlMessage": 1054,
+    "line": 69,
+    "message": "SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user.condominio_id' in 'on clause'",
+    "pdoCode": "Unknown column 'user.condominio_id' in 'on clause'",
+    "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAllUser",
+    "trace": [
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+            "line": 69,
+            "function": "execute",
+            "class": "PDOStatement",
+            "type": "->",
+            "args": [
+                []
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+            "line": 80,
+            "function": "executeQuery",
+            "class": "Core\\Database\\Connection",
+            "type": "->",
+            "args": [
+                "SELECT user.id, user.nombre, user.apellido, user.cedula, user.phone, user.email, user.user_password, user.is_active, r.nombre AS rol, c.id AS condominio_id, c.nombre AS condominio_nombre, w.id AS website_id, w.shortcode AS website_shortcode, w.tagid AS website_tagid FROM usuarios USER LEFT JOIN condominios c ON user.condominio_id = c.id LEFT JOIN websites w ON c.id_website = w.id LEFT JOIN usuarios_roles ur ON user.id = ur.usuario_id LEFT JOIN roles r ON ur.rol_id = r.id WHERE user.is_active = TRUE ORDER BY user.nombre ASC",
+                []
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\UserModel.php",
+            "line": 84,
+            "function": "getResults",
+            "class": "Core\\Database\\Connection",
+            "type": "->",
+            "args": [
+                "SELECT user.id, user.nombre, user.apellido, user.cedula, user.phone, user.email, user.user_password, user.is_active, r.nombre AS rol, c.id AS condominio_id, c.nombre AS condominio_nombre, w.id AS website_id, w.shortcode AS website_shortcode, w.tagid AS website_tagid FROM usuarios USER LEFT JOIN condominios c ON user.condominio_id = c.id LEFT JOIN websites w ON c.id_website = w.id LEFT JOIN usuarios_roles ur ON user.id = ur.usuario_id LEFT JOIN roles r ON ur.rol_id = r.id WHERE user.is_active = TRUE ORDER BY user.nombre ASC",
+                [],
+                "all"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\UserModel.php",
+            "line": 98,
+            "function": "execute",
+            "class": "App\\Models\\UserModel",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Controllers\\UserController.php",
+            "line": 105,
+            "function": "fetch",
+            "class": "App\\Models\\UserModel",
+            "type": "->",
+            "args": [
+                "all"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Router.php",
+            "line": 51,
+            "function": "getAllUser",
+            "class": "App\\Controllers\\UserController",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\FrontController.php",
+            "line": 17,
+            "function": "route",
+            "class": "Core\\Router",
+            "type": "->",
+            "args": [
+                "user\/getalluser"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\index.php",
+            "line": 8,
+            "function": "__construct",
+            "class": "Core\\FrontController",
+            "type": "->",
+            "args": []
+        }
+    ],
+    "timestamp": "2024-11-11 22:54:37"
+}
+====================================
+{
+    "httpMethod": "GET",
+    "code": "42S22",
+    "sqlState": "42S22",
+    "sqlMessage": 1054,
+    "line": 69,
+    "message": "SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user.condominio_id' in 'on clause'",
+    "pdoCode": "Unknown column 'user.condominio_id' in 'on clause'",
+    "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+    "className": "App\\Controllers\\UserController",
+    "methodName": "App\\Controllers\\UserController::getAllUser",
+    "trace": [
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+            "line": 69,
+            "function": "execute",
+            "class": "PDOStatement",
+            "type": "->",
+            "args": [
+                []
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Database\\Connection.php",
+            "line": 80,
+            "function": "executeQuery",
+            "class": "Core\\Database\\Connection",
+            "type": "->",
+            "args": [
+                "SELECT user.id, user.nombre, user.apellido, user.cedula, user.phone, user.email, user.user_password, user.is_active, r.nombre AS rol, c.id AS condominio_id, c.nombre AS condominio_nombre, w.id AS website_id, w.shortcode AS website_shortcode, w.tagid AS website_tagid FROM usuarios USER LEFT JOIN condominios c ON user.condominio_id = c.id LEFT JOIN websites w ON c.id_website = w.id LEFT JOIN usuarios_roles ur ON user.id = ur.usuario_id LEFT JOIN roles r ON ur.rol_id = r.id WHERE user.is_active = TRUE ORDER BY user.nombre ASC",
+                []
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\UserModel.php",
+            "line": 84,
+            "function": "getResults",
+            "class": "Core\\Database\\Connection",
+            "type": "->",
+            "args": [
+                "SELECT user.id, user.nombre, user.apellido, user.cedula, user.phone, user.email, user.user_password, user.is_active, r.nombre AS rol, c.id AS condominio_id, c.nombre AS condominio_nombre, w.id AS website_id, w.shortcode AS website_shortcode, w.tagid AS website_tagid FROM usuarios USER LEFT JOIN condominios c ON user.condominio_id = c.id LEFT JOIN websites w ON c.id_website = w.id LEFT JOIN usuarios_roles ur ON user.id = ur.usuario_id LEFT JOIN roles r ON ur.rol_id = r.id WHERE user.is_active = TRUE ORDER BY user.nombre ASC",
+                [],
+                "all"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Models\\UserModel.php",
+            "line": 98,
+            "function": "execute",
+            "class": "App\\Models\\UserModel",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\app\\Controllers\\UserController.php",
+            "line": 105,
+            "function": "fetch",
+            "class": "App\\Models\\UserModel",
+            "type": "->",
+            "args": [
+                "all"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\Router.php",
+            "line": 51,
+            "function": "getAllUser",
+            "class": "App\\Controllers\\UserController",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\core\\FrontController.php",
+            "line": 17,
+            "function": "route",
+            "class": "Core\\Router",
+            "type": "->",
+            "args": [
+                "user\/getalluser"
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\www\\condominium-system\\Api\\index.php",
+            "line": 8,
+            "function": "__construct",
+            "class": "Core\\FrontController",
+            "type": "->",
+            "args": []
+        }
+    ],
+    "timestamp": "2024-11-11 22:54:46"
+}

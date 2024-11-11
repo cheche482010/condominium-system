@@ -73,15 +73,13 @@ VALUES ('ver_pagos', 'Verificar pagos'),
        ('gestion_tipos_pago', 'Gestionar tipos de pago'),
        ('gestion_websites', 'Gestionar websites');
 
-INSERT INTO usuarios (id_condominio, id_website, nombre, apellido, cedula, phone, email, user_password, id_rol, token, is_active)
-VALUES
+INSERT INTO `usuarios` (`id`, `id_website`, `id_condominio`, `id_rol`, `nombre`, `apellido`, `cedula`, `phone`, `email`, `user_password`, `token`, `is_active`, `created_at`, `updated_at`) VALUES
 -- Usuario básico
-(1, 1, 'Juan Pérez', 'Pérez Gómez', 12345678, '123-456-7890', 'juan.perez@example.com', 'password123', 1, NULL, TRUE),
+(1, 1, 1, 1, 'Usuario', 'Basico', 11222333, '04161234567', 'UsuarioBasico@gmail.com', 'WEhrSmFIQmVnOVBNVjF2S1NxeUxxQT09', '659234ee791d4194e246a4d3308a179212192b4528fef69a50d887c004287f6dc41aa956f05ff74e3cd10ae164d22f958ff87abddc7d3797db9ee63f6e412b2d', 1, '2024-11-11 21:43:24', '2024-11-11 21:43:24'),
 -- Administrador del negocio
-(2, 1, 'María González', 'González López', 87654321, '987-654-3210', 'maria.gonzalez@example.com', 'password123', 2, NULL, FALSE),
+(2, 1, 2, 2, 'Usario', 'Administrador', 1222333, '04161234567', 'UsarioAdministrador@gmail.com', 'WEhrSmFIQmVnOVBNVjF2S1NxeUxxQT09', '3302891fd8e917d94261060184c27005f67ce5b4683dd5ae4b9dc9472022cff417e7e26f23c26be76387fb43c4fa416e76b617e40a7783c79410464833aa3456', 1, '2024-11-11 21:48:38', '2024-11-11 21:48:38'),
 -- Desarrollador
-(3, 2, 'Carlos Hernández', 'Hernández Martínez', 111222333, '555-666-7777', 'carlos.hernandez@example.com', 'password123', 3, NULL, TRUE);
-
+(3, 1, 3, 3, 'Usuario', 'Desarrollador', 111222333, '04161234567', 'UsuarioDesarrollador@gmail.com', 'WEhrSmFIQmVnOVBNVjF2S1NxeUxxQT09', '40f5417f4d78dfeae785611acf82b874d07169f9540ea1b1c543485b17976f08e252172459534f16755c8a3a128de6daf0be05f10f60e0a536903e54c2902688', 1, '2024-11-11 21:51:53', '2024-11-11 21:51:53');
 
 INSERT INTO usuarios_roles (id_usuario, id_rol)
 VALUES
