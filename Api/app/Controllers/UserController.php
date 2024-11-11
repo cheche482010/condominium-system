@@ -215,24 +215,17 @@ class UserController extends BaseController
             $data['id_website'] = 1;
             
             $result = $this->model->createUser()->param($data)->execute();
-            $userId = $this->model->lastInsertId();
-            
+            $userId = intval($this->model->lastInsertId());
+
             if (!$result) {
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el usuario', $result);
             }
             
-            if (!empty($data['rol_id'])) {
-                $assignRoleResponse = $this->assignRole(['usuario_id' => $userId, 'rol_id' => $data['rol_id']]);
-                return (!$assignRoleResponse) ? $assignRoleResponse : null;
+            if (!empty($data['id_rol'])) {
+                $assignRoleData = ['id_usuario' => $userId, 'id_rol' => $data['id_rol']];
+                $this->respuesta = $this->model->assignRoleToUser()->param($assignRoleData)->execute();
             }
 
-            // Asigna los permisos al usuario
-            if (!empty($data['permisos']) && is_array($data['permisos'])) {
-                foreach ($data['permisos'] as $permisoId) {
-                    $this->model->assignPermissionToUser()->param(['usuario_id' => $userId, 'permiso_id' => $permisoId])->execute();
-                }
-            }
-            
             $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Usuario creado con éxito', [
                 'userId' => $userId,
             ]);
@@ -429,9 +422,9 @@ class UserController extends BaseController
         return $sanitizedData;
     }
 
-    public function assignRole(array $data)
+    public function assignRole(array $assignRoleData)
     {
-        $assignRoleResult = $this->model->assignRoleToUser()->param($data)->execute();
+        $assignRoleResult = $this->model->assignRoleToUser()->param($assignRoleData)->execute();
 
         if (!$assignRoleResult) {
             return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al asignar rol al usuario.', $assignRoleResult);

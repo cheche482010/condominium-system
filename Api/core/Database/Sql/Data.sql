@@ -73,7 +73,7 @@ VALUES ('ver_pagos', 'Verificar pagos'),
        ('gestion_tipos_pago', 'Gestionar tipos de pago'),
        ('gestion_websites', 'Gestionar websites');
 
-INSERT INTO usuarios (condominio_id, id_website, nombre, apellido, cedula, phone, email, user_password, rol_id, token, is_active)
+INSERT INTO usuarios (id_condominio, id_website, nombre, apellido, cedula, phone, email, user_password, id_rol, token, is_active)
 VALUES
 -- Usuario básico
 (1, 1, 'Juan Pérez', 'Pérez Gómez', 12345678, '123-456-7890', 'juan.perez@example.com', 'password123', 1, NULL, TRUE),

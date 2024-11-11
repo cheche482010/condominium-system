@@ -64,26 +64,26 @@ CREATE TABLE permisos (
 CREATE TABLE usuarios (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     id_website BIGINT,
-    condominio_id BIGINT NOT NULL,
+    id_condominio BIGINT NOT NULL,
+    id_rol INT NOT NULL,
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     cedula BIGINT NOT NULL UNIQUE,
     phone VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
-    rol_id INT NOT NULL,
-    token VARCHAR(255) NOT NULL,
+    token TEXT NOT NULL,
     is_active BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (condominio_id) REFERENCES condominios(id),
-    FOREIGN KEY (rol_id) REFERENCES roles(id),
+    FOREIGN KEY (id_condominio) REFERENCES condominios(id),
+    FOREIGN KEY (id_rol) REFERENCES roles(id),
     FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE bitacora (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    usuario_id BIGINT,
+    id_usuario BIGINT,
     id_website BIGINT,
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
@@ -91,23 +91,23 @@ CREATE TABLE bitacora (
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE pagos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     id_website BIGINT,
+    id_banco BIGINT,
+    id_tipo_pago BIGINT,
     monto DECIMAL(10, 2) NOT NULL,
     fecha DATE NOT NULL,
-    banco_id BIGINT,
-    tipo_pago_id BIGINT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_website) REFERENCES websites(id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (banco_id) REFERENCES bancos(id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (tipo_pago_id) REFERENCES tipos_de_pago(id) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (id_banco) REFERENCES bancos(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (id_tipo_pago) REFERENCES tipos_de_pago(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE gastos (
@@ -124,38 +124,38 @@ CREATE TABLE gastos (
 
 CREATE TABLE gastos_condominio (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    gastos_id BIGINT,
-    condominio_id BIGINT,
+    id_gastos BIGINT,
+    id_condominio BIGINT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (gastos_id) REFERENCES gastos(id),
-    FOREIGN KEY (condominio_id) REFERENCES condominios(id)
+    FOREIGN KEY (id_gastos) REFERENCES gastos(id),
+    FOREIGN KEY (id_condominio) REFERENCES condominios(id)
 );
 
 CREATE TABLE pago_gasto (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    pagos_id BIGINT,
-    gastos_condominio_id BIGINT,
+    id_pago BIGINT,
+    id_gasto_condominio BIGINT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (pagos_id) REFERENCES pagos(id),
-    FOREIGN KEY (gastos_condominio_id) REFERENCES gastos_condominio(id)
+    FOREIGN KEY (id_pago) REFERENCES pagos(id),
+    FOREIGN KEY (id_gasto_condominio) REFERENCES gastos_condominio(id)
 );
 
 CREATE TABLE usuarios_roles (
-    usuario_id BIGINT NOT NULL,
-    rol_id INT NOT NULL,
-    PRIMARY KEY (usuario_id, rol_id),
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    FOREIGN KEY (rol_id) REFERENCES roles(id)
+    id_usuario BIGINT NOT NULL,
+    id_rol INT NOT NULL,
+    PRIMARY KEY (id_usuario, id_rol),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_rol) REFERENCES roles(id)
 );
 
 CREATE TABLE roles_permisos (
-    rol_id INT NOT NULL,
-    permiso_id INT NOT NULL,
-    PRIMARY KEY (rol_id, permiso_id),
-    FOREIGN KEY (rol_id) REFERENCES roles(id),
-    FOREIGN KEY (permiso_id) REFERENCES permisos(id)
+    id_rol INT NOT NULL,
+    id_permiso INT NOT NULL,
+    PRIMARY KEY (id_rol, id_permiso),
+    FOREIGN KEY (id_rol) REFERENCES roles(id),
+    FOREIGN KEY (id_permiso) REFERENCES permisos(id)
 );

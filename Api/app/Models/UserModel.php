@@ -24,14 +24,14 @@ class UserModel extends BaseModel
         'getCount' => "SELECT COUNT(*) as total FROM usuarios",
         'getById' => "SELECT id, nombre, apellido, cedula, phone, email, user_password, rol, token, is_active FROM usuarios WHERE id = :id",
         'getByEmail' => "SELECT email FROM usuarios WHERE email = :email",
-        'createUser' => "INSERT INTO usuarios (nombre, apellido, cedula, phone, email, user_password, token, condominio_id, id_website, rol_id) VALUES (:nombre, :apellido, :cedula, :phone, :email, :user_password, :token, :condominio_id, :id_website, :rol_id)",
+        'createUser' => "INSERT INTO usuarios (nombre, apellido, cedula, phone, email, user_password, token, id_condominio, id_website, id_rol, is_active) VALUES (:nombre, :apellido, :cedula, :phone, :email, :user_password, :token, :id_condominio, :id_website, :id_rol, :is_active)",
         'updateUser' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email WHERE id = :id",
         'resetPassword' => "UPDATE usuarios SET user_password = :user_password WHERE id = :id",
         'delete' => "DELETE FROM usuarios WHERE id = :id",
         'deactivate' => "UPDATE usuarios SET is_active = FALSE WHERE id = :id",
         //permisos y roles
         'getAllRols' => "SELECT id, nombre, descripcion, is_active FROM roles WHERE is_active = 1 ORDER BY nombre ASC",
-        'assignRoleToUser' => "INSERT INTO usuarios_roles (usuario_id, rol_id) VALUES (:usuario_id, :rol_id)",
+        'assignRoleToUser' => "INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (:id_usuario, :id_rol)",
         'getAllPermissions' => "SELECT id, nombre, descripcion FROM permisos WHERE is_active = 1 ORDER BY nombre ASC",
     ];
 
@@ -41,13 +41,21 @@ class UserModel extends BaseModel
     }
 
     public function param($data)
-    {
-        foreach ($data as $key => $value) {
-            $this->params[$key] = $this->sanitize($value);
-        }
-
-        return $this;
+{
+    $this->params = array_merge($this->params, $data);
+    
+    // Limpiar los parámetros existentes antes de agregar nuevos
+    foreach ($this->params as $key => &$value) {
+        unset($this->params[$key]);
     }
+    
+    foreach ($data as $key => $value) {
+        $this->params[$key] = $this->sanitize($value);
+    }
+    
+    return $this;
+}
+
 
     public function __call($method, $arguments)
     {
