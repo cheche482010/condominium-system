@@ -139,8 +139,8 @@ $(document).ready(function () {
             apellido: $('#apellido').val() || '',
             email: $('#email').val() || '',
             phone: $('#phone').val() || '',
-            condominio: $('#condominio').val() || '',
-            rol: $('#rol').val() || '',
+            id_condominio: parseInt($('#condominio').val()) || null,
+            id_rol: parseInt($('#rol').val()) || null,
             is_active: $('#is_active').prop('checked'),
             user_password: $('#user_password').val() || ''
         };
