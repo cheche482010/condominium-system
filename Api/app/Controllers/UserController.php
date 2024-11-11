@@ -85,7 +85,7 @@ class UserController extends BaseController
                     'rol' => $usuario['rol'],
                     'is_active' => $usuario['is_active'],
                     'condominio' => [
-                        'id' => $usuario['condominio_id'],
+                        'id' => $usuario['id_condominio'],
                         'nombre' => $usuario['condominio_nombre'],
                     ],
                     'website' => [
