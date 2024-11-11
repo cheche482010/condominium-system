@@ -83,21 +83,21 @@ VALUES
 (3, 2, 'Carlos Hernández', 'Hernández Martínez', 111222333, '555-666-7777', 'carlos.hernandez@example.com', 'password123', 3, NULL, TRUE);
 
 
-INSERT INTO usuarios_roles (usuario_id, rol_id)
+INSERT INTO usuarios_roles (id_usuario, id_rol)
 VALUES
 (1, 1),  -- Juan Pérez como Usuario básico
 (2, 2),  -- Maria Gomez como Administrador del negocio
 (3, 3);  -- Carlos Ramirez como Desarrollador
 
 -- Asignar permisos al rol 'user'
-INSERT INTO roles_permisos (rol_id, permiso_id)
+INSERT INTO roles_permisos (id_rol, id_permiso)
 VALUES
     (1, 1),  -- ver_pagos
     (1, 2),  -- consultar_deudas
     (1, 3);  -- pagar_deudas
 
 -- Asignar permisos al rol 'admin'
-INSERT INTO roles_permisos (rol_id, permiso_id)
+INSERT INTO roles_permisos (id_rol, id_permiso)
 VALUES
     (2, 1),  -- ver_pagos
     (2, 2),  -- consultar_deudas
@@ -106,7 +106,7 @@ VALUES
     (2, 5);  -- administracion_negocio
     
 -- Asignar permisos al rol 'dev'
-INSERT INTO roles_permisos (rol_id, permiso_id)
+INSERT INTO roles_permisos (id_rol, id_permiso)
 VALUES
     (3, 1),  -- ver_pagos
     (3, 2),  -- consultar_deudas
@@ -118,3 +118,11 @@ VALUES
     (3, 8),  -- gestion_tipos_pago
     (3, 9);  -- gestion_websites
 
+-- vistas
+
+CREATE VIEW rol_permisos AS
+SELECT r.nombre AS Rol, p.nombre AS Permiso, p.descripcion AS Descripción
+FROM roles r
+JOIN roles_permisos rp ON r.id = rp.id_rol
+JOIN permisos p ON rp.id_permiso = p.id
+ORDER BY r.nombre;
