@@ -3,10 +3,15 @@
 
 <head>
     <?php include __DIR__ . "/../../includes/meta.php"; ?>
-    <title><?= $this->config->get('APP_NAME'); ?></title>
+    <title><?= TITLE; ?></title>
     <?php include __DIR__ . "/../../includes/link.php"; ?>
-    
-    <link href="<?= $this->assetsView; ?>user/login/login.scss" rel="stylesheet">
+
+    <link href="<?= URL; ?>Frontend/user/login/login.scss" rel="stylesheet">
+    <style>
+        #roles-container {
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="hold-transition login-page">
@@ -14,7 +19,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <span class="h1"><?= $this->config->get('APP_NAME'); ?></span>
+                <span class="h1"><?= TITLE; ?></span>
             </div>
 
             <div class="card-body">
@@ -35,6 +40,13 @@
                             <div class="input-group-text toggle-password">
                                 <span class="fas fa-eye-slash"></span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="roles-container">
+                            Seleccione su rol
+                            <br>
+                            <input type="radio" name="role" value="" required>
                         </div>
                     </div>
                     <div class="row">
@@ -70,7 +82,7 @@
     <!-- /.login-box -->
     <?php include __DIR__ . "/../../includes/script.php"; ?>
 
-    <script src="<?= $this->assetsView; ?>user/login/login.js"></script>
+    <script src="<?= URL; ?>Frontend/user/login/login.js"></script>
 </body>
 
 </html>

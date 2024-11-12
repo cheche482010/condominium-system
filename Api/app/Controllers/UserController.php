@@ -347,6 +347,34 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
+    public function checkRole()
+    {
+        $this->isPostRequest();
+        
+        try {
+            $email = $this->datos["email"];
+            
+            $user = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
+
+            if (!$user) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Email incorrecto. '. $data["email"]);
+            }
+
+            $roles = $this->model->getRolesByUserId($userIdResult['id']);
+
+            if (empty($roles)) {
+                return $this->response(self::HTTP_FORBIDDEN, false, 'error', 'El usuario no tiene roles asignados.' , $roles);
+            }
+
+            return $this->response(self::HTTP_OK, true, 'success', null, ['roles' => $roles]);
+        } catch (\PDOException $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al verificar el usuario', $errorMessage);
+        
+        }
+    }
+
+
     public function resetPassword()
     {
         $this->isPostRequest();

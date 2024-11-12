@@ -73,6 +73,7 @@ VALUES ('ver_pagos', 'Verificar pagos'),
        ('gestion_tipos_pago', 'Gestionar tipos de pago'),
        ('gestion_websites', 'Gestionar websites');
 
+-- Clave es Contraseña123@
 INSERT INTO `usuarios` (`id`, `id_website`, `id_condominio`, `id_rol`, `nombre`, `apellido`, `cedula`, `phone`, `email`, `user_password`, `token`, `is_active`, `created_at`, `updated_at`) VALUES
 -- Usuario básico
 (1, 1, 1, 1, 'Usuario', 'Basico', 11222333, '04161234567', 'UsuarioBasico@gmail.com', 'WEhrSmFIQmVnOVBNVjF2S1NxeUxxQT09', '659234ee791d4194e246a4d3308a179212192b4528fef69a50d887c004287f6dc41aa956f05ff74e3cd10ae164d22f958ff87abddc7d3797db9ee63f6e412b2d', 1, '2024-11-11 21:43:24', '2024-11-11 21:43:24'),

@@ -31,6 +31,7 @@ class UserModel extends BaseModel
         'deactivate' => "UPDATE usuarios SET is_active = FALSE WHERE id = :id",
         //permisos y roles
         'getAllRols' => "SELECT id, nombre, descripcion, is_active FROM roles WHERE is_active = 1 ORDER BY nombre ASC",
+        'getRolesByUserId' => "SELECT r.id AS role_id, r.nombre AS role_name FROM usuarios u JOIN usuarios_roles ur ON u.id = ur.id_usuario JOIN roles r ON ur.id_rol = r.id WHERE u.id = :id",
         'assignRoleToUser' => "INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (:id_usuario, :id_rol)",
         'getAllPermissions' => "SELECT id, nombre, descripcion FROM permisos WHERE is_active = 1 ORDER BY nombre ASC",
     ];
