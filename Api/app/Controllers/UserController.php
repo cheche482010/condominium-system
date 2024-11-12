@@ -85,7 +85,7 @@ class UserController extends BaseController
                     'rol' => $usuario['rol'],
                     'is_active' => $usuario['is_active'],
                     'condominio' => [
-                        'id' => $usuario['condominio_id'],
+                        'id' => $usuario['id_condominio'],
                         'nombre' => $usuario['condominio_nombre'],
                     ],
                     'website' => [
@@ -223,7 +223,11 @@ class UserController extends BaseController
             
             if (!empty($data['id_rol'])) {
                 $assignRoleData = ['id_usuario' => $userId, 'id_rol' => $data['id_rol']];
-                $this->respuesta = $this->model->assignRoleToUser()->param($assignRoleData)->execute();
+                $assignRoleResult = $this->model->assignRoleToUser()->param($assignRoleData)->execute();
+
+                if (!$assignRoleResult) {
+                    return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al asignar rol al usuario.', $assignRoleResult);
+                }
             }
 
             $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Usuario creado con éxito', [
@@ -265,62 +269,46 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    public function deactivate($id)
+    public function deactivate()
     {
         $this->isPostRequest();
-        $this->handleAuthorization();
         
         try {
-            $this->model->db->beginTransaction();
+            $id = $this->datos["id"];
             
             $sanitizedId = intval(filter_var($id, FILTER_SANITIZE_NUMBER_INT));
 
             if (!$sanitizedId) {
-                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'ID inválido');
-                $this->model->db->rollBack();
-                return $this->respuesta;
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'ID inválido');
             }
 
-            $userId = $this->model->execute('getById', ['id' => $sanitizedId], 'single');
+            $userIdResult = $this->model->getById()->param(['id' => $sanitizedId])->fetch('single');
 
-            if (!$userId) {
-                $this->respuesta = $this->response(self::HTTP_NOT_FOUND, false, 'error', 'Usuario no encontrado');
-                return $this->respuesta;
+            if (!$userIdResult) {
+                return $this->response(self::HTTP_NOT_FOUND, false, 'error', 'Usuario no encontrado', $userIdResult);
             }
-
 
             if ($this->attemptCount >= $this->maxAttempts) {
-                $this->respuesta = $this->response(self::HTTP_TOO_MANY_REQUESTS, false, 'error', 'Demasiados intentos de desactivación');
-                $this->model->db->rollBack();
-                return $this->respuesta;
+                return $this->response(self::HTTP_TOO_MANY_REQUESTS, false, 'error', 'Demasiados intentos de desactivación');
             }
             
             $this->attemptCount++;
 
-            $result = $this->model->execute('deactivate', ['id' => $sanitizedId]);
+            $result = $this->model->transaction(function ($m) use ($sanitizedId) {
+                return $m->deactivate()->param(['id' => $sanitizedId])->execute();
+            });
 
             if ($result) {
-                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario desactivado con éxito',
-                [
-                    'id' => $sanitizedId,
-                    'estado' => 'desactivado'
-                ]
-            );
+                $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario desactivado con éxito', ['id' => $sanitizedId, 'estado' => 'desactivado']);
             } else {
-                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo desactivar el usuario');
+                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo desactivar el usuario', $result);
             }
-
-            $this->model->db->commit();
         } catch (\PDOException $e) {
             if ($e->getCode() === 'HY000' && strpos($e->getMessage(), 'Duplicate entry') !== false) {
-                $errorMessage = $this->handlePDOExption($e, __METHOD__);
-                $this->respuesta = $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'El usuario ya está desactivado',$errorMessage);
+                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'El usuario ya está desactivado', $this->handlePDOExption($e, __METHOD__));
             }
-            $this->model->db->rollBack();
-        } catch (\PDOException $e) {
-            $errorMessage = $this->handlePDOExption($e, __METHOD__);
-            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al desactivar usuario', $errorMessage);
-            $this->model->db->rollBack();
+            
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al desactivar usuario', $this->handlePDOExption($e, __METHOD__));
         }
 
         return $this->respuesta;
@@ -358,6 +346,34 @@ class UserController extends BaseController
 
         return $this->respuesta;
     }
+
+    public function checkRole()
+    {
+        $this->isPostRequest();
+        
+        try {
+            $email = $this->datos["email"];
+            
+            $user = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
+
+            if (!$user) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Email incorrecto. '. $data["email"]);
+            }
+
+            $roles = $this->model->getRolesByUserId($userIdResult['id']);
+
+            if (empty($roles)) {
+                return $this->response(self::HTTP_FORBIDDEN, false, 'error', 'El usuario no tiene roles asignados.' , $roles);
+            }
+
+            return $this->response(self::HTTP_OK, true, 'success', null, ['roles' => $roles]);
+        } catch (\PDOException $e) {
+            $errorMessage = $this->handlePDOExption($e, __METHOD__);
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al verificar el usuario', $errorMessage);
+        
+        }
+    }
+
 
     public function resetPassword()
     {

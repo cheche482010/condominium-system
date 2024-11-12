@@ -75,9 +75,42 @@ $(document).ready(function () {
         var row = table.row($(this).parents('tr'));
         var data = row.data();
 
-        if (deleteConfirmation()) {
-            // row.remove().draw();
-        }
+        deleteConfirmation().then(confirmed => {
+            if (confirmed) {
+                $.ajax({
+                    url: PROJECT_URL + 'api/user/deactivate',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id: data.id
+                    },
+                    success: function(data) {
+                        if (!handleError(data)) {
+                            return; 
+                        }
+    
+                        Swal.fire({
+                            title: 'Usuario Eliminado',
+                            text: 'Se ha Eliminado el usuario con éxito.',
+                            icon: 'success',
+                            confirmButtonText: 'Continuar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                row.remove().draw();
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.error(error);
+                        Swal.fire({
+                            title: 'Error al eliminar',
+                            text: 'Ha ocurrido un error al intentar eliminar. Por favor, inténtelo nuevamente.',
+                            icon: 'error'
+                        });
+                    }
+                });
+            }
+        });
 
     });
 

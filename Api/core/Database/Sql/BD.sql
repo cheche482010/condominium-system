@@ -147,6 +147,7 @@ CREATE TABLE pago_gasto (
 CREATE TABLE usuarios_roles (
     id_usuario BIGINT NOT NULL,
     id_rol INT NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (id_usuario, id_rol),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
     FOREIGN KEY (id_rol) REFERENCES roles(id)
@@ -155,6 +156,7 @@ CREATE TABLE usuarios_roles (
 CREATE TABLE roles_permisos (
     id_rol INT NOT NULL,
     id_permiso INT NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (id_rol, id_permiso),
     FOREIGN KEY (id_rol) REFERENCES roles(id),
     FOREIGN KEY (id_permiso) REFERENCES permisos(id)
