@@ -1,0 +1,5 @@
+# Ignorar el archivo de entorno
+Api/.env
+
+# Ignorar el archivo de logs
+Api/core/Logs/error.log
