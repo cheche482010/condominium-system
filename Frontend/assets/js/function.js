@@ -109,25 +109,17 @@ function createDataTable(selector, ajaxConfig, columnConfig, functioname = null)
 }
 
 function deleteConfirmation() {
-    Swal.fire({
+    return Swal.fire({
         title: '¿Estás seguro?',
         text: "¿Quieres eliminar este registro?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Aceptar'
+        confirmButtonText: 'Eliminar'
     }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: "Eliminado!",
-                text: "El registro ha sido eliminado",
-                icon: "success"
-            });
-            return true;
-        }
-        return false;
-    })
+        return result.isConfirmed;
+    });
 }
 
 function generarBotonesAccion(id) {

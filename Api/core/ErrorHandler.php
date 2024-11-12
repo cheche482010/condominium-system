@@ -58,7 +58,7 @@ set_exception_handler(function ($exception) {
         "line" => $exception->getLine(),
         "message" => $exception->getMessage(),
         "file" => $exception->getFile(),
-        'backtrace' => $exception->getTraceAsString(),
+        'backtrace' => $exception->getTrace(),
         "timestamp" => date('Y-m-d H:i:s'),
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     
