@@ -43,13 +43,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div id="roles-container">
-                            Seleccione su rol
-                            <br>
-                            <input type="radio" name="role" value="" required>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
                                 <input type="checkbox" id="remember">

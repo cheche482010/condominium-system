@@ -58,11 +58,12 @@ class UserController extends BaseController
     }
 
 
-    private function initializeSession($user)
+    private function initializeSession($user, $roles, $permissions)
     {
         $_SESSION['user'] = [
             'id' => $user['id'],
-            'rol' => $user['rol'],
+            'rol' => $roles,
+            'permissions' => $permissions,
             'token' => $user['token'],
             'sesion_token' => bin2hex(random_bytes(32)),
         ];
@@ -317,63 +318,44 @@ class UserController extends BaseController
     public function auth()
     {
         $this->isPostRequest();
-
-        $data = $this->datos["user_data"];
-
+        $data = json_decode($this->datos["user_data"], true);
+        
         try {
-            $user = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
 
+            $user = $this->model->getByEmail()->param(['email' => $data['email']])->fetch('single');
+           
             if (!$user) {
-                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Email incorrecto. '. $data["email"]);
+                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'Email no Encontrado.', $data["email"]);
             }
-
+            
             $password = $this->securePassword($_ENV["SECURE_KEY"], $data['user_password'], 'codificar');
 
             if (!$password['success']) {
-                return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error',  ($passwordResult['error'] ?? 'No especificado'));
+                return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error',  ($password['error'] ?? 'No especificado'));
             }
 
             if ($user['user_password'] !== $password['data']) {
                 return $this->response(self::HTTP_UNAUTHORIZED, false, 'error', 'Contraseña incorrecta.' , $data['user_password']);
             }
             
-            $this->initializeSession($user);
-            $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Inicio de sesión exitoso', $user);
+            $roles = $this->model->getRolesByUserId()->param(['id' => $user['id']])->fetch('single');
+            if (!$roles || count($roles) == 0) {
+                return $this->response(self::HTTP_NOT_FOUND, false, 'error', 'No se encontraron roles para el usuario.');
+            }
+            
+            $permissions = $this->model->getPermissionsByUserId()->param(['id' => $user['id']])->fetch('all');
+            if (!$permissions || count($permissions) == 0) {
+                return $this->response(self::HTTP_NOT_FOUND, false, 'error', 'No se encontraron permisos para el usuario.');
+            }
+            
+            $this->initializeSession($user, $roles, $permissions);
+
+            return $this->response(self::HTTP_OK, true, 'success', 'Inicio de sesión exitoso', $_SESSION["user"]);
 
         } catch (\Exception $e) {
-            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al iniciar sesión: ' . $e->getMessage());
-        }
-
-        return $this->respuesta;
-    }
-
-    public function checkRole()
-    {
-        $this->isPostRequest();
-        
-        try {
-            $email = $this->datos["email"];
-            
-            $user = $this->model->execute('getByEmail', ['email' => $data['email']], 'single');
-
-            if (!$user) {
-                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'Email incorrecto. '. $data["email"]);
-            }
-
-            $roles = $this->model->getRolesByUserId($userIdResult['id']);
-
-            if (empty($roles)) {
-                return $this->response(self::HTTP_FORBIDDEN, false, 'error', 'El usuario no tiene roles asignados.' , $roles);
-            }
-
-            return $this->response(self::HTTP_OK, true, 'success', null, ['roles' => $roles]);
-        } catch (\PDOException $e) {
-            $errorMessage = $this->handlePDOExption($e, __METHOD__);
-            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al verificar el usuario', $errorMessage);
-        
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al iniciar sesion.', $this->handlePDOExption($e, __METHOD__));
         }
     }
-
 
     public function resetPassword()
     {

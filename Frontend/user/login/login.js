@@ -1,7 +1,11 @@
 $(document).ready(function () {
     $('#login').click(function (e) {
         e.preventDefault();
-        const formData = captureFormData();
+
+        const userData = {
+            email: $('#email').val() || '',
+            user_password: $('#user_password').val() || ''
+        };
 
         if (!validForm()) {
             return;
@@ -10,13 +14,10 @@ $(document).ready(function () {
         $.ajax({
             url: PROJECT_URL + '/api/user/auth',
             method: 'POST',
-            data: {
-                user_data: formData,
-                role: $('input[name="role"]:checked').val()
-            },
             dataType: 'json',
+            data: { user_data: JSON.stringify(userData) },
             success: function (data) {
-
+                console.log(data)
                 if (!handleError(data)) {
                     return;
                 }
@@ -73,59 +74,4 @@ $(document).ready(function () {
 
         return true;
     }
-
-    $('#email').on('keyup', function() {
-        var email = $(this).val();
-        
-        if (email.length >= 3 && isValidEmail(email)) {
-            checkUserRole(email);
-        }
-    });
-
-    function checkUserRole(email) {
-        $.ajax({
-            url: PROJECT_URL + '/api/user/check-role',
-            method: 'POST',
-            data: { email: email },
-            dataType: 'json',
-            success: function(data) {
-                if (data.roles && data.roles.length > 0) {
-                    showRoles(data.roles);
-                } else {
-                    hideRoles();
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-                toastr.error('Ha ocurrido un error al verificar el usuario.');
-            }
-        });
-    }
-
-    function showRoles(roles) {
-        var rolesContainer = $('#roles-container');
-        rolesContainer.empty();
-
-        $.each(roles, function(index, role) {
-            rolesContainer.append(`
-                <input type="radio" name="role" value="${role.id}" required>
-                <label for="role-${role.id}">${role.name}</label><br>
-            `);
-        });
-
-        $('#login').attr('type', 'submit');
-    }
-
-    function hideRoles() {
-        var rolesContainer = $('#roles-container');
-        rolesContainer.empty();
-        rolesContainer.hide();
-
-        $('#login').attr('type', 'button');
-    }
-
-    function isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
 });

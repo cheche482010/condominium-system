@@ -23,7 +23,7 @@ class UserModel extends BaseModel
         'getAllPaginated' => "SELECT * FROM usuarios LIMIT :limit OFFSET :offset",
         'getCount' => "SELECT COUNT(*) as total FROM usuarios",
         'getById' => "SELECT id, nombre, apellido, cedula, phone, email, is_active FROM usuarios WHERE id = :id",
-        'getByEmail' => "SELECT email FROM usuarios WHERE email = :email",
+        'getByEmail' => "SELECT id, nombre, apellido, email, user_password, token, is_active FROM usuarios WHERE email = :email",
         'createUser' => "INSERT INTO usuarios (nombre, apellido, cedula, phone, email, user_password, token, id_condominio, id_website, id_rol, is_active) VALUES (:nombre, :apellido, :cedula, :phone, :email, :user_password, :token, :id_condominio, :id_website, :id_rol, :is_active)",
         'updateUser' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email WHERE id = :id",
         'resetPassword' => "UPDATE usuarios SET user_password = :user_password WHERE id = :id",
@@ -31,8 +31,8 @@ class UserModel extends BaseModel
         'deactivate' => "UPDATE usuarios SET is_active = FALSE WHERE id = :id",
         //permisos y roles
         'getAllRols' => "SELECT id, nombre, descripcion, is_active FROM roles WHERE is_active = 1 ORDER BY nombre ASC",
-        'getRolesByUserId' => "SELECT r.id AS role_id, r.nombre AS role_name FROM usuarios u JOIN usuarios_roles ur ON u.id = ur.id_usuario JOIN roles r ON ur.id_rol = r.id WHERE u.id = :id",
-        'assignRoleToUser' => "INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (:id_usuario, :id_rol)",
+        'getRolesByUserId' => "SELECT r.id , r.nombre FROM usuarios u JOIN usuarios_roles ur ON u.id = ur.id_usuario JOIN roles r ON ur.id_rol = r.id WHERE u.id = :id",
+        'getPermissionsByUserId' => "SELECT p.id AS id_permission, p.nombre AS name_permission, rp.is_active FROM usuarios u JOIN usuarios_roles ur ON u.id = ur.id_usuario JOIN roles r ON ur.id_rol = r.id JOIN roles_permisos rp ON r.id = rp.id_rol JOIN permisos p ON rp.id_permiso = p.id WHERE u.id = :id AND p.is_active = TRUE",'assignRoleToUser' => "INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (:id_usuario, :id_rol)",
         'getAllPermissions' => "SELECT id, nombre, descripcion FROM permisos WHERE is_active = 1 ORDER BY nombre ASC",
     ];
 
