@@ -336,9 +336,9 @@ class UserController extends BaseController
                 return $this->response(self::HTTP_NOT_FOUND, false, 'error', 'No se encontraron permisos para el usuario.');
             }
 
-            $this->initializeSession($user, $roles, $permissions);
             $this->secureSession();
-
+            $this->initializeSession($user, $roles, $permissions);
+            
             return $this->response(self::HTTP_OK, true, 'success', 'Inicio de sesión exitoso', $_SESSION["user"]);
 
         } catch (\Exception $e) {
@@ -368,11 +368,13 @@ class UserController extends BaseController
 
     private function secureSession()
     {
+        session_set_cookie_params(3600);
         session_start();
-        session_set_cookie_params(3600); 
         session_regenerate_id(true);
 
-        $_SESSION['security_token'] = hash('sha256', session_id() . time());
+        if (!isset($_SESSION['security_token'])) {
+            $_SESSION['security_token'] = hash('sha256', session_id() . time());
+        }
         setcookie('PHPSESSID', session_id(), time() + 3600, '/', $_SERVER['HTTP_HOST'], false, true);
         setcookie('security_token', $_SESSION['security_token'], time() + 3600, '/', $_SERVER['HTTP_HOST'], false, true);
     }

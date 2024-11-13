@@ -11,7 +11,6 @@ class BaseController
     protected $validator;
     
     protected $components = [];
-    protected $session;
     protected $expectedApiKey;
     protected $secretToken; 
     
@@ -23,7 +22,6 @@ class BaseController
         $modelName = "App\Models\\" . str_replace("Controller", "Model", $controllerName);
         $this->model = new $modelName();
         $this->config = new Config();
-        $this->session = $_SESSION;
     }
 
     public function isGetRequest()
@@ -72,7 +70,7 @@ class BaseController
 
     public function handleIsUserLoggedIn(): void
     {
-        if (!isset($this->session['user']) || empty($this->session['user'])) {
+        if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
             $this->handle403Error(); 
             exit();
         }
@@ -137,7 +135,7 @@ class BaseController
 
     public function verifySecurityToken($token)
     {
-        if ($token !== $this->session['token']) {
+        if ($token !== $_SESSION['token']) {
             $this->response(self::HTTP_UNAUTHORIZED, 'Unauthorized', 'error', 'No autorizado');
             return false;
         }
