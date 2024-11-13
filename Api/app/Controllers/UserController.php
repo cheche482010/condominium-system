@@ -57,18 +57,6 @@ class UserController extends BaseController
         return ['success' => false, 'error' => 'Acción inválida'];
     }
 
-
-    private function initializeSession($user, $roles, $permissions)
-    {
-        $_SESSION['user'] = [
-            'id' => $user['id'],
-            'rol' => $roles,
-            'permissions' => $permissions,
-            'token' => $user['token'],
-            'sesion_token' => bin2hex(random_bytes(32)),
-        ];
-    }
-
     private function usuariosArray($data)
     {
         $usuarios = [];
@@ -347,14 +335,46 @@ class UserController extends BaseController
             if (!$permissions || count($permissions) == 0) {
                 return $this->response(self::HTTP_NOT_FOUND, false, 'error', 'No se encontraron permisos para el usuario.');
             }
-            
+
             $this->initializeSession($user, $roles, $permissions);
+            $this->secureSession();
 
             return $this->response(self::HTTP_OK, true, 'success', 'Inicio de sesión exitoso', $_SESSION["user"]);
 
         } catch (\Exception $e) {
             return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al iniciar sesion.', $this->handlePDOExption($e, __METHOD__));
         }
+    }
+
+    private function initializeSession($user, $roles, $permissions)
+    {
+        $_SESSION['user'] = [
+            'id' => $user['id'],
+            'rol' => $roles,
+            'permissions' => $permissions,
+            'token' => $user['token'],
+            'sesion_token' => bin2hex(random_bytes(32)),
+        ];
+    }
+
+    public function logout()
+    {
+        session_start();
+        session_unset();
+        session_destroy();
+
+        return $this->response(self::HTTP_OK, true, 'success', 'Cierre de sesión exitoso');
+    }
+
+    private function secureSession()
+    {
+        session_start();
+        session_set_cookie_params(3600); 
+        session_regenerate_id(true);
+
+        $_SESSION['security_token'] = hash('sha256', session_id() . time());
+        setcookie('PHPSESSID', session_id(), time() + 3600, '/', $_SERVER['HTTP_HOST'], false, true);
+        setcookie('security_token', $_SESSION['security_token'], time() + 3600, '/', $_SERVER['HTTP_HOST'], false, true);
     }
 
     public function resetPassword()
@@ -376,15 +396,6 @@ class UserController extends BaseController
         }
 
         return $this->respuesta;
-    }
-
-    public function logout()
-    {
-        session_start();
-        session_unset();
-        session_destroy();
-
-        return $this->response(self::HTTP_OK, true, 'success', 'Cierre de sesión exitoso');
     }
 
     private function validateData($data,  $context = 'create')

@@ -122,26 +122,6 @@ class BaseController
         return true;
     }
 
-    protected function secureSession()
-    {
-        session_start();
-        session_set_cookie_params(3600); // Expira en una hora
-        session_regenerate_id(true);
-
-        $this->session['token'] = bin2hex(random_bytes(32));
-        setcookie('PHPSESSID', session_id(), time() + 3600, '/', $_SERVER['HTTP_HOST'], false, true);
-        setcookie('security_token', $this->session['token'], time() + 3600, '/', $_SERVER['HTTP_HOST'], false, true);
-    }
-
-    public function verifySecurityToken($token)
-    {
-        if ($token !== $this->session['token']) {
-            $this->response(self::HTTP_UNAUTHORIZED, 'Unauthorized', 'error', 'No autorizado');
-            return false;
-        }
-        return true;
-    }
-
     public function validateShortcode()
     {
         $shortcode = $_SERVER['HTTP_SHORTCODE'] ?? null;
@@ -153,6 +133,15 @@ class BaseController
         }
 
         return true; 
+    }
+
+    public function verifySecurityToken($token)
+    {
+        if ($token !== $this->session['token']) {
+            $this->response(self::HTTP_UNAUTHORIZED, 'Unauthorized', 'error', 'No autorizado');
+            return false;
+        }
+        return true;
     }
 
     protected function handlePDOExption($e, $method) {
