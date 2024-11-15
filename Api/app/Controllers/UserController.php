@@ -237,8 +237,8 @@ class UserController extends BaseController
     {
         $this->isPostRequest();
 
-        $data = $this->datos["user_data"];
-
+        $data = json_decode($this->datos["user_data"], true);
+        
         try {
 
             $validateData = $this->validateData($data, "update");
@@ -247,7 +247,8 @@ class UserController extends BaseController
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
             }
 
-            $result = $this->model->execute('updateUser', $data, 'update');
+            $result = $this->model->updateUser()->param($data)->execute();
+            
             if ($result) {
                 $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario actualizado con éxito');
             } else {

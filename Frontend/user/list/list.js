@@ -44,10 +44,11 @@ $(document).ready(function () {
         },
         {
             data: 'is_active',
+            className: 'text-center',
             render: function (data, type, row) {
                 return data === 1 || data === true
                     ? '<span class="badge bg-success text-sm">Activo</span>'
-                    : '<span class="badge bg-danger text-dark text-lg">Inactivo</span>';
+                    : '<span class="badge bg-danger text-dark text-sm">Inactivo</span>';
             }
         },
         {
@@ -132,16 +133,17 @@ $(document).ready(function () {
             nombre: $('#nombre').val(),
             apellido: $('#apellido').val(),
             email: $('#email').val(),
-            phone: $('#phone').val(),
+            phone: $('#phone').val(), 
+            id_condominio: parseInt($('#condominio').val()) || null,
+            id_rol: parseInt($('#rol').val()) || null,
+            is_active: $('#is_active').prop('checked')
         };
         
         $.ajax({
             url:  `../api/user/update`,
             type: 'POST',
             dataType: 'json',
-            data: {
-                user_data: userData,
-            },
+            data: { user_data: JSON.stringify(userData) },
             success: function(data) {
                 
                 if (!handleErrorValidate(data) || !handleError(data)) {
