@@ -140,7 +140,7 @@ $(document).ready(function () {
         };
         
         $.ajax({
-            url:  `../api/user/update`,
+            url:  PROJECT_URL + `api/user/update`,
             type: 'POST',
             dataType: 'json',
             data: { user_data: JSON.stringify(userData) },
@@ -181,14 +181,12 @@ $(document).ready(function () {
         };
         
         $.ajax({
-            url:  `../api/user/resetPassword`,
+            url:  PROJECT_URL + `api/user/resetPassword`,
             type: 'POST',
             dataType: 'json',
-            data: {
-                user_data: userData,
-            },
+            data: { user_data: JSON.stringify(userData) },
             success: function(data) {
-                console.log(data);
+                
                 if (!handleError(data)) {
                     return; 
                 }

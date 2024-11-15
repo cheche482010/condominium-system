@@ -248,7 +248,7 @@ class UserController extends BaseController
             }
 
             $result = $this->model->updateUser()->param($data)->execute();
-            
+
             if ($result) {
                 $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'usuario actualizado con éxito');
             } else {
@@ -389,14 +389,24 @@ class UserController extends BaseController
     {
         $this->isPostRequest();
 
-        $data = $this->datos["user_data"];
+        $data = json_decode($this->datos["user_data"], true);
 
         try {
-            $result = $this->model->execute('resetPassword', $data, 'update');
+
+            $password = $this->securePassword($_ENV["SECURE_KEY"], $data['user_password'], 'codificar');
+            
+            if (!$password['success']) {
+                return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error',  ($password['error'] ?? 'No especificado'));
+            }
+
+            $data['user_password'] = $password['data'];
+            
+            $result = $this->model->resetPassword()->param($data)->execute();
+
             if ($result) {
                 $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Contraseña actualizada con éxito');
             } else {
-                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo actualizar la contraseña');
+                $this->respuesta = $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo actualizar la contraseña', $result);
             }
         } catch (\PDOException $e) {
             $errorMessage = $this->handlePDOExption($e, __METHOD__);
