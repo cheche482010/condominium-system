@@ -65,7 +65,7 @@ class BaseController
             $response['data'] = $data;
         }
         header('Content-Type: application/json');
-        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 
     public function handleIsUserLoggedIn(): void

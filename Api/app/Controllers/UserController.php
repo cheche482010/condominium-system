@@ -339,7 +339,7 @@ class UserController extends BaseController
             $this->secureSession();
             $this->initializeSession($user, $roles, $permissions);
             
-            return $this->response(self::HTTP_OK, true, 'success', 'Inicio de sesión exitoso', $_SESSION["user"]);
+            return $this->response(self::HTTP_OK, true, 'success', 'Inicio de sesión exitoso');
 
         } catch (\Exception $e) {
             return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al iniciar sesion.', $this->handlePDOExption($e, __METHOD__));
@@ -350,6 +350,8 @@ class UserController extends BaseController
     {
         $_SESSION['user'] = [
             'id' => $user['id'],
+            'nombre' => $user['nombre'],
+            'apellido' => $user['apellido'],
             'rol' => $roles,
             'permissions' => $permissions,
             'token' => $user['token'],

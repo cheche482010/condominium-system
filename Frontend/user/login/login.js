@@ -12,7 +12,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: PROJECT_URL + '/api/user/auth',
+            url: PROJECT_URL + 'api/user/auth',
             method: 'POST',
             dataType: 'json',
             data: { user_data: JSON.stringify(userData) },
@@ -22,24 +22,30 @@ $(document).ready(function () {
                     return;
                 }
 
-                Swal.fire({
-                    title: 'Inicio de sesion Exitoso',
-                    text: 'Se ha iniciado sesion con éxito. Bienvenido a nuestro sistema!',
-                    icon: 'success',
-                    confirmButtonText: null,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    onBeforeOpen: () => {
-                        Swal.showLoading()
-                    },
-                    onClose: () => {
-                        Swal.hideLoading()
-                    }
-                });
-
+                if (data.status === true) {
+                    Swal.fire({
+                        title: 'Inicio de sesión Exitoso',
+                        text: 'Se ha iniciado sesión con éxito. Bienvenido a nuestro sistema!',
+                        icon: 'success',
+                        confirmButtonText: null,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                        onClose: () => {
+                            window.location.href = PROJECT_URL + 'home';
+                        }
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            window.location.href = PROJECT_URL + 'home';
+                        }
+                    });
+                }
+                
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
