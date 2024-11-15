@@ -34,14 +34,21 @@ $(document).ready(function () {
             data: 'email'
         },
         {
-            data: 'rol'
+            data: 'rol',
+            render: function (data, type, row) {
+                if (type === 'display') {
+                    return data ? data.nombre : '';
+                }
+                return data;
+            }
         },
         {
             data: 'is_active',
+            className: 'text-center',
             render: function (data, type, row) {
                 return data === 1 || data === true
                     ? '<span class="badge bg-success text-sm">Activo</span>'
-                    : '<span class="badge bg-danger text-dark text-lg">Inactivo</span>';
+                    : '<span class="badge bg-danger text-dark text-sm">Inactivo</span>';
             }
         },
         {
@@ -60,14 +67,17 @@ $(document).ready(function () {
         var data = table.row($(this).parents('tr')).data();
         selectedUserId = data.id;
         $('#editUserForm').modal('show');
-        
+    
         rellenarFormulario('editForm', data, [
             'cedula',
             'nombre',
             'apellido',
             'email',
-            'phone'
+            'phone',
+            'is_active'
         ]);
+        $(`#condominio`).selectpicker('val', data.condominio.id);
+        $(`#rol`).selectpicker('val',data.rol.id);
     });
 
     // Delete button click handler
@@ -123,16 +133,17 @@ $(document).ready(function () {
             nombre: $('#nombre').val(),
             apellido: $('#apellido').val(),
             email: $('#email').val(),
-            phone: $('#phone').val(),
+            phone: $('#phone').val(), 
+            id_condominio: parseInt($('#condominio').val()) || null,
+            id_rol: parseInt($('#rol').val()) || null,
+            is_active: $('#is_active').prop('checked')
         };
         
         $.ajax({
-            url:  `../api/user/update`,
+            url:  PROJECT_URL + `api/user/update`,
             type: 'POST',
             dataType: 'json',
-            data: {
-                user_data: userData,
-            },
+            data: { user_data: JSON.stringify(userData) },
             success: function(data) {
                 
                 if (!handleErrorValidate(data) || !handleError(data)) {
@@ -170,14 +181,12 @@ $(document).ready(function () {
         };
         
         $.ajax({
-            url:  `../api/user/resetPassword`,
+            url:  PROJECT_URL + `api/user/resetPassword`,
             type: 'POST',
             dataType: 'json',
-            data: {
-                user_data: userData,
-            },
+            data: { user_data: JSON.stringify(userData) },
             success: function(data) {
-                console.log(data);
+                
                 if (!handleError(data)) {
                     return; 
                 }
@@ -236,6 +245,67 @@ $(document).ready(function () {
         } else {
             $('.progress-bar').width('100%');
             updateSecurityLevel('Contraseña segura');
+        }
+    });
+
+    $('#condominio').selectpicker({
+        liveSearch: true,
+        liveSearchNormalize: false,
+        size: 10,
+        style: 'btn btn-default'
+    });
+
+    $.ajax({
+        url: PROJECT_URL + 'api/condominio/getAllCondomains',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            if (!handleError(data)) {
+                return;
+            }
+
+            var options = '<option value="">Seleccione un condominio</option>';
+            $.each(data.data, function (index, item) {
+                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
+            });
+            $('#condominio').html(options);
+            $('#condominio').selectpicker('refresh');
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
+        }
+    });
+
+    $.ajax({
+        url: PROJECT_URL + 'api/user/getAllRols',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            if (!handleError(data)) {
+                return;
+            }
+
+            var options = '<option value="">Seleccione un rol</option>';
+            $.each(data.data, function (index, item) {
+                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
+            });
+            $('#rol').html(options);
+            $('#rol').selectpicker('refresh');
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
         }
     });
 

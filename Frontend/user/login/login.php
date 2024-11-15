@@ -43,23 +43,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div id="roles-container">
-                            Seleccione su rol
-                            <br>
-                            <input type="radio" name="role" value="" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>
                         <!-- /.col -->
-                        <div class="col-4">
+                        <div class="col-12">
                             <button id="login" type="button" class="btn btn-primary btn-block">Ingresar</button>
                         </div>
                         <!-- /.col -->
@@ -69,9 +54,6 @@
                 <div class="row login-footer">
                     <p class="col-6">
                         <a href="forgot-password.html">Recupera Contraseña</a>
-                    </p>
-                    <p class="col-6">
-                        <a href="Register" class="text-center">Registrarse</a>
                     </p>
                 </div>
             </div>

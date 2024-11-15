@@ -19,20 +19,20 @@ class UserModel extends BaseModel
     private $fetchMode = 'all';
 
     private const SQL_CONFIG = [
-        'getAllUser' => "SELECT user.id, user.nombre, user.apellido, user.cedula, user.phone, user.email, user.user_password, user.is_active, r.nombre AS rol, c.id AS id_condominio, c.nombre AS condominio_nombre, w.id AS website_id, w.shortcode AS website_shortcode, w.tagid AS website_tagid FROM usuarios USER LEFT JOIN condominios c ON user.id_condominio = c.id LEFT JOIN websites w ON c.id_website = w.id LEFT JOIN usuarios_roles ur ON user.id = ur.id_usuario LEFT JOIN roles r ON ur.id_rol = r.id WHERE user.is_active = TRUE ORDER BY user.nombre ASC",
+        'getAllUser' => "SELECT user.id, user.nombre, user.apellido, user.cedula, user.phone, user.email, user.user_password, user.is_active, r.nombre AS rol, r.id AS id_rol, c.id AS id_condominio, c.nombre AS condominio_nombre, w.id AS website_id, w.shortcode AS website_shortcode, w.tagid AS website_tagid FROM usuarios USER LEFT JOIN condominios c ON user.id_condominio = c.id LEFT JOIN websites w ON c.id_website = w.id LEFT JOIN usuarios_roles ur ON user.id = ur.id_usuario LEFT JOIN roles r ON ur.id_rol = r.id ORDER BY user.nombre ASC",
         'getAllPaginated' => "SELECT * FROM usuarios LIMIT :limit OFFSET :offset",
         'getCount' => "SELECT COUNT(*) as total FROM usuarios",
         'getById' => "SELECT id, nombre, apellido, cedula, phone, email, is_active FROM usuarios WHERE id = :id",
-        'getByEmail' => "SELECT email FROM usuarios WHERE email = :email",
+        'getByEmail' => "SELECT id, nombre, apellido, email, user_password, token, is_active FROM usuarios WHERE email = :email",
         'createUser' => "INSERT INTO usuarios (nombre, apellido, cedula, phone, email, user_password, token, id_condominio, id_website, id_rol, is_active) VALUES (:nombre, :apellido, :cedula, :phone, :email, :user_password, :token, :id_condominio, :id_website, :id_rol, :is_active)",
-        'updateUser' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email WHERE id = :id",
+        'updateUser' => "UPDATE usuarios SET nombre = :nombre, apellido = :apellido, cedula = :cedula, phone = :phone, email = :email, id_rol = :id_rol, is_active = :is_active, id_condominio = :id_condominio WHERE id = :id",
         'resetPassword' => "UPDATE usuarios SET user_password = :user_password WHERE id = :id",
         'delete' => "DELETE FROM usuarios WHERE id = :id",
         'deactivate' => "UPDATE usuarios SET is_active = FALSE WHERE id = :id",
         //permisos y roles
         'getAllRols' => "SELECT id, nombre, descripcion, is_active FROM roles WHERE is_active = 1 ORDER BY nombre ASC",
-        'getRolesByUserId' => "SELECT r.id AS role_id, r.nombre AS role_name FROM usuarios u JOIN usuarios_roles ur ON u.id = ur.id_usuario JOIN roles r ON ur.id_rol = r.id WHERE u.id = :id",
-        'assignRoleToUser' => "INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (:id_usuario, :id_rol)",
+        'getRolesByUserId' => "SELECT r.id , r.nombre FROM usuarios u JOIN usuarios_roles ur ON u.id = ur.id_usuario JOIN roles r ON ur.id_rol = r.id WHERE u.id = :id",
+        'getPermissionsByUserId' => "SELECT p.id AS id_permission, p.nombre AS name_permission, rp.is_active FROM usuarios u JOIN usuarios_roles ur ON u.id = ur.id_usuario JOIN roles r ON ur.id_rol = r.id JOIN roles_permisos rp ON r.id = rp.id_rol JOIN permisos p ON rp.id_permiso = p.id WHERE u.id = :id AND p.is_active = TRUE",'assignRoleToUser' => "INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (:id_usuario, :id_rol)",
         'getAllPermissions' => "SELECT id, nombre, descripcion FROM permisos WHERE is_active = 1 ORDER BY nombre ASC",
     ];
 

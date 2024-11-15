@@ -2,12 +2,20 @@
 define('URL', (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']) . "/");
 define("TITLE", "Condominium System");
 
+session_start();
+
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $route = str_replace('/www/condominium-system/', '', $uri);
 
 if (empty($route) || $route === '/') {
-    $route = 'home';
+    if (isset($_SESSION['user'])) {
+        header("Location: " . URL . "home");
+        exit();
+    } else {
+        header("Location: " . URL . "user/login");
+        exit();
+    }
 } else {
     $route = trim($route, '/');
 }

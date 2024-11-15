@@ -163,6 +163,36 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label for="condominio">Condominio</label>
+                                                    <select id="condominio" name="condominio"
+                                                        class="form-control custom-select">
+                                                        <option value="">Seleccione un condominio</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="rol">Rol</label>
+                                                        <select id="rol" name="rol" class="form-control custom-select">
+                                                            <option value="">Seleccione un rol</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row mb-2">
+                                                <div class="col-md-12 text-center">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="is_active" name="is_active" checked>
+                                                        <label class="custom-control-label"
+                                                            for="is_active">Activo</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row mb-1 mt-3 button-style">
