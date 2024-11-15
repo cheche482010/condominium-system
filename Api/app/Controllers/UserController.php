@@ -71,7 +71,10 @@ class UserController extends BaseController
                     'phone' => $usuario['phone'],
                     'email' => $usuario['email'],
                     'user_password' => $usuario['user_password'],
-                    'rol' => $usuario['rol'],
+                    'rol' => [
+                        'id' => $usuario['id_rol'],
+                        'nombre' => $usuario['rol'],
+                    ],
                     'is_active' => $usuario['is_active'],
                     'condominio' => [
                         'id' => $usuario['id_condominio'],

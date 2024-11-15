@@ -19,7 +19,7 @@ class UserModel extends BaseModel
     private $fetchMode = 'all';
 
     private const SQL_CONFIG = [
-        'getAllUser' => "SELECT user.id, user.nombre, user.apellido, user.cedula, user.phone, user.email, user.user_password, user.is_active, r.nombre AS rol, c.id AS id_condominio, c.nombre AS condominio_nombre, w.id AS website_id, w.shortcode AS website_shortcode, w.tagid AS website_tagid FROM usuarios USER LEFT JOIN condominios c ON user.id_condominio = c.id LEFT JOIN websites w ON c.id_website = w.id LEFT JOIN usuarios_roles ur ON user.id = ur.id_usuario LEFT JOIN roles r ON ur.id_rol = r.id WHERE user.is_active = TRUE ORDER BY user.nombre ASC",
+        'getAllUser' => "SELECT user.id, user.nombre, user.apellido, user.cedula, user.phone, user.email, user.user_password, user.is_active, r.nombre AS rol, r.id AS id_rol, c.id AS id_condominio, c.nombre AS condominio_nombre, w.id AS website_id, w.shortcode AS website_shortcode, w.tagid AS website_tagid FROM usuarios USER LEFT JOIN condominios c ON user.id_condominio = c.id LEFT JOIN websites w ON c.id_website = w.id LEFT JOIN usuarios_roles ur ON user.id = ur.id_usuario LEFT JOIN roles r ON ur.id_rol = r.id WHERE user.is_active = TRUE ORDER BY user.nombre ASC",
         'getAllPaginated' => "SELECT * FROM usuarios LIMIT :limit OFFSET :offset",
         'getCount' => "SELECT COUNT(*) as total FROM usuarios",
         'getById' => "SELECT id, nombre, apellido, cedula, phone, email, is_active FROM usuarios WHERE id = :id",
