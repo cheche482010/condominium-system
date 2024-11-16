@@ -1,3 +1,4 @@
+<?php verifySession(); ?>  
 <!DOCTYPE html>
 <html lang="es">
 

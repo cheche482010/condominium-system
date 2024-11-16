@@ -32,9 +32,7 @@
             </b>...]
         </p>
         <p>> 
-            <span>PÁGINAS EN ESTE SERVIDOR A LAS QUE USTED TIENE PERMISOS PARA ACCESAR</span>: [<a href="home">Pantalla
-                Principal</a>,
-            <a href="/">Contacto</a>...]
+            <span>PÁGINAS EN ESTE SERVIDOR A LAS QUE USTED TIENE PERMISOS PARA ACCESAR</span>: [<a href="<?= URL; ?>user/login">Iniciar Sesion</a>]
         </p>
         <p>> <span>QUE TENGAS UN DÍA.</span></p>
     </div>
