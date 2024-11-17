@@ -46,15 +46,22 @@
                 <a href="#" class="dropdown-item dropdown-footer">Ver todas las notificaciones</a>
             </div>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="fa fa-cog"></i>
+        <li class="nav-item dropdown" id="userContent">
+            <a class="nav-link user-nav" data-toggle="dropdown" href="#">
+                <span class="user-name">
+                    <?= $_SESSION['user']['nombre']." ".$_SESSION['user']['apellido']; ?>
+                </span>
+                <i class="fa fa-user"></i>
             </a>
-            <div id="userContent" class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <div class="user-header">
                     <div class="user-content">
-                        <span class="user-name">Usuario</span>
-                        <span class="user-rol">Web Developer</span>
+                        <span class="user-name">
+                            <?= $_SESSION['user']['nombre']." ".$_SESSION['user']['apellido']; ?>
+                        </span>
+                        <span class="badge bg-success user-rol">
+                            <?= $_SESSION['user']['rol']['nombre']; ?>
+                        </span>
                     </div>
                 </div>
                 
