@@ -363,12 +363,13 @@ class UserController extends BaseController
         ];
     }
 
-    public function logout()
+    public function logOut()
     {
         session_start();
         session_unset();
         session_destroy();
-
+        http_response_code(200);
+        
         return $this->response(self::HTTP_OK, true, 'success', 'Cierre de sesión exitoso');
     }
 
