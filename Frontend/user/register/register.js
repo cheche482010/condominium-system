@@ -155,7 +155,7 @@ $(document).ready(function () {
             dataType: 'json',
             data: { user_data: JSON.stringify(userData) },
             success: function (data) {
-                console.log(data);
+                
                 if (!handleErrorValidate(data) || !handleErrorExisting(data) || !handleError(data)) {
                     return;
                 }

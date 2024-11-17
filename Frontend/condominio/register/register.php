@@ -1,4 +1,4 @@
-<?php verifySession(); ?>  
+<?php verifySession(); ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -8,7 +8,7 @@
     <?php include __DIR__ . "/../../includes/link.php"; ?>
 
     <link href="<?= URL; ?>Frontend/condominio/register/register.scss" rel="stylesheet">
-</head> 
+</head>
 
 <body class="layout-navbar-fixed accent-primary layout-footer-fixed layout-fixed sidebar-mini sidebar-collapse">
     <div class="wrapper">
@@ -54,32 +54,65 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <!-- form start -->
-                                <form id="formRegistroCondominio">
+                                <form id="registerCondominio">
                                     <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="nombre">Nombre del Condominio</label>
-                                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre del condominio" required>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="nombre">Nombre del Condominio</label>
+                                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                                        placeholder="Ingrese el nombre del condominio">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="alicuota">Alícuota</label>
-                                            <input type="number" class="form-control" id="alicuota" name="alicuota" placeholder="Ingrese la alícuota" step="0.01" min="0" required>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="deuda">Deuda</label>
+                                                    <input type="number" class="form-control" id="deuda" name="deuda"
+                                                        placeholder="Ingrese la Deuda" step="0.01" min="0">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="alicuota">Alícuota</label>
+                                                    <input type="number" class="form-control" id="alicuota"
+                                                        name="alicuota" placeholder="Ingrese la alícuota" step="0.01"
+                                                        min="0">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" checked>
-                                                <label class="custom-control-label" for="is_active">Activo</label>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="is_active" name="is_active" checked>
+                                                        <label class="custom-control-label"
+                                                            for="is_active">Activo</label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Registrar</button>
-                                        <button type="button" class="btn btn-danger" onclick="window.history.back();">Cancelar</button>
+                                        <div class="row">
+                                            <!-- /.col -->
+                                            <div class="col-12">
+                                                <button id="register" type="button"
+                                                    class="btn btn-primary">Register</button>
+                                                <button id="clear" type="button" class="btn btn-danger">Limpiar</button>
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
                                     </div>
                                 </form>
                             </div>
-                            
+
                         </div>
                     </div>
 
@@ -96,7 +129,7 @@
     </div>
     <!-- ./wrapper -->
     <?php include __DIR__ . "/../../includes/script.php"; ?>
-    
+
     <script src="<?= URL; ?>Frontend/condominio/register/register.js"></script>
 </body>
 
