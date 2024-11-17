@@ -5,3 +5,26 @@
 .dropdown-menu  * {
     color: black !important;
 }
+
+#userContent {
+    .user-header {
+        padding: 10px;
+        text-align: center;
+    }
+    .user-body {
+        background-color: #f9f9f9;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .user-content {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .user-rol{
+        font-size: 14px;
+    }
+}
