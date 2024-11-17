@@ -15,8 +15,12 @@ class CondominioModel extends BaseModel
     private $fetchMode = 'all';
 
     private const SQL_CONFIG = [
-        'getAllCondomains' => "SELECT c.id, c.nombre, c.deuda, c.alicuota, c.is_active, cw.shortcode FROM condominios c JOIN websites cw ON c.id_website = cw.id WHERE c.is_active = TRUE ORDER BY c.nombre ASC;",
-        'getWebsiteByShortcode' => "SELECT shortcode  FROM websites WHERE shortcode = :shortcode LIMIT 1",
+        'getAllCondomains' => "SELECT c.id, c.nombre, c.deuda, c.alicuota, c.is_active, cw.shortcode FROM condominios c JOIN websites cw ON c.id_website = cw.id ORDER BY c.nombre ASC",
+        'createCondomain' => "INSERT INTO condominios (id_website, nombre, deuda, alicuota, is_active) VALUES (:id_website, :nombre, :deuda, :alicuota, :is_active)",
+        'getCondomainByName' => "SELECT id, nombre, deuda, alicuota, is_active FROM condominios WHERE nombre = :nombre LIMIT 1",
+        'getById' => "SELECT id, nombre, deuda, alicuota, is_active FROM condominios WHERE id = :id LIMIT 1",
+        'deactivate' => "UPDATE condominios SET is_active = FALSE WHERE id = :id",
+        'updateCondomain' => "UPDATE condominios SET  nombre = :nombre, deuda = :deuda, alicuota = :alicuota, is_active = :is_active WHERE id = :id",
     ];
 
     public function __construct()
@@ -26,12 +30,19 @@ class CondominioModel extends BaseModel
 
     public function param($data)
     {
+        $this->params = array_merge($this->params, $data);
+        
+        foreach ($this->params as $key => &$value) {
+            unset($this->params[$key]);
+        }
+        
         foreach ($data as $key => $value) {
             $this->params[$key] = $this->sanitize($value);
         }
-
+        
         return $this;
     }
+
 
     public function __call($method, $arguments)
     {
@@ -72,5 +83,18 @@ class CondominioModel extends BaseModel
         }
         $this->fetchMode = $mode;
         return $this->execute();
+    }
+
+    public function transaction($callback)
+    {
+        $this->db->beginTransaction();
+        try {
+            $result = $callback($this);
+             $this->db->commit();
+            return $result;
+        } catch (\PDOException $e) {
+             $this->db->rollback();
+            throw $e;
+        }
     }
 }

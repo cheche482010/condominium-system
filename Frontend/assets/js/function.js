@@ -165,3 +165,39 @@ $('.toggle-password').click(function (e) {
         $(".password").focus();
     }
 });
+
+$('#logout').click(function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: PROJECT_URL + 'api/user/logOut',
+        method: 'POST',
+        success: function(response) {
+            if (response.status) {
+                Swal.fire({
+                    title: 'Cierre de sesión exitoso',
+                    text: 'Has cerrado correctamente tu sesión.',
+                    icon: 'success',
+                    confirmButtonText: null,
+                    showConfirmButton: false,
+                    timer: 1500,
+                }).then(() => {
+                    window.location.href = PROJECT_URL;
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error al cerrar sesión',
+                    text: 'Ha ocurrido un error al intentar cerrar sesión. Por favor, inténtelo nuevamente.',
+                    icon: 'error'
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error de Servidor',
+                text: 'Ha ocurrido un error al intentar acceder al servidor. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
+        }
+    });
+});

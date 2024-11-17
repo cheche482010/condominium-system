@@ -17,7 +17,7 @@
             temporalmente no disponible.
         </p>
         <p class="output">
-            Por favor, intente <a href="<?= URL; ?>home">volver a la página de inicio</a>.
+            Por favor, intente <a href="<?= URL; ?>">volver a la página de inicio</a>.
         </p>
         <p class="output">Buena suerte.</p>
     </div>

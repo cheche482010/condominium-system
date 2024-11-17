@@ -116,12 +116,3 @@ VALUES
     (3, 7),  -- gestion_banco
     (3, 8),  -- gestion_tipos_pago
     (3, 9);  -- gestion_websites
-
--- vistas
-
-CREATE VIEW rol_permisos AS
-SELECT r.nombre AS Rol, p.nombre AS Permiso, p.descripcion AS Descripción
-FROM roles r
-JOIN roles_permisos rp ON r.id = rp.id_rol
-JOIN permisos p ON rp.id_permiso = p.id
-ORDER BY r.nombre;

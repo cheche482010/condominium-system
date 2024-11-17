@@ -42,20 +42,19 @@ class UserModel extends BaseModel
     }
 
     public function param($data)
-{
-    $this->params = array_merge($this->params, $data);
-    
-    // Limpiar los parámetros existentes antes de agregar nuevos
-    foreach ($this->params as $key => &$value) {
-        unset($this->params[$key]);
+    {
+        $this->params = array_merge($this->params, $data);
+        
+        foreach ($this->params as $key => &$value) {
+            unset($this->params[$key]);
+        }
+        
+        foreach ($data as $key => $value) {
+            $this->params[$key] = $this->sanitize($value);
+        }
+        
+        return $this;
     }
-    
-    foreach ($data as $key => $value) {
-        $this->params[$key] = $this->sanitize($value);
-    }
-    
-    return $this;
-}
 
 
     public function __call($method, $arguments)

@@ -9,11 +9,12 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $route = str_replace('/www/condominium-system/', '', $uri);
 
 if (empty($route) || $route === '/') {
-    if (isset($_SESSION['user'])) {
+    header("Location: " . URL . (hasValidSession() ? "home" : "user/login"));
+exit();
+
+} elseif ($route === 'user/login') {
+    if (hasValidSession()) {
         header("Location: " . URL . "home");
-        exit();
-    } else {
-        header("Location: " . URL . "user/login");
         exit();
     }
 } else {
@@ -31,4 +32,22 @@ if (file_exists($filePath)) {
     http_response_code(404);
     header("Location: " . URL . "error/404");
 }
+
+function verifySession() : void {
+    if (!isset($_SESSION['user']) || empty($_SESSION['user']) || !isset($_SESSION['user']["sesion_token"]) || empty($_SESSION['user']["sesion_token"])) {
+        header("HTTP/1.0 403 Forbidden");
+        http_response_code(403);
+        header("Location: " . URL . "error/403");
+        return;
+    }
+}
+
+function hasValidSession(): bool {
+    return (
+        isset($_SESSION['user'])
+        && isset($_SESSION['user']['sesion_token'])
+        && !empty($_SESSION['user']['sesion_token'])
+    );
+}
+
 ?>
