@@ -66,7 +66,7 @@
                 </div>
                 
                 <div class="user-body">
-                    <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                    <a href="<?= URL; ?>user/profile" class="btn btn-default btn-flat">Perfil</a>
                     <a href="javascript::void(0)" id="logout" class="btn btn-default btn-flat">Salir</a>
                 </div>
             </div>
