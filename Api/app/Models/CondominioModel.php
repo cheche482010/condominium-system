@@ -15,9 +15,11 @@ class CondominioModel extends BaseModel
     private $fetchMode = 'all';
 
     private const SQL_CONFIG = [
-        'getAllCondomains' => "SELECT c.id, c.nombre, c.deuda, c.alicuota, c.is_active, cw.shortcode FROM condominios c JOIN websites cw ON c.id_website = cw.id WHERE c.is_active = TRUE ORDER BY c.nombre ASC",
+        'getAllCondomains' => "SELECT c.id, c.nombre, c.deuda, c.alicuota, c.is_active, cw.shortcode FROM condominios c JOIN websites cw ON c.id_website = cw.id ORDER BY c.nombre ASC",
         'createCondomain' => "INSERT INTO condominios (id_website, nombre, deuda, alicuota, is_active) VALUES (:id_website, :nombre, :deuda, :alicuota, :is_active)",
-        'getCondomainByName' => "SELECT id, nombre, deuda, alicuota, is_active FROM condominios WHERE nombre = :nombre LIMIT 1"
+        'getCondomainByName' => "SELECT id, nombre, deuda, alicuota, is_active FROM condominios WHERE nombre = :nombre LIMIT 1",
+        'getById' => "SELECT id, nombre, deuda, alicuota, is_active FROM condominios WHERE id = :id LIMIT 1",
+        'deactivate' => "UPDATE condominios SET is_active = FALSE WHERE id = :id",
     ];
 
     public function __construct()

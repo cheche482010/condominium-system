@@ -1,4 +1,4 @@
-<?php verifySession(); ?>  
+<?php verifySession(); ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -33,7 +33,7 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active">Condominium System</li>
+                                <li class="breadcrumb-item active"><?= TITLE; ?></li>
                                 <li class="breadcrumb-item"><a href="list">Listar</a></li>
                             </ol>
                         </div><!-- /.col -->
@@ -52,10 +52,10 @@
                                     <h3 class="card-title">Lista de Condominios</h3>
                                 </div>
                                 <div class="card-body">
-                                    <table id="condominiosTable" class="table table-bordered table-striped">
+                                    <table id="condomainTable" class="table table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>#</th>
                                                 <th>Nombre</th>
                                                 <th>Deuda</th>
                                                 <th>Alícuota</th>
@@ -67,7 +67,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>#</th>
                                                 <th>Nombre</th>
                                                 <th>Deuda</th>
                                                 <th>Alícuota</th>
@@ -81,6 +81,7 @@
                         </div>
                     </div>
                 </div>
+
             </section>
             <!-- /.content -->
         </div>

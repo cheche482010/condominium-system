@@ -9,6 +9,8 @@ class CondominioController extends BaseController
     use \Core\Traits\ValidatorTrait;
     private $datos;
     private $respuesta; 
+    private $maxAttempts = 5;
+    private $attemptCount = 0;
 
     public function __construct()
     {
@@ -20,13 +22,12 @@ class CondominioController extends BaseController
   
     public function getAllCondomains()
     {
-        $this->isGetRequest();
+        $this->isGetRequest(); 
         try {
             $data = $this->model->getAllCondomains()->fetch('all');
             $this->respuesta = $this->response(self::HTTP_OK, true, 'success', 'Condominios obtenidos con éxito', $data);
         } catch (\PDOException $e) {
-            $errorMessage = $this->handlePDOExption($e, __METHOD__);
-            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los Condominios', $errorMessage);
+            $this->respuesta = $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los Condominios', $this->handlePDOExption($e, __METHOD__));
         }
         return $this->respuesta; 
     }
@@ -92,6 +93,49 @@ class CondominioController extends BaseController
     public function update($id)
     {
         $this->isPutRequest();
+    }
+
+    public function deactivate()
+    {
+        $this->isPostRequest();
+        
+        try {
+            $id = $this->datos["id"];
+            
+            $sanitizedId = intval(filter_var($id, FILTER_SANITIZE_NUMBER_INT));
+
+            if (!$sanitizedId) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'ID inválido');
+            }
+
+            $condomainIdResult = $this->model->getById()->param(['id' => $sanitizedId])->fetch('single');
+
+            if (!$condomainIdResult) {
+                return $this->response(self::HTTP_NOT_FOUND, false, 'error', 'Condominio no encontrado', $condomainIdResult);
+            }
+
+            if ($this->attemptCount >= $this->maxAttempts) {
+                return $this->response(self::HTTP_TOO_MANY_REQUESTS, false, 'error', 'Demasiados intentos de desactivación');
+            }
+            
+            $this->attemptCount++;
+
+            $result = $this->model->transaction(function ($m) use ($sanitizedId) {
+                return $m->deactivate()->param(['id' => $sanitizedId])->execute();
+            });
+
+            if ($result) {
+                return $this->response(self::HTTP_OK, true, 'success', 'condominio desactivado con éxito', ['id' => $sanitizedId, 'estado' => 'desactivado']);
+            } else {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo desactivar el condominio', $result);
+            }
+        } catch (\PDOException $e) {
+            if ($e->getCode() === 'HY000' && strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'El condominio ya está desactivado', $this->handlePDOExption($e, __METHOD__));
+            }
+            
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al desactivar condominio', $this->handlePDOExption($e, __METHOD__));
+        }
     }
 
 }
