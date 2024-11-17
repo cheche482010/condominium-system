@@ -36,8 +36,6 @@
         </p>
         <p>> <span>QUE TENGAS UN DÍA.</span></p>
     </div>
-
-    <script src="<?= URL; ?>Frontend/error/403/403.js"></script>
 </body>
 
 </html>
