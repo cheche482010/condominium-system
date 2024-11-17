@@ -1,5 +1,6 @@
 $(document).ready(function () {
-
+    let selectedUserId; 
+    
     let table = createDataTable('#condomainTable', {
         url: PROJECT_URL + 'api/condominio/getAllCondomains',
     },
@@ -86,5 +87,63 @@ $(document).ready(function () {
             }
         });
 
+    });
+
+    // Edit button click handler
+    $('#condomainTable tbody').on('click', '.btn-edit', function () {
+        var data = table.row($(this).parents('tr')).data();
+        selectedUserId = data.id;
+        $('#editCondomainForm').modal('show');
+    
+        rellenarFormulario('editForm', data, [
+            'nombre',
+            'deuda',
+            'alicuota',
+            'is_active'
+        ]);
+
+    });
+
+    $('#editBtn').on('click', function(e) {
+        e.preventDefault();
+        
+        const dataCondominio = {
+            id: selectedUserId,
+            nombre: $('#nombre').val() || '',
+            deuda: parseFloat($('#deuda').val()) || 0,
+            alicuota: parseFloat($('#alicuota').val()) || 0,
+            is_active: $('#is_active').prop('checked'),
+        };
+        
+        $.ajax({
+            url:  PROJECT_URL + `api/condominio/update`,
+            type: 'POST',
+            dataType: 'json',
+            data: { condominio_data: JSON.stringify(dataCondominio) },
+            success: function(response) {
+                
+                if (!handleErrorValidate(response) || !handleError(response)) {
+                    return; 
+                }
+
+                table.ajax.reload();
+                $('#editCondomainForm').modal('hide');
+
+                Swal.fire({
+                    title: 'Condominio Actualizado',
+                    text: 'Se ha actualizado el Condominio con éxito.',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                });
+            },
+            error: function(error) {
+                console.error(error);
+                Swal.fire({
+                    title: 'Error al alctualizar',
+                    text: 'Ha ocurrido un error al intentar alctualizar. Por favor, inténtelo nuevamente.',
+                    icon: 'error'
+                });
+            }
+        });
     });
 });

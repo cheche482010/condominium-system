@@ -20,6 +20,7 @@ class CondominioModel extends BaseModel
         'getCondomainByName' => "SELECT id, nombre, deuda, alicuota, is_active FROM condominios WHERE nombre = :nombre LIMIT 1",
         'getById' => "SELECT id, nombre, deuda, alicuota, is_active FROM condominios WHERE id = :id LIMIT 1",
         'deactivate' => "UPDATE condominios SET is_active = FALSE WHERE id = :id",
+        'updateCondomain' => "UPDATE condominios SET  nombre = :nombre, deuda = :deuda, alicuota = :alicuota, is_active = :is_active WHERE id = :id",
     ];
 
     public function __construct()

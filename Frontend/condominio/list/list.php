@@ -80,6 +80,69 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal fade" id="editCondomainForm" tabindex="-1" role="dialog"
+                        aria-labelledby="editUserFormLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editUserFormLabel">Editar Condominio</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form id="editForm" action="POST">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="nombre">Nombre del Condominio</label>
+                                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                                        placeholder="Ingrese el nombre del condominio">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="deuda">Deuda</label>
+                                                    <input type="number" class="form-control" id="deuda" name="deuda"
+                                                        placeholder="Ingrese la Deuda" step="0.01" min="0">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="alicuota">Alícuota</label>
+                                                    <input type="number" class="form-control" id="alicuota"
+                                                        name="alicuota" placeholder="Ingrese la alícuota" step="0.01"
+                                                        min="0">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="is_active" name="is_active" checked>
+                                                        <label class="custom-control-label"
+                                                            for="is_active">Activo</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary" id="editBtn">Guardar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </section>

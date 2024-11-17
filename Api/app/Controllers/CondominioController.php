@@ -43,8 +43,7 @@ class CondominioController extends BaseController
         $rules = [
             'nombre' => 'required|regex:alphanumeric|min:3|max:100',
             'deuda' => 'required|regex:numeric|min:0.01',
-            'alicuota' => 'required|regex:numeric|min:0.01',
-            'is_active' => 'required|regex:boolean'
+            'alicuota' => 'required|regex:numeric|min:0.01'
         ];
 
         $errors = $this->validate($data, $rules);
@@ -90,9 +89,33 @@ class CondominioController extends BaseController
         }
     } 
 
-    public function update($id)
+    public function update()
     {
-        $this->isPutRequest();
+        $this->isPostRequest();
+
+        $data = json_decode($this->datos["condominio_data"], true);
+        
+        try {
+
+            $validateData = $this->validateData($data);
+            
+            if ($validateData) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
+            }
+
+            $result = $this->model->transaction(function ($model) use ($data) {
+                return $model->updateCondomain()->param($data)->execute();
+            });
+
+            if (!$result) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo actualizar el Condominio', $result);
+            }
+            
+            return $this->response(self::HTTP_OK, true, 'success', 'Condominio actualizado con éxito');
+
+        } catch (\PDOException $e) {
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al actualizar el usuario.', $this->handlePDOExption($e, __METHOD__));
+        }
     }
 
     public function deactivate()
