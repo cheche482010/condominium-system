@@ -129,10 +129,10 @@
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="condominio">Condominio</label>
-                                                    <select id="condominio" name="condominio"
+                                                    <label for="apartamento">Apartamento</label>
+                                                    <select id="apartamento" name="apartamento"
                                                         class="form-control custom-select">
-                                                        <option value="">Seleccione un condominio</option>
+                                                        <option value="">Seleccione un Apartamento</option>
                                                     </select>
                                                 </div>
                                             </div>

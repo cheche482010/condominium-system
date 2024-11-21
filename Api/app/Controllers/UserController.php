@@ -76,9 +76,9 @@ class UserController extends BaseController
                         'nombre' => $usuario['rol'],
                     ],
                     'is_active' => $usuario['is_active'],
-                    'condominio' => [
-                        'id' => $usuario['id_condominio'],
-                        'nombre' => $usuario['condominio_nombre'],
+                    'apartamento' => [
+                        'id' => $usuario['id_apartamento'],
+                        'nombre' => $usuario['nombre_apartamento'],
                     ],
                     'website' => [
                         'shortcode' => $usuario['website_shortcode'],
@@ -177,7 +177,7 @@ class UserController extends BaseController
         return $this->respuesta;
     }
 
-    public function createNewUser()
+    public function create()
     {
         $this->isPostRequest();
         $data = json_decode($this->datos["user_data"], true);
