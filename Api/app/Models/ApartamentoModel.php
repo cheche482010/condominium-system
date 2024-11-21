@@ -15,12 +15,12 @@ class ApartamentoModel extends BaseModel
     private $fetchMode = 'all';
 
     private const SQL_CONFIG = [
-        'getAllApartments' => "SELECT a.id, a.nombre, a.deuda, a.alicuota, a.is_active, w.shortcode, c.id AS id_condominio, c.codigo AS codigo_condominio, c.nombre AS nombre_condominio FROM apartamento a JOIN websites w ON a.id_website = w.id JOIN condominio c ON a.id_condominio = c.id ORDER BY a.nombre ASC",
-        'createCondomain' => "INSERT INTO apartamento (id_website, nombre, deuda, alicuota, is_active) VALUES (:id_website, :nombre, :deuda, :alicuota, :is_active)",
-        'getCondomainByName' => "SELECT id, nombre, deuda, alicuota, is_active FROM apartamento WHERE nombre = :nombre LIMIT 1",
-        'getById' => "SELECT id, nombre, deuda, alicuota, is_active FROM apartamento WHERE id = :id LIMIT 1",
+        'getAllApartments' => "SELECT a.id, a.nombre, a.deuda, a.alicuota, a.is_active, w.shortcode, c.id AS id_condominio, c.codigo AS codigo_condominio, c.nombre AS nombre_condominio FROM apartamento a JOIN websites w ON a.id_website = w.id JOIN condominio c ON a.id_condominio = c.id WHERE a.is_active = TRUE ORDER BY a.nombre ASC",
+        'createApartament' => "INSERT INTO apartamento (id_website, nombre, deuda, alicuota, is_active) VALUES (:id_website, :nombre, :deuda, :alicuota, :is_active)",
+        'getApartamentByName' => "SELECT id, nombre, deuda, alicuota, is_active FROM apartamento WHERE nombre = :nombre LIMIT 1",
+        'getByIdApartament' => "SELECT id, nombre, deuda, alicuota, is_active FROM apartamento WHERE id = :id LIMIT 1",
         'deactivate' => "UPDATE apartamento SET is_active = FALSE WHERE id = :id",
-        'updateCondomain' => "UPDATE apartamento SET  nombre = :nombre, deuda = :deuda, alicuota = :alicuota, is_active = :is_active WHERE id = :id",
+        'updateApartament' => "UPDATE apartamento SET  nombre = :nombre, deuda = :deuda, alicuota = :alicuota, is_active = :is_active WHERE id = :id",
     ];
 
     public function __construct()

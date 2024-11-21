@@ -53,7 +53,7 @@ class ApartamentoController extends BaseController
     public function create()
     {
         $this->isPostRequest();
-        $data = json_decode($this->datos["condominio_data"], true);
+        $data = json_decode($this->datos["apartament_data"], true);
 
         try { 
             
@@ -63,28 +63,29 @@ class ApartamentoController extends BaseController
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
             }
 
-            $existingCondominium = $this->model->getCondomainByName()->param(['nombre' => $data['nombre']])->fetch('single');
+            $existingApartament = $this->model->getApartamentByName()->param(['nombre' => $data['nombre']])->fetch('single');
            
-            if ($existingCondominium) {
-                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'Condominio ya registrado. ', $data["nombre"]);
+            if ($existingApartament) {
+                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'Apartamento ya registrado. ', $data["nombre"]);
             }
 
             $data['id_website'] = 1;
+            $data['id_condominio'] = 1;
 
             $result = $this->model->transaction(function ($model) use ($data) {
-                return $model->createCondomain()->param($data)->execute();
+                return $model->createApartament()->param($data)->execute();
             });
 
             if (!$result) {
-                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el Condominio', $result);
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo crear el Apartamento', $result);
             }
             
-            $condominiumId = intval($this->model->lastInsertId());
+            $apartamentId = intval($this->model->lastInsertId());
 
-            return $this->response(self::HTTP_OK, true, 'success', 'Condominio creado con éxito', ['id' => $condominiumId]);
+            return $this->response(self::HTTP_OK, true, 'success', 'Apartamento creado con éxito', ['id' => $apartamentId]);
 
         } catch (\Exception $e) {
-            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al crear el Condominio.', $this->handlePDOExption($e, __METHOD__));
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al crear el Apartamento.', $this->handlePDOExption($e, __METHOD__));
         }
     } 
 
@@ -92,7 +93,7 @@ class ApartamentoController extends BaseController
     {
         $this->isPostRequest();
 
-        $data = json_decode($this->datos["condominio_data"], true);
+        $data = json_decode($this->datos["apartament_data"], true);
         
         try {
 
@@ -103,17 +104,17 @@ class ApartamentoController extends BaseController
             }
 
             $result = $this->model->transaction(function ($model) use ($data) {
-                return $model->updateCondomain()->param($data)->execute();
+                return $model->updateApartament()->param($data)->execute();
             });
 
             if (!$result) {
-                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo actualizar el Condominio', $result);
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo actualizar el Apartamento', $result);
             }
             
-            return $this->response(self::HTTP_OK, true, 'success', 'Condominio actualizado con éxito');
+            return $this->response(self::HTTP_OK, true, 'success', 'Apartamento actualizado con éxito');
 
         } catch (\PDOException $e) {
-            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al actualizar el usuario.', $this->handlePDOExption($e, __METHOD__));
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al actualizar el Apartamento.', $this->handlePDOExption($e, __METHOD__));
         }
     }
 
@@ -130,10 +131,10 @@ class ApartamentoController extends BaseController
                 return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'ID inválido');
             }
 
-            $condomainIdResult = $this->model->getById()->param(['id' => $sanitizedId])->fetch('single');
+            $apartamentIdResult = $this->model->getByIdApartament()->param(['id' => $sanitizedId])->fetch('single');
 
-            if (!$condomainIdResult) {
-                return $this->response(self::HTTP_NOT_FOUND, false, 'error', 'Condominio no encontrado', $condomainIdResult);
+            if (!$apartamentIdResult) {
+                return $this->response(self::HTTP_NOT_FOUND, false, 'error', 'Apartamento no encontrado', $apartamentIdResult);
             }
 
             if ($this->attemptCount >= $this->maxAttempts) {
@@ -147,16 +148,16 @@ class ApartamentoController extends BaseController
             });
 
             if ($result) {
-                return $this->response(self::HTTP_OK, true, 'success', 'condominio desactivado con éxito', ['id' => $sanitizedId, 'estado' => 'desactivado']);
+                return $this->response(self::HTTP_OK, true, 'success', 'Apartamento desactivado con éxito', ['id' => $sanitizedId, 'estado' => 'desactivado']);
             } else {
-                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo desactivar el condominio', $result);
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo desactivar el Apartamento', $result);
             }
         } catch (\PDOException $e) {
             if ($e->getCode() === 'HY000' && strpos($e->getMessage(), 'Duplicate entry') !== false) {
-                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'El condominio ya está desactivado', $this->handlePDOExption($e, __METHOD__));
+                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'El Apartamento ya está desactivado', $this->handlePDOExption($e, __METHOD__));
             }
             
-            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al desactivar condominio', $this->handlePDOExption($e, __METHOD__));
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al desactivar Apartamento', $this->handlePDOExption($e, __METHOD__));
         }
     }
 
