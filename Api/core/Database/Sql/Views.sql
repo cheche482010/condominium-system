@@ -13,11 +13,12 @@ ORDER BY
     r.nombre;
 
 -- usuario condominio
-CREATE VIEW usuarios_condominio AS SELECT
+CREATE VIEW usuarios_apartamento AS SELECT
     u.nombre,
     u.apellido,
-    c.nombre AS condominio_nombre
+    a.nombre AS apartamento,
+    co.nombre AS condominio
 FROM
     usuarios u
-JOIN condominios c ON
-    u.id_condominio = c.id;
+JOIN apartamento a ON u.id_apartamento = a.id
+JOIN condominio co ON a.id_condominio = co.id;
