@@ -1,11 +1,17 @@
 INSERT INTO 
     websites (name, shortcode, tagid)
 VALUES
-('Condominio A', 'CA', 001),
-('Condominio B', 'CB', 002),
-('Condominio C', 'CC', 003),
-('Condominio D', 'CD', 004),
-('Condominio E', 'CE', 005);
+('Test A', 'TA', 001),
+('Test B', 'TB', 002),
+('Test C', 'TC', 003),
+('Test D', 'TD', 004),
+('Test E', 'TE', 005);
+
+INSERT INTO condominio (id_website, codigo, nombre)
+VALUES
+(1, 'COND-001', 'Reserva del Mar'),
+(2, 'COND-002', 'Torre de la Costa'),
+(3, 'COND-003', 'Parque del Sol');
 
 INSERT INTO
     bancos (codigo, nombre)
@@ -41,6 +47,16 @@ VALUES
 ('TPI', 'PayPal Instant Transfer', 'Transferencia instantánea desde PayPal'),
 ('TAT', 'Tarjeta Débito', 'Pagos con tarjeta débito'),
 ('TCT', 'Tarjeta Crédito', 'Pagos con tarjeta de crédito');
+
+INSERT INTO tipo_gasto (nombre, descripcion, is_active)
+VALUES
+('Agua', 'Gasto por suministro de agua', true),
+('Gas', 'Gasto por suministro de gas', true),
+('Electricidad', 'Gasto por suministro eléctrico', true),
+('Seguridad', 'Servicios de vigilancia y seguridad', true),
+('Limpieza común', 'Limpieza de áreas comunes', true),
+('Mantenimiento', 'Reparaciones y mantenimiento general', true),
+('Estacionamiento', 'Servicios de estacionamiento', true);
 
 INSERT INTO 
     condominios (id_website, nombre, deuda, alicuota)
