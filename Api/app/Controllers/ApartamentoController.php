@@ -42,7 +42,8 @@ class ApartamentoController extends BaseController
         $rules = [
             'nombre' => 'required|regex:alphanumeric|min:3|max:100',
             'deuda' => 'required|regex:numeric|min:0.01',
-            'alicuota' => 'required|regex:numeric|min:0.01'
+            'alicuota' => 'required|regex:numeric|min:0.01',
+            'id_condominio' => 'required'
         ];
 
         $errors = $this->validate($data, $rules);
@@ -67,6 +68,12 @@ class ApartamentoController extends BaseController
            
             if ($existingApartament) {
                 return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'Apartamento ya registrado. ', $data["nombre"]);
+            }
+
+            $existingCondomain = $this->model->getCondomainById()->param(['id' => $data['id_condominio']])->fetch('single');
+           
+            if (!$existingCondomain) {
+                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'Condominio no existe.', $data["id_condominio"]);
             }
 
             $data['id_website'] = 1;

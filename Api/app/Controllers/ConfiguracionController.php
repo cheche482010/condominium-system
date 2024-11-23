@@ -140,4 +140,17 @@ class ConfiguracionController extends BaseController
 
         return  $errors ?? null;
     }
+
+    // Condominios
+
+    public function getAllCondomains()
+    {
+        $this->isGetRequest();
+        try {
+            $data = $this->model->getAllCondomains()->fetch('all');
+            return$this->response(self::HTTP_OK, true, 'success', 'Condominios obtenidos con éxito', $data);
+        } catch (\PDOException $e) {
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los Condominios', $this->handlePDOExption($e, __METHOD__));
+        }
+    }
 }

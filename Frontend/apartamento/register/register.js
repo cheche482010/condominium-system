@@ -6,6 +6,7 @@ $(document).ready(function () {
             nombre: $('#nombre').val() || '',
             deuda: parseFloat($('#deuda').val()) || 0,
             alicuota: parseFloat($('#alicuota').val()) || 0,
+            id_condominio: parseInt($('#condominio').val()) || null,
             is_active: $('#is_active').prop('checked'),
         };
 
@@ -54,13 +55,46 @@ $(document).ready(function () {
         style: 'btn btn-default'
     });
 
+    $.ajax({
+        url: PROJECT_URL + 'api/configuracion/getAllCondomains',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            if (!handleError(data)) {
+                return;
+            }
+
+            var options = '<option value="">Seleccione un condominio</option>';
+            $.each(data.data, function (index, item) {
+                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
+            });
+            $('#condominio').html(options);
+            $('#condominio').selectpicker('refresh');
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
+        }
+    });
+
     function validateForm(data) {
         const nombre = data.nombre.trim();
         const deuda = data.deuda;
         const alicuota = data.alicuota;
+        const condominio = data.alicuota;
 
         if (nombre.length === 0) {
             toastr.error('El campo Nombre del Apartamento es obligatorio.');
+            return false;
+        }
+
+        if (condominio.length === 0) {
+            toastr.error('El campo Condominio es obligatorio.');
             return false;
         }
 
