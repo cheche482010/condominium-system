@@ -16,6 +16,9 @@ $(document).ready(function () {
             }
         },
         {
+            data: 'nombre_condominio'
+        },
+        {
             data: 'nombre'
         },
         {
@@ -101,7 +104,7 @@ $(document).ready(function () {
             'alicuota',
             'is_active'
         ]);
-
+        $(`#condominio`).selectpicker('val', data.id_condominio);
     });
 
     $('#editBtn').on('click', function(e) {
@@ -112,7 +115,8 @@ $(document).ready(function () {
             nombre: $('#nombre').val() || '',
             deuda: parseFloat($('#deuda').val()) || 0,
             alicuota: parseFloat($('#alicuota').val()) || 0,
-            is_active: $('#is_active').prop('checked'),
+            is_active: $('#is_active').prop('checked'), 
+            id_condominio: parseInt($('#condominio').val()) || null
         };
         
         $.ajax({
@@ -145,5 +149,39 @@ $(document).ready(function () {
                 });
             }
         });
+    });
+
+    $('#condominio').selectpicker({
+        liveSearch: true,
+        liveSearchNormalize: false,
+        size: 10,
+        style: 'btn btn-default'
+    });
+
+    $.ajax({
+        url: PROJECT_URL + 'api/configuracion/getAllCondomains',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            if (!handleError(data)) {
+                return;
+            }
+
+            var options = '<option value="">Seleccione un condominio</option>';
+            $.each(data.data, function (index, item) {
+                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
+            });
+            $('#condominio').html(options);
+            $('#condominio').selectpicker('refresh');
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
+        }
     });
 });

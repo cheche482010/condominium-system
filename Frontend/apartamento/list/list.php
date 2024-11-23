@@ -56,7 +56,8 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nombre</th>
+                                                <th>Condominio</th>
+                                                <th>Apartamento</th>
                                                 <th>Deuda</th>
                                                 <th>Alícuota</th>
                                                 <th>Estado</th>
@@ -68,7 +69,8 @@
                                         <tfoot>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nombre</th>
+                                                <th>Condominio</th>
+                                                <th>Apartamento</th>
                                                 <th>Deuda</th>
                                                 <th>Alícuota</th>
                                                 <th>Estado</th>
@@ -94,11 +96,21 @@
                                 <form id="editForm" action="POST">
                                     <div class="modal-body">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="nombre">Nombre del Apartamento</label>
                                                     <input type="text" class="form-control" id="nombre" name="nombre"
                                                         placeholder="Ingrese el nombre del apartamento">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="condominio">Condominio</label>
+                                                    <select id="condominio" name="condominio"
+                                                        class="form-control custom-select">
+                                                        <option value="">Seleccione un condominio</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

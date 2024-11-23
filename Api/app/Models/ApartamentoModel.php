@@ -20,7 +20,7 @@ class ApartamentoModel extends BaseModel
         'getApartamentByName' => "SELECT id, nombre, deuda, alicuota, is_active FROM apartamento WHERE nombre = :nombre LIMIT 1",
         'getByIdApartament' => "SELECT id, nombre, deuda, alicuota, is_active FROM apartamento WHERE id = :id LIMIT 1",
         'deactivate' => "UPDATE apartamento SET is_active = FALSE WHERE id = :id",
-        'updateApartament' => "UPDATE apartamento SET  nombre = :nombre, deuda = :deuda, alicuota = :alicuota, is_active = :is_active WHERE id = :id",
+        'updateApartament' => "UPDATE apartamento SET  nombre = :nombre, deuda = :deuda, alicuota = :alicuota, is_active = :is_active, id_condominio = :id_condominio  WHERE id = :id",
         'getCondomainById' => "SELECT id, nombre, codigo, is_active FROM condominio WHERE id = :id LIMIT 1",
     ];
 
