@@ -4,7 +4,8 @@
                 <img src="<?= URL; ?>Frontend/assets/img/logo.jpg" alt="Logo"
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light">
-                    Condominium System </span>
+                    <?= TITLE; ?>
+                </span>
             </a>
 
             <!-- Sidebar -->
@@ -48,28 +49,19 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="<?= URL; ?>user/permits"
-                                        class="nav-link">
-                                        <i class="fa fa-lock nav-icon"></i>
-                                        <p>
-                                            PERMISOS
-                                        </p>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a href="<?= URL; ?>#" class="nav-link">
                                 <i class="nav-icon fa fa-building"></i>
                                 <p>
-                                    CONDOMINIOS
+                                    APARTAMENTOS
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="<?= URL; ?>condominio/register"
+                                    <a href="<?= URL; ?>apartamento/register"
                                         class="nav-link">
                                         <i class="fa fa-plus-circle nav-icon"></i>
                                         <p>
@@ -78,7 +70,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= URL; ?>condominio/list"
+                                    <a href="<?= URL; ?>apartamento/list"
                                         class="nav-link">
                                         <i class="fa fa-list nav-icon"></i>
                                         <p>
@@ -161,7 +153,7 @@
                                         class="nav-link">
                                         <i class="fa fa-building nav-icon"></i>
                                         <p>
-                                            POR CONDOMINIO
+                                            POR APARTAMENTO
                                         </p>
                                     </a>
                                 </li>

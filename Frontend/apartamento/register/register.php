@@ -7,7 +7,7 @@
     <title><?= TITLE; ?></title>
     <?php include __DIR__ . "/../../includes/link.php"; ?>
 
-    <link href="<?= URL; ?>Frontend/condominio/register/register.scss" rel="stylesheet">
+    <link href="<?= URL; ?>Frontend/apartamento/register/register.scss" rel="stylesheet">
 </head>
 
 <body class="layout-navbar-fixed accent-primary layout-footer-fixed layout-fixed sidebar-mini sidebar-collapse">
@@ -28,11 +28,11 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Condominios</h1>
+                            <h1 class="m-0">Apartamentos</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active">Condominium System</li>
+                                <li class="breadcrumb-item active"><?= TITLE; ?></li>
                                 <li class="breadcrumb-item"><a href="register">Registrar</a></li>
                             </ol>
                         </div><!-- /.col -->
@@ -50,18 +50,28 @@
 
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Registrar Condominio</h3>
+                                    <h3 class="card-title">Registrar Apartamento</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <!-- form start -->
-                                <form id="registerCondominio">
+                                <form id="registerApartament">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="nombre">Nombre del Condominio</label>
+                                                    <label for="nombre">Nombre del Apartamento</label>
                                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                                        placeholder="Ingrese el nombre del condominio">
+                                                        placeholder="Ingrese el nombre del Apartamento">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="condominio">Condominio</label>
+                                                    <select id="condominio" name="condominio"
+                                                        class="form-control custom-select">
+                                                        <option value="">Seleccione un condominio</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -130,7 +140,7 @@
     <!-- ./wrapper -->
     <?php include __DIR__ . "/../../includes/script.php"; ?>
 
-    <script src="<?= URL; ?>Frontend/condominio/register/register.js"></script>
+    <script src="<?= URL; ?>Frontend/apartamento/register/register.js"></script>
 </body>
 
 </html>

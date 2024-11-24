@@ -2,22 +2,23 @@ $(document).ready(function () {
     $('#register').on('click', function (e) {
         e.preventDefault();
 
-        const dataCondominio = {
+        const dataApartament = {
             nombre: $('#nombre').val() || '',
             deuda: parseFloat($('#deuda').val()) || 0,
             alicuota: parseFloat($('#alicuota').val()) || 0,
+            id_condominio: parseInt($('#condominio').val()) || null,
             is_active: $('#is_active').prop('checked'),
         };
 
-        if (!validateForm(dataCondominio)) {
+        if (!validateForm(dataApartament)) {
             return;
         }
 
         $.ajax({
-            url: PROJECT_URL + 'api/condominio/create',
+            url: PROJECT_URL + 'api/apartamento/create',
             method: 'POST',
             dataType: 'json',
-            data: { condominio_data: JSON.stringify(dataCondominio) },
+            data: { apartament_data: JSON.stringify(dataApartament) },
             success: function (response) {
                 
                 if (!handleErrorValidate(response) || !handleError(response)) {
@@ -26,7 +27,7 @@ $(document).ready(function () {
 
                 Swal.fire({
                     title: 'Registro Exitoso',
-                    text: 'Se ha registrado el condominio con éxito.',
+                    text: 'Se ha registrado el Apartamento con éxito.',
                     icon: 'success',
                     confirmButtonText: 'Continuar'
                 }).then((result) => {
@@ -36,7 +37,7 @@ $(document).ready(function () {
                 });
             },
             error: function (xhr, status, error) {
-                var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Error al registrar el condominio';
+                var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Error al registrar el Apartamento';
                 console.error('Error:', errorMessage);
                 Swal.fire({
                     title: 'Error al registrar',
@@ -47,23 +48,63 @@ $(document).ready(function () {
         });
     });
 
+    $('#condominio').selectpicker({
+        liveSearch: true,
+        liveSearchNormalize: false,
+        size: 10,
+        style: 'btn btn-default'
+    });
+
+    $.ajax({
+        url: PROJECT_URL + 'api/configuracion/getAllCondomains',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            if (!handleError(data)) {
+                return;
+            }
+
+            var options = '<option value="">Seleccione un condominio</option>';
+            $.each(data.data, function (index, item) {
+                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
+            });
+            $('#condominio').html(options);
+            $('#condominio').selectpicker('refresh');
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
+        }
+    });
+
     function validateForm(data) {
         const nombre = data.nombre.trim();
         const deuda = data.deuda;
         const alicuota = data.alicuota;
+        const condominio = data.alicuota;
 
         if (nombre.length === 0) {
-            toastr.error('El campo Nombre del Condominio es obligatorio.');
+            toastr.error('El campo Nombre del Apartamento es obligatorio.');
+            return false;
+        }
+
+        if (condominio.length === 0) {
+            toastr.error('El campo Condominio es obligatorio.');
             return false;
         }
 
         if (!/^[a-zA-Z0-9ñÑ\s-]+$/i.test(nombre)) {
-            toastr.error('El Nombre del Condominio solo puede contener letras, números y los caracteres especiales - y ñ.');
+            toastr.error('El Nombre del Apartamento solo puede contener letras, números y los caracteres especiales - y ñ.');
             return false;
         }
 
         if (nombre.length < 3 || nombre.length > 100) {
-            toastr.error('El Nombre del Condominio debe tener entre 3 y 100 caracteres.');
+            toastr.error('El Nombre del Apartamento debe tener entre 3 y 100 caracteres.');
             return false;
         }
 

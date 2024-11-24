@@ -19,6 +19,7 @@ class ConfiguracionModel extends BaseModel
         'updateBancos' => "UPDATE bancos SET codigo = :codigo, nombre = :nombre, is_active = :is_active WHERE id = :id",
         'addBanco' => "INSERT INTO bancos (codigo, nombre, is_active) VALUES (:codigo, :nombre, :is_active)",
         'deleteBanco' => "DELETE FROM bancos WHERE id = :id",
+        'getAllCondomains' => "SELECT id, nombre, codigo FROM condominio WHERE is_active = TRUE ORDER BY nombre ASC",
     ];
 
     public function __construct()

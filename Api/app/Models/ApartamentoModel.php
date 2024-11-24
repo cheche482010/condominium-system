@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class CondominioModel extends BaseModel
+class ApartamentoModel extends BaseModel
 {
     public string $id; 
     public string $nombre; 
@@ -15,12 +15,13 @@ class CondominioModel extends BaseModel
     private $fetchMode = 'all';
 
     private const SQL_CONFIG = [
-        'getAllCondomains' => "SELECT c.id, c.nombre, c.deuda, c.alicuota, c.is_active, cw.shortcode FROM condominios c JOIN websites cw ON c.id_website = cw.id ORDER BY c.nombre ASC",
-        'createCondomain' => "INSERT INTO condominios (id_website, nombre, deuda, alicuota, is_active) VALUES (:id_website, :nombre, :deuda, :alicuota, :is_active)",
-        'getCondomainByName' => "SELECT id, nombre, deuda, alicuota, is_active FROM condominios WHERE nombre = :nombre LIMIT 1",
-        'getById' => "SELECT id, nombre, deuda, alicuota, is_active FROM condominios WHERE id = :id LIMIT 1",
-        'deactivate' => "UPDATE condominios SET is_active = FALSE WHERE id = :id",
-        'updateCondomain' => "UPDATE condominios SET  nombre = :nombre, deuda = :deuda, alicuota = :alicuota, is_active = :is_active WHERE id = :id",
+        'getAllApartments' => "SELECT a.id, a.nombre, a.deuda, a.alicuota, a.is_active, w.shortcode, c.id AS id_condominio, c.codigo AS codigo_condominio, c.nombre AS nombre_condominio FROM apartamento a JOIN websites w ON a.id_website = w.id JOIN condominio c ON a.id_condominio = c.id WHERE a.is_active = TRUE ORDER BY a.nombre ASC",
+        'createApartament' => "INSERT INTO apartamento (id_condominio, id_website, nombre, deuda, alicuota, is_active) VALUES (:id_condominio, :id_website, :nombre, :deuda, :alicuota, :is_active)",
+        'getApartamentByName' => "SELECT id, nombre, deuda, alicuota, is_active FROM apartamento WHERE nombre = :nombre LIMIT 1",
+        'getByIdApartament' => "SELECT id, nombre, deuda, alicuota, is_active FROM apartamento WHERE id = :id LIMIT 1",
+        'deactivate' => "UPDATE apartamento SET is_active = FALSE WHERE id = :id",
+        'updateApartament' => "UPDATE apartamento SET  nombre = :nombre, deuda = :deuda, alicuota = :alicuota, is_active = :is_active, id_condominio = :id_condominio  WHERE id = :id",
+        'getCondomainById' => "SELECT id, nombre, codigo, is_active FROM condominio WHERE id = :id LIMIT 1",
     ];
 
     public function __construct()

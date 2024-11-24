@@ -1,11 +1,17 @@
 INSERT INTO 
     websites (name, shortcode, tagid)
 VALUES
-('Condominio A', 'CA', 001),
-('Condominio B', 'CB', 002),
-('Condominio C', 'CC', 003),
-('Condominio D', 'CD', 004),
-('Condominio E', 'CE', 005);
+('Test A', 'TA', 001),
+('Test B', 'TB', 002),
+('Test C', 'TC', 003),
+('Test D', 'TD', 004),
+('Test E', 'TE', 005);
+
+INSERT INTO condominio (id_website, codigo, nombre)
+VALUES
+(1, 'COND-001', 'Reserva del Mar'),
+(2, 'COND-002', 'Torre de la Costa'),
+(3, 'COND-003', 'Parque del Sol');
 
 INSERT INTO
     bancos (codigo, nombre)
@@ -42,19 +48,29 @@ VALUES
 ('TAT', 'Tarjeta Débito', 'Pagos con tarjeta débito'),
 ('TCT', 'Tarjeta Crédito', 'Pagos con tarjeta de crédito');
 
-INSERT INTO 
-    condominios (id_website, nombre, deuda, alicuota)
+INSERT INTO tipo_gasto (nombre, descripcion, is_active)
 VALUES
-(1, 'Test1', 15000.00, 450.00),
-(2, 'Test2', 20000.00, 600.00),
-(3, 'Test3', 25000.00, 750.00),
-(1, 'Test4', 18000.00, 540.00),
-(2, 'Test5', 22000.00, 660.00),
-(3, 'Test6', 28000.00, 840.00),
-(1, 'Test7', 16000.00, 480.00),
-(2, 'Test8', 21000.00, 630.00),
-(3, 'Test9', 26000.00, 780.00),
-(1, 'Test10', 19000.00, 570.00);
+('Agua', 'Gasto por suministro de agua', true),
+('Gas', 'Gasto por suministro de gas', true),
+('Electricidad', 'Gasto por suministro eléctrico', true),
+('Seguridad', 'Servicios de vigilancia y seguridad', true),
+('Limpieza común', 'Limpieza de áreas comunes', true),
+('Mantenimiento', 'Reparaciones y mantenimiento general', true),
+('Estacionamiento', 'Servicios de estacionamiento', true);
+
+INSERT INTO 
+    apartamento (id_website, id_condominio, nombre, deuda, alicuota)
+VALUES
+(1, 1, 'Test1', 15000.00, 450.00),
+(2, 1, 'Test2', 20000.00, 600.00),
+(3, 1, 'Test3', 25000.00, 750.00),
+(1, 1, 'Test4', 18000.00, 540.00),
+(2, 1, 'Test5', 22000.00, 660.00),
+(3, 1, 'Test6', 28000.00, 840.00),
+(1, 1, 'Test7', 16000.00, 480.00),
+(2, 1, 'Test8', 21000.00, 630.00),
+(3, 1, 'Test9', 26000.00, 780.00),
+(1, 1, 'Test10', 19000.00, 570.00);
 
 -- DATOS PERMISOS 
 INSERT INTO roles (nombre, descripcion)
@@ -74,7 +90,7 @@ VALUES ('ver_pagos', 'Verificar pagos'),
        ('gestion_websites', 'Gestionar websites');
 
 -- Clave es Contraseña123@
-INSERT INTO `usuarios` (`id`, `id_website`, `id_condominio`, `id_rol`, `nombre`, `apellido`, `cedula`, `phone`, `email`, `user_password`, `token`, `is_active`, `created_at`, `updated_at`) VALUES
+INSERT INTO `usuarios` (`id`, `id_website`, `id_apartamento`, `id_rol`, `nombre`, `apellido`, `cedula`, `phone`, `email`, `user_password`, `token`, `is_active`, `created_at`, `updated_at`) VALUES
 -- Usuario básico
 (1, 1, 1, 1, 'Usuario', 'Basico', 11222333, '04161234567', 'UsuarioBasico@gmail.com', 'WEhrSmFIQmVnOVBNVjF2S1NxeUxxQT09', '659234ee791d4194e246a4d3308a179212192b4528fef69a50d887c004287f6dc41aa956f05ff74e3cd10ae164d22f958ff87abddc7d3797db9ee63f6e412b2d', 1, '2024-11-11 21:43:24', '2024-11-11 21:43:24'),
 -- Administrador del negocio

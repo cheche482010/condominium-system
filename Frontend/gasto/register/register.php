@@ -1,4 +1,4 @@
-<?php verifySession(); ?>  
+<?php verifySession(); ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -32,7 +32,7 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active">Condominium System</li>
+                                <li class="breadcrumb-item active"><?= TITLE; ?></li>
                                 <li class="breadcrumb-item"><a href="register">Registrar</a></li>
                             </ol>
                         </div><!-- /.col -->
@@ -47,7 +47,76 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            
+
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Registrar Gasto</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <!-- form start -->
+                                <form id="registerGasto">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="concepto">Concepto </label>
+                                                    <input type="text" class="form-control" id="concepto"
+                                                        name="concepto" placeholder="Ingrese el concepto del gasto">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="tipo">Tipo de Gasto</label>
+                                                    <input type="text" class="form-control" id="tipo" name="tipo"
+                                                        placeholder="Ingrese el tipo de gasto">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="monto">Monto</label>
+                                                    <input type="number" class="form-control" id="monto" name="monto"
+                                                        placeholder="Ingrese el Monto" step="0.01" min="0">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="is_active" name="is_active" checked>
+                                                        <label class="custom-control-label"
+                                                            for="is_active">Activo</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <!-- /.col -->
+                                            <div class="col-12">
+                                                <button id="register" type="button"
+                                                    class="btn btn-primary">Register</button>
+                                                <button id="clear" type="button" class="btn btn-danger">Limpiar</button>
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                         </div>
                     </div>
 

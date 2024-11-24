@@ -139,7 +139,7 @@ $(document).ready(function () {
             apellido: $('#apellido').val() || '',
             email: $('#email').val() || '',
             phone: $('#phone').val() || '',
-            id_condominio: parseInt($('#condominio').val()) || null,
+            id_apartamento: parseInt($('#apartamento').val()) || null,
             id_rol: parseInt($('#rol').val()) || null,
             is_active: $('#is_active').prop('checked'),
             user_password: $('#user_password').val() || ''
@@ -150,7 +150,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: PROJECT_URL + 'api/user/createNewUser',
+            url: PROJECT_URL + 'api/user/create',
             method: 'POST',
             dataType: 'json',
             data: { user_data: JSON.stringify(userData) },
@@ -209,7 +209,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#condominio').selectpicker({
+    $('#apartamento').selectpicker({
         liveSearch: true,
         liveSearchNormalize: false,
         size: 10,
@@ -217,7 +217,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url: PROJECT_URL + 'api/condominio/getAllCondomains',
+        url: PROJECT_URL + 'api/apartamento/getAllApartments',
         method: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -226,12 +226,12 @@ $(document).ready(function () {
                 return;
             }
 
-            var options = '<option value="">Seleccione un condominio</option>';
+            var options = '<option value="">Seleccione un apartamento</option>';
             $.each(data.data, function (index, item) {
                 options += '<option value="' + item.id + '">' + item.nombre + '</option>';
             });
-            $('#condominio').html(options);
-            $('#condominio').selectpicker('refresh');
+            $('#apartamento').html(options);
+            $('#apartamento').selectpicker('refresh');
         },
         error: function (error) {
             console.error('Error:', error);

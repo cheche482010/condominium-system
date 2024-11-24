@@ -1,8 +1,8 @@
 $(document).ready(function () {
     let selectedUserId; 
     
-    let table = createDataTable('#condomainTable', {
-        url: PROJECT_URL + 'api/condominio/getAllCondomains',
+    let table = createDataTable('#apartamentTable', {
+        url: PROJECT_URL + 'api/apartamento/getAllApartments',
     },
     [
         {
@@ -14,6 +14,9 @@ $(document).ready(function () {
             render: function (data, type, row, meta) {
                 return meta.row + 1;
             }
+        },
+        {
+            data: 'nombre_condominio'
         },
         {
             data: 'nombre'
@@ -45,14 +48,14 @@ $(document).ready(function () {
     ]); 
 
     // Delete button click handler
-    $('#condomainTable tbody').on('click', '.btn-delete', function () {
+    $('#apartamentTable tbody').on('click', '.btn-delete', function () {
         var row = table.row($(this).parents('tr'));
         var data = row.data();
 
         deleteConfirmation().then(confirmed => {
             if (confirmed) {
                 $.ajax({
-                    url: PROJECT_URL + 'api/condominio/deactivate',
+                    url: PROJECT_URL + 'api/apartamento/deactivate',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -65,8 +68,8 @@ $(document).ready(function () {
                         }
     
                         Swal.fire({
-                            title: 'Condominio Eliminado',
-                            text: 'Se ha Eliminado el Condominio con éxito.',
+                            title: 'Apartamento Eliminado',
+                            text: 'Se ha Eliminado el Apartamento con éxito.',
                             icon: 'success',
                             confirmButtonText: 'Continuar'
                         }).then((result) => {
@@ -90,10 +93,10 @@ $(document).ready(function () {
     });
 
     // Edit button click handler
-    $('#condomainTable tbody').on('click', '.btn-edit', function () {
+    $('#apartamentTable tbody').on('click', '.btn-edit', function () {
         var data = table.row($(this).parents('tr')).data();
         selectedUserId = data.id;
-        $('#editCondomainForm').modal('show');
+        $('#editApartamentForm').modal('show');
     
         rellenarFormulario('editForm', data, [
             'nombre',
@@ -101,25 +104,26 @@ $(document).ready(function () {
             'alicuota',
             'is_active'
         ]);
-
+        $(`#condominio`).selectpicker('val', data.id_condominio);
     });
 
     $('#editBtn').on('click', function(e) {
         e.preventDefault();
         
-        const dataCondominio = {
+        const dataApartament = {
             id: selectedUserId,
             nombre: $('#nombre').val() || '',
             deuda: parseFloat($('#deuda').val()) || 0,
             alicuota: parseFloat($('#alicuota').val()) || 0,
-            is_active: $('#is_active').prop('checked'),
+            is_active: $('#is_active').prop('checked'), 
+            id_condominio: parseInt($('#condominio').val()) || null
         };
         
         $.ajax({
-            url:  PROJECT_URL + `api/condominio/update`,
+            url:  PROJECT_URL + `api/apartamento/update`,
             type: 'POST',
             dataType: 'json',
-            data: { condominio_data: JSON.stringify(dataCondominio) },
+            data: { apartament_data: JSON.stringify(dataApartament) },
             success: function(response) {
                 
                 if (!handleErrorValidate(response) || !handleError(response)) {
@@ -127,11 +131,11 @@ $(document).ready(function () {
                 }
 
                 table.ajax.reload();
-                $('#editCondomainForm').modal('hide');
+                $('#editApartamentForm').modal('hide');
 
                 Swal.fire({
-                    title: 'Condominio Actualizado',
-                    text: 'Se ha actualizado el Condominio con éxito.',
+                    title: 'Apartamento Actualizado',
+                    text: 'Se ha actualizado el Apartamento con éxito.',
                     icon: 'success',
                     confirmButtonText: 'Continuar'
                 });
@@ -145,5 +149,39 @@ $(document).ready(function () {
                 });
             }
         });
+    });
+
+    $('#condominio').selectpicker({
+        liveSearch: true,
+        liveSearchNormalize: false,
+        size: 10,
+        style: 'btn btn-default'
+    });
+
+    $.ajax({
+        url: PROJECT_URL + 'api/configuracion/getAllCondomains',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            if (!handleError(data)) {
+                return;
+            }
+
+            var options = '<option value="">Seleccione un condominio</option>';
+            $.each(data.data, function (index, item) {
+                options += '<option value="' + item.id + '">' + item.nombre + '</option>';
+            });
+            $('#condominio').html(options);
+            $('#condominio').selectpicker('refresh');
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error. Por favor, inténtelo nuevamente.',
+                icon: 'error'
+            });
+        }
     });
 });

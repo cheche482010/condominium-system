@@ -7,7 +7,7 @@
     <title><?= TITLE; ?></title>
     <?php include __DIR__ . "/../../includes/link.php"; ?>
 
-    <link href="<?= URL; ?>Frontend/condominio/list/list.scss" rel="stylesheet">
+    <link href="<?= URL; ?>Frontend/apartamento/list/list.scss" rel="stylesheet">
     <?php include __DIR__ . "/../../includes/data-table.php"; ?>
 </head>
 
@@ -29,7 +29,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Condominios</h1>
+                            <h1 class="m-0">Apartamentos</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -49,14 +49,15 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Lista de Condominios</h3>
+                                    <h3 class="card-title">Lista de Apartamentos</h3>
                                 </div>
                                 <div class="card-body">
-                                    <table id="condomainTable" class="table table-bordered" style="width:100%">
+                                    <table id="apartamentTable" class="table table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nombre</th>
+                                                <th>Condominio</th>
+                                                <th>Apartamento</th>
                                                 <th>Deuda</th>
                                                 <th>Alícuota</th>
                                                 <th>Estado</th>
@@ -68,7 +69,8 @@
                                         <tfoot>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nombre</th>
+                                                <th>Condominio</th>
+                                                <th>Apartamento</th>
                                                 <th>Deuda</th>
                                                 <th>Alícuota</th>
                                                 <th>Estado</th>
@@ -81,12 +83,12 @@
                         </div>
                     </div>
 
-                    <div class="modal fade" id="editCondomainForm" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="editApartamentForm" tabindex="-1" role="dialog"
                         aria-labelledby="editUserFormLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editUserFormLabel">Editar Condominio</h5>
+                                    <h5 class="modal-title" id="editUserFormLabel">Editar Apartamento</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -94,11 +96,21 @@
                                 <form id="editForm" action="POST">
                                     <div class="modal-body">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="nombre">Nombre del Condominio</label>
+                                                    <label for="nombre">Nombre del Apartamento</label>
                                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                                        placeholder="Ingrese el nombre del condominio">
+                                                        placeholder="Ingrese el nombre del apartamento">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="condominio">Condominio</label>
+                                                    <select id="condominio" name="condominio"
+                                                        class="form-control custom-select">
+                                                        <option value="">Seleccione un condominio</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -157,7 +169,7 @@
     <!-- ./wrapper -->
     <?php include __DIR__ . "/../../includes/script.php"; ?>
 
-    <script src="<?= URL; ?>Frontend/condominio/list/list.js"></script>
+    <script src="<?= URL; ?>Frontend/apartamento/list/list.js"></script>
 </body>
 
 </html>
