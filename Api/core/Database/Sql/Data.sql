@@ -50,6 +50,7 @@ VALUES
 
 INSERT INTO tipo_gasto (nombre, descripcion, is_active)
 VALUES
+('Unico', 'Gasto unico de apartamento', true),
 ('Agua', 'Gasto por suministro de agua', true),
 ('Gas', 'Gasto por suministro de gas', true),
 ('Electricidad', 'Gasto por suministro eléctrico', true),

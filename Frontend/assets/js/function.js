@@ -30,6 +30,8 @@ function createDataTable(selector, ajaxConfig, columnConfig, functioname = null)
         language: {
             url: PROJECT_URL + 'Frontend/assets/json/Spanish.json',
         },
+        responsive: true,
+        autoWidth: false,
         scrollX: true,
         scrollY: '500px',
         scrollCollapse: true,
@@ -100,8 +102,15 @@ function createDataTable(selector, ajaxConfig, columnConfig, functioname = null)
                                 functioname();
                             }
                         }
-                    }
+                    },
                 ]
+            },
+            {
+                text: '<i class="fas fa-sync"></i>',
+                className: 'btn btn-info',
+                action: function (e, dt, node, config) {
+                    dt.ajax.reload(null, false); 
+                }
             }
         ],
         dom: '<"d-flex"lBf>rt<"d-flex justify-content-between"ip>',

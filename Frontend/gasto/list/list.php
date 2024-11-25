@@ -1,4 +1,4 @@
-<?php verifySession(); ?>  
+<?php verifySession(); ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -48,7 +48,39 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Lista de Gastos</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table id="gastoTable" class="table table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Tipo de Pago</th>
+                                                <th>Concepto</th>
+                                                <th>Monto</th>
+                                                <th>Fecha</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Tipo de Pago</th>
+                                                <th>Concepto</th>
+                                                <th>Monto</th>
+                                                <th>Fecha</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
