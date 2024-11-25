@@ -5,6 +5,7 @@ namespace App\Models;
 class ApartamentoModel extends BaseModel
 {
     public string $id; 
+    public string $id_condominio;
     public string $nombre; 
     public string $deuda; 
     public string $alicuota; 

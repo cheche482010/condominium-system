@@ -50,6 +50,8 @@ class Connection
                 $this->credentials['Contraseña']
             );
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $this->pdo->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_NATURAL);
         } catch (PDOException $e) {
             header('Content-Type: application/json');
             $errorMessage = $this->formatErrorMessage($e, __METHOD__);

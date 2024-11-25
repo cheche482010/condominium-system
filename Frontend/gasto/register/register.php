@@ -57,7 +57,18 @@
                                 <form id="registerGasto">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-12">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="id_tipo">Tipo de Gasto</label>
+                                                    <select id="id_tipo" name="id_tipo"
+                                                        class="form-control custom-select">
+                                                        <option value="">Seleccione un tipo de Gasto</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="concepto">Concepto </label>
                                                     <input type="text" class="form-control" id="concepto"
@@ -69,23 +80,25 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="tipo">Tipo de Gasto</label>
-                                                    <input type="text" class="form-control" id="tipo" name="tipo"
-                                                        placeholder="Ingrese el tipo de gasto">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
                                                     <label for="monto">Monto</label>
                                                     <input type="number" class="form-control" id="monto" name="monto"
                                                         placeholder="Ingrese el Monto" step="0.01" min="0">
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row">
-
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="fecha">Fecha de registro</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="fas fa-calendar-alt"></i></span>
+                                                        </div>
+                                                        <input type="date" class="form-control" id="fecha"
+                                                            name="fecha">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row">
