@@ -28,7 +28,18 @@ class GastoController extends BaseController
         } catch (\PDOException $e) {
             return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los Tipos de gastos', $this->handlePDOExption($e, __METHOD__));
         }
+    }
 
+    public function getAllExpenses()
+    {
+        $this->isGetRequest();
+
+        try {
+            $data = $this->model->getAllExpenses()->fetch('all');
+            return $this->response(self::HTTP_OK, true, 'success', 'Gastos obtenidos con éxito', $data);
+        } catch (\PDOException $e) {
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al obtener los Gastos', $this->handlePDOExption($e, __METHOD__));
+        }
     }
 
     public function getById($id)
