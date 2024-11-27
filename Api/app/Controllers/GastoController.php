@@ -96,9 +96,33 @@ class GastoController extends BaseController
         return  $errors ?? null;
     }
 
-    public function update($id)
+    public function updateExpense()
     {
-        $this->isPutRequest();
+        $this->isPostRequest();
+
+        $data = json_decode($this->datos["gasto_data"], true);
+        
+        try {
+
+            $validateData = $this->validateData($data);
+            
+            if ($validateData) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'errorValidate', 'Errores de validación', $validateData);
+            }
+
+            $result = $this->model->transaction(function ($model) use ($data) {
+                return $model->updateExpense()->param($data)->execute();
+            });
+
+            if (!$result) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo actualizar el Gasto', $result);
+            }
+            
+            return $this->response(self::HTTP_OK, true, 'success', 'Gasto actualizado con éxito');
+
+        } catch (\PDOException $e) {
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al actualizar el Gasto.', $this->handlePDOExption($e, __METHOD__));
+        }
     }
 
     public function deactivate()
