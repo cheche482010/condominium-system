@@ -9,6 +9,8 @@ class GastoController extends BaseController
     use \Core\Traits\ValidatorTrait;
     private $datos;
     private $respuesta;
+    private $maxAttempts = 5;
+    private $attemptCount = 0;
 
     public function __construct()
     {
@@ -97,6 +99,49 @@ class GastoController extends BaseController
     public function update($id)
     {
         $this->isPutRequest();
+    }
+
+    public function deactivate()
+    {
+        $this->isPostRequest();
+        
+        try {
+            $id = $this->datos["id"];
+            
+            $sanitizedId = intval(filter_var($id, FILTER_SANITIZE_NUMBER_INT));
+
+            if (!$sanitizedId) {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'ID inválido');
+            }
+
+            $apartamentIdResult = $this->model->getByIdExpense()->param(['id' => $sanitizedId])->fetch('single');
+
+            if (!$apartamentIdResult) {
+                return $this->response(self::HTTP_NOT_FOUND, false, 'error', 'Gasto no encontrado', $apartamentIdResult);
+            }
+
+            if ($this->attemptCount >= $this->maxAttempts) {
+                return $this->response(self::HTTP_TOO_MANY_REQUESTS, false, 'error', 'Demasiados intentos de desactivación');
+            }
+            
+            $this->attemptCount++;
+
+            $result = $this->model->transaction(function ($m) use ($sanitizedId) {
+                return $m->deactivate()->param(['id' => $sanitizedId])->execute();
+            });
+
+            if ($result) {
+                return $this->response(self::HTTP_OK, true, 'success', 'Gasto desactivado con éxito', ['id' => $sanitizedId, 'estado' => 'desactivado']);
+            } else {
+                return $this->response(self::HTTP_BAD_REQUEST, false, 'error', 'No se pudo desactivar el Gasto', $result);
+            }
+        } catch (\PDOException $e) {
+            if ($e->getCode() === 'HY000' && strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                return $this->response(self::HTTP_CONFLICT_STATUS_CODE, false, 'error', 'El Gasto ya está desactivado', $this->handlePDOExption($e, __METHOD__));
+            }
+            
+            return $this->response(self::HTTP_INTERNAL_SERVER_ERROR, false, 'error', 'Error al desactivar Gasto', $this->handlePDOExption($e, __METHOD__));
+        }
     }
 
 }

@@ -14,8 +14,10 @@ class GastoModel extends BaseModel
     private $fetchMode = 'all';
 
     private const SQL_CONFIG = [
-        'getAllExpenses' => "SELECT g.id, g.concepto, g.monto, g.fecha, g.is_active, tg.id AS id_tipo, tg.nombre AS tipo_gasto, tg.descripcion AS tipo_gasto_descripcion FROM gastos g JOIN tipo_gasto tg ON g.id_tipo = tg.id ORDER BY g.id ASC",
+        'getAllExpenses' => "SELECT g.id, g.concepto, g.monto, g.fecha, g.is_active, tg.id AS id_tipo, tg.nombre AS tipo_gasto, tg.descripcion AS tipo_gasto_descripcion FROM gastos g JOIN tipo_gasto tg ON g.id_tipo = tg.id WHERE g.is_active = TRUE ORDER BY g.id ASC",
         'getAllTypeExpense' => "SELECT id, nombre, descripcion, is_active FROM tipo_gasto ORDER BY id ASC",
+        'deactivate' => "UPDATE gastos SET is_active = FALSE WHERE id = :id",
+        'getByIdExpense' => "SELECT id, concepto, monto, fecha, is_active FROM gastos WHERE id = :id LIMIT 1",
         'createExpense' => "INSERT INTO gastos (id_website, id_tipo, concepto, monto, fecha, is_active) VALUES (:id_website, :id_tipo, :concepto, :monto, :fecha, :is_active)"
     ];
 

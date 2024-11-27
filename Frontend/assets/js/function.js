@@ -31,7 +31,6 @@ function createDataTable(selector, ajaxConfig, columnConfig, functioname = null)
             url: PROJECT_URL + 'Frontend/assets/json/Spanish.json',
         },
         responsive: true,
-        autoWidth: false,
         scrollX: true,
         scrollY: '500px',
         scrollCollapse: true,
