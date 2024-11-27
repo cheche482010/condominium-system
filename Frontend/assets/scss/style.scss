@@ -1,0 +1,43 @@
+.main-header * {
+    color: white !important;
+}
+
+.dropdown-menu  * {
+    color: black !important;
+}
+
+#userContent {
+    .user-header {
+        padding: 10px;
+        text-align: center;
+    }
+    .user-body {
+        background-color: #f9f9f9;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .user-content {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        row-gap: 10px;
+    }
+
+    .user-rol{
+        font-size: 14px;
+        text-transform: uppercase;
+        color: white !important;
+        width: fit-content;
+    }
+    
+    .user-nav {
+        padding-inline: 5px !important;
+    }
+    
+    .user-nav .user-name {
+        padding-right: 10px;
+    }
+}
