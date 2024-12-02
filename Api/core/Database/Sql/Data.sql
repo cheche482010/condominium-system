@@ -13,41 +13,6 @@ VALUES
 (2, 'COND-002', 'Torre de la Costa'),
 (3, 'COND-003', 'Parque del Sol');
 
-INSERT INTO
-    bancos (codigo, nombre)
-VALUES
-    ('0102', 'Banco de Venezuela'),
-    ('0105', 'Banco Mercantil'),
-    ('0106', 'Banco Provincial'),
-    ('0107', 'Banco Bicentenario'),
-    ('0108', 'Banco Occidental'),
-    ('0110', 'Banco Universal'),
-    ('0111', 'Banco Plaza'),
-    ('0112', 'Banco Venezzuela (Banco Industrial)'),
-    ('0113', 'Banco Exterior'),
-    ('0114', 'Banco Latino'),
-    ('0115', 'Banco Nacional de Crédito Cooperativo'),
-    ('0116', 'Banco Agrícola Latino'),
-    ('0117', 'Banco Comercial Latino'),
-    ('0118', 'Banco Continental'),
-    ('0119', 'Banco Caribe');
-
-INSERT INTO 
-    tipos_de_pago (codigo, nombre, descripcion)
-VALUES
-('TPE', 'Efectivo', 'Pago de efectivo en Bolivares'),
-('TPM', 'Pago Móvil', 'Pagos móviles en Bolivares.'),
-('TED', 'Efectivo Divisas', 'Pagos en efectivo con divisas extranjeras'),
-('TZL', 'Zinli', 'Servicio de pagos Zinli'),
-('TBZ', 'Zelle', 'Plataforma de pagos Zelle'),
-('TBN', 'Binance', 'Pagos criptográficos a través de Binance'),
-('TTF', 'Transferencia', 'Transferencias bancarias'),
-('TBP', 'Bio Pago', 'Pagos biométricos'),
-('TGP', 'Google Pay', 'Servicio de pagos móviles Google Pay'),
-('TPI', 'PayPal Instant Transfer', 'Transferencia instantánea desde PayPal'),
-('TAT', 'Tarjeta Débito', 'Pagos con tarjeta débito'),
-('TCT', 'Tarjeta Crédito', 'Pagos con tarjeta de crédito');
-
 INSERT INTO tipo_gasto (nombre, descripcion, is_active)
 VALUES
 ('Unico', 'Gasto unico de apartamento', true),
