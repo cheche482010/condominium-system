@@ -94,12 +94,12 @@ CREATE TABLE gastos (
 
 CREATE TABLE gastos_apartamento (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    id_gastos BIGINT,
+    id_gasto BIGINT,
     id_apartamento BIGINT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_gastos) REFERENCES gastos(id),
+    FOREIGN KEY (id_gasto) REFERENCES gastos(id),
     FOREIGN KEY (id_apartamento) REFERENCES apartamento(id)
 );
 
